@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="14.3.0">
+<diagram program="umlet" version="13.3">
   <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>763</x>
-      <y>539</y>
+      <x>609</x>
+      <y>574</y>
       <w>147</w>
-      <h>70</h>
+      <h>84</h>
     </coordinates>
     <panel_attributes>Route
 --
 -id: int
 -trips: Trip[]
 -path: Path
---</panel_attributes>
+--
++getTrip(Trip trip): boolean
++getAllTrips(): Trip[]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>924</x>
-      <y>434</y>
+      <x>686</x>
+      <y>308</y>
       <w>154</w>
       <h>56</h>
     </coordinates>
-    <panel_attributes>DatabaseAPI
+    <panel_attributes>DataService
 --
--database: DatabaseInstance
+#database: DatabaseInstance
 --</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>301</x>
-      <y>644</y>
+      <x>287</x>
+      <y>602</y>
       <w>196</w>
       <h>140</h>
     </coordinates>
@@ -58,68 +60,71 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>217</x>
-      <y>371</y>
+      <x>70</x>
+      <y>385</y>
       <w>182</w>
-      <h>133</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>Driver
 --
--id: int
 -busID: int[]
 -name: String
 -nationalID: String
 -drivingLicense: ImageIcon
 -trip: Trip[]
+-execuses: Execuse[]
 --
 +Driver(int busID)
 +showTripsInfo(): void
-+makeExcuse(Excuse excuse): void</panel_attributes>
++makeExcuse(Excuse excuse): void
++showAllExecuses(): Execuse[]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>490</x>
-      <y>728</y>
-      <w>329</w>
-      <h>28</h>
+      <x>476</x>
+      <y>686</y>
+      <w>189</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=n
 m2=1</panel_attributes>
-    <additional_attributes>450.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>250.0;120.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>343</x>
-      <y>497</y>
-      <w>21</w>
-      <h>161</h>
+      <x>196</x>
+      <y>518</y>
+      <w>105</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;210.0;10.0;10.0</additional_attributes>
+    <additional_attributes>130.0;120.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1001</x>
-      <y>539</y>
+      <x>847</x>
+      <y>574</y>
       <w>147</w>
-      <h>49</h>
+      <h>63</h>
     </coordinates>
     <panel_attributes>Path
 --
 - stops: Stop[]
---</panel_attributes>
+--
++getAllStops(): boolean
++addStops(Stop stop): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>721</x>
-      <y>371</y>
+      <x>574</x>
+      <y>406</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -129,49 +134,41 @@ m2=1</panel_attributes>
 --
 +showAllTrips(): Trip[]
 +joinTrip(): void
-+cancelBooking(): void
-</panel_attributes>
++cancelBooking(Trip trip): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>266</y>
-      <w>189</w>
-      <h>119</h>
+      <x>840</x>
+      <y>91</y>
+      <w>231</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>SystemManager
 --
--database: DatabaseService
---
-+createDriverAccount(): Driver
-+activateDriverAccount(): boolean
-+suspendDriverAccount(): boolean
-+deleteDriverAccount(): boolean
-+verifyRoute(): boolean
-+handleComplain(): boolean
-+handleExcuse(Excuse excuse): boolean</panel_attributes>
+#service: DataService
+--</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>504</x>
-      <y>105</y>
+      <x>357</x>
+      <y>119</y>
       <w>217</w>
       <h>133</h>
     </coordinates>
     <panel_attributes>User
 --
--username: String
--email: String
--password: String
+#username: String
+#email: String
+#password: String
 --
 +makeComplain(Complain complain): void
 +updateProfile(): void
 +login(): void
-+register(): void
+
 
 </panel_attributes>
     <additional_attributes/>
@@ -179,38 +176,44 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>427</x>
-      <y>371</y>
+      <x>280</x>
+      <y>364</y>
       <w>259</w>
-      <h>147</h>
+      <h>224</h>
     </coordinates>
     <panel_attributes>Organization
 --
 -passengers: Passenger[]
 -routes: Route[]
 --
-+createRoute(): void
-+showAllRoute(): void
++handleRequests(): void
++createRoute(Route route): void
++payForTrip(Trip trip): void
++showAllRoutes(): void
++showAllTrips(): Trip[]
 +deleteRoute(): boolean
-+showPassengers(): void
-+createPassengerAccount(Passenger pass): void
-+deletePassengerAccount(Passenger pass): void
-+activatePassengerAccount(Passenger pass): void
-+suspendPassengerAccount(Passenger pass): void
-+payForRoute(): void</panel_attributes>
++showAllPassengers(): Passenger[]
++createPassengerAccount(Passenger p): void
++deletePassengerAccount(Passenger p): void
++activatePassengerAccount(Passenger p): void
++suspendPassengerAccount(Passenger p): void
++payForRoute(Route route): boolean
++createTrip(Trip trip): boolean
+-extendBookingTime(Trip trip): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>238</x>
-      <y>105</y>
+      <x>1169</x>
+      <y>364</y>
       <w>147</w>
       <h>119</h>
     </coordinates>
     <panel_attributes>Notification
 --
 -id: int
+-email: String
 -subject: String
 -body: String
 --
@@ -224,8 +227,8 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>679</x>
-      <y>420</y>
+      <x>532</x>
+      <y>455</y>
       <w>56</w>
       <h>21</h>
     </coordinates>
@@ -235,19 +238,19 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>378</x>
-      <y>175</y>
-      <w>140</w>
-      <h>21</h>
+      <x>1001</x>
+      <y>308</y>
+      <w>182</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+    <additional_attributes>240.0;150.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>910</x>
-      <y>105</y>
+      <x>637</x>
+      <y>147</y>
       <w>147</w>
       <h>133</h>
     </coordinates>
@@ -269,16 +272,17 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>336</y>
+      <x>14</x>
+      <y>595</y>
       <w>147</w>
-      <h>133</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>Excuse
 --
 -driver: Driver
 -title: String
 -body: String
+-status: String
 --
 +getDriver(): User
 +setDriver(Driver driver): boolean
@@ -292,85 +296,52 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>714</x>
-      <y>140</y>
-      <w>210</w>
+      <x>567</x>
+      <y>154</y>
+      <w>84</w>
       <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>280.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>140</x>
-      <y>385</y>
-      <w>91</w>
-      <h>21</h>
+      <x>70</x>
+      <y>518</y>
+      <w>63</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+    <additional_attributes>10.0;110.0;70.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>994</x>
-      <y>378</y>
+      <x>770</x>
+      <y>133</y>
+      <w>98</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;250.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>448</x>
+      <y>245</y>
       <w>21</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>490</x>
-      <y>497</y>
-      <w>308</w>
-      <h>182</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;240.0;420.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>868</x>
-      <y>483</y>
-      <w>70</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;80.0;80.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>714</x>
-      <y>224</y>
-      <w>210</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>280.0;70.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>595</x>
-      <y>231</y>
-      <w>21</w>
-      <h>154</h>
+      <h>133</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>301</x>
-      <y>294</y>
+      <x>154</x>
+      <y>308</y>
       <w>315</w>
       <h>91</h>
     </coordinates>
@@ -380,48 +351,49 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>595</x>
-      <y>294</y>
+      <x>448</x>
+      <y>308</y>
       <w>224</w>
-      <h>91</h>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>300.0;110.0;300.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>300.0;140.0;300.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>805</x>
-      <y>700</y>
+      <x>651</x>
+      <y>735</y>
       <w>112</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>Trip
--
+--
 -id: int
 -bus: Bus
--
+--
+
 +isCompleted(): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>833</x>
-      <y>602</y>
-      <w>28</w>
-      <h>112</h>
+      <x>679</x>
+      <y>651</y>
+      <w>21</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
 m2=n</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1001</x>
-      <y>700</y>
+      <x>847</x>
+      <y>735</y>
       <w>147</w>
       <h>70</h>
     </coordinates>
@@ -435,21 +407,21 @@ m2=n</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1064</x>
-      <y>581</y>
-      <w>28</w>
-      <h>133</h>
+      <x>910</x>
+      <y>630</y>
+      <w>21</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
 m1=1
 m2=n</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>903</x>
-      <y>574</y>
+      <x>749</x>
+      <y>609</y>
       <w>112</w>
       <h>28</h>
     </coordinates>
@@ -457,5 +429,266 @@ m2=n</panel_attributes>
 m1=1
 m2=1</panel_attributes>
     <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>742</x>
+      <y>357</y>
+      <w>63</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;70.0;60.0;10.0;60.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>784</x>
+      <y>357</y>
+      <w>91</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;110.0;60.0;110.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>903</x>
+      <y>133</y>
+      <w>147</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>190.0;10.0;190.0;70.0;10.0;70.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1029</x>
+      <y>133</y>
+      <w>126</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0;160.0;70.0;160.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>728</x>
+      <y>427</y>
+      <w>84</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>ِRoutesService
+--
+
+--
++add(Route)
++update(Route)
++delete(Route)
++get(id)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>819</x>
+      <y>448</y>
+      <w>105</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>ComplainsService
+--
+
+--
++add(Complain)
++update(Complain)
++delete(Complain)
++get(id)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>784</x>
+      <y>357</y>
+      <w>189</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;250.0;60.0;250.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>931</x>
+      <y>427</y>
+      <w>105</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>UsersService
+--
+
+--
++add(User)
++update(User)
++delete(User)
++get(id)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1050</x>
+      <y>434</y>
+      <w>112</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>NotificationsService
+--
+
+--
++add(Notification)
++update(Notification)
++delete(Notification)
++get(id)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>784</x>
+      <y>357</y>
+      <w>308</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;420.0;60.0;420.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1085</x>
+      <y>217</y>
+      <w>168</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>Admin
+--
+
+--
++createDriverAccount(): Driver
++deleteDriverAccount(): boolean
++handleComplain(): boolean
++handleExcuse(Excuse excuse): boolean
++showAllDrivers(): Driver[]
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>847</x>
+      <y>217</y>
+      <w>231</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>AutomationSystem
+--
+
+--
+-sendNotification(Notification, User): boolean
++verifyTrip(Trip): boolean
++resetPassword(User): boolean
++activateOrganiztion(Orgranization): boolean
++suspendTrip(Trip): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>532</x>
+      <y>497</y>
+      <w>91</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>110.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>476</x>
+      <y>532</y>
+      <w>154</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;150.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>567</x>
+      <y>119</y>
+      <w>287</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>390.0;10.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>112</x>
+      <y>280</y>
+      <w>749</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>1050.0;10.0;10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>413</x>
+      <y>287</y>
+      <w>448</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>620.0;10.0;10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>784</x>
+      <y>357</y>
+      <w>273</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;370.0;60.0;370.0;280.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1008</x>
+      <y>553</y>
+      <w>112</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>TripsService
+--
+
+--
++add(Notification)
++update(Notification)
++delete(Notification)
++get(id)</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
