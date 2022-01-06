@@ -52,7 +52,7 @@ class User {
     #username: String
     #email: String
     #password: String
-    +makeComplain(Complaint Complaint): void
+    +makeComplaint(Complaint Complaint): void
     +updateProfile(): void
     +login(): void
 }
@@ -175,7 +175,7 @@ class ComplaintService {
 class Admin {
     +createDriverAccount(): Driver
     +deleteDriverAccount(): boolean
-    +handleComplain(): boolean
+    +handleComplaint(): boolean
     +handleExcuse(Excuse excuse): boolean
     +showAllDrivers(): Driver[]
 }
