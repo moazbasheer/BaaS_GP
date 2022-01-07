@@ -181,7 +181,6 @@ class Admin {
 
 Notification <-- AutomationSystem
 
-AutomationSystem <-- Driver
 AutomationSystem <-- Organization
 
 SystemManager <|-- Admin
