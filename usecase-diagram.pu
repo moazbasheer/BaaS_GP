@@ -103,31 +103,31 @@ admin -- show_complaints
 admin -- show_trips2
 admin -- show_drivers_excuses
 
-login <... reset_password : extends
+login <... reset_password : <<extends>>
 
-show_joining_requests <.. reject_request : extends
-show_joining_requests <.. accept_request : extends
+show_joining_requests <.. reject_request : <<extends>>
+show_joining_requests <.. accept_request : <<extends>>
 
-show_trips1 <.. filter_criteria : extends
+show_trips1 <.. filter_criteria : <<extends>>
 
-activate_organization <.. register : includes
+activate_organization <.. register : <<includes>>
 
-assign_driver <... pay_for_trip : includes
+assign_driver <... pay_for_trip : <<includes>>
 
-show_complaints <.. mark_handled1 : extends
+show_complaints <.. mark_handled1 : <<extends>>
 
-show_drivers_excuses <.. change_driver : extends
-show_drivers_excuses <.. suspend_trip : extends
-show_drivers_excuses <.. mark_handled2 : extends
+show_drivers_excuses <.. change_driver : <<extends>>
+show_drivers_excuses <.. suspend_trip : <<extends>>
+show_drivers_excuses <.. mark_handled2 : <<extends>>
 
-create_stops <.. create_route : includes
+create_stops <.. create_route : <<includes>>
 
-create_trip <.. create_route : includes
+create_trip <.. create_route : <<includes>>
 
-accept_request <.. activate_passenger : extends
+accept_request <.. activate_passenger : <<extends>>
 
-pay_for_trip <.. create_trip : includes
+pay_for_trip <.. create_trip : <<includes>>
 
-enter_time <.. create_trip : includes
+enter_time <.. create_trip : <<includes>>
 
 @enduml
