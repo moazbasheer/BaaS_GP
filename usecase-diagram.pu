@@ -1,0 +1,133 @@
+@startuml usecase-diagram
+
+left to right direction
+
+rectangle "BaaS System" {
+    usecase "Login" as login #Gold
+    usecase "Update profile info" as update_profile #Gold
+    usecase "Make a complaint" as make_complaint #Gold
+    usecase "Show all trips" as show_trips1 #Gold
+    usecase "Filter by criteria" as filter_criteria #Gold
+    usecase "Reset password" as reset_password #Yellow
+    usecase "Activate organization account" as activate_organization #Yellow
+    usecase "Assign driver" as assign_driver #Yellow
+    usecase "Activate trip" as activate_trip #Yellow
+    usecase "Cancel booking for a trip" as cancel_booking #Lime
+    usecase "Join a trip" as join_trip #Lime
+    usecase "Show all notifications" as show_notifications #Lime
+    usecase "Open a trip" as open_trip #DodgerBlue
+    usecase "Show location map" as show_location #DodgerBlue
+    usecase "Excuse for a trip" as excuse_trip #DodgerBlue
+    usecase "Show all drivers excuses" as show_drivers_excuses #Tomato
+    usecase "Show all complaints" as show_complaints #Tomato
+    usecase "Create driver account" as create_driver #Tomato
+    usecase "Delete driver account" as delete_driver #Tomato
+    usecase "Show all drivers" as show_drivers #Tomato
+    usecase "Suspend driver account" as suspend_driver #Tomato
+    usecase "Delete organization account" as delete_organization #Tomato
+    usecase "Mark as handled" as mark_handled1 #Tomato
+    usecase "Mark as handled" as mark_handled2 #Tomato
+    usecase "Show all trips" as show_trips2 #Tomato
+    usecase "Change driver for a trip" as change_driver #Tomato
+    usecase "Suspend trip" as suspend_trip #Tomato
+    usecase "Register" as register #Turquoise
+    usecase "Suspend passenger account" as suspend_passenger #Turquoise
+    usecase "Delete passenger account" as delete_passenger #Turquoise
+    usecase "Create passenger account" as create_passenger #Turquoise
+    usecase "Activate passenger account" as activate_passenger #Turquoise
+    usecase "Show all passengers" as show_passengers #Turquoise
+    usecase "Show all joining requests" as show_joining_requests #Turquoise
+    usecase "Extend time of booking route" as extend_booking #Turquoise
+    usecase "Delete trip" as delete_trip #Turquoise
+    usecase "Create route" as create_route #Turquoise
+    usecase "Update route" as update_route #Turquoise
+    usecase "Create stops" as create_stops #Turquoise
+    usecase "Create a trip" as create_trip #Turquoise
+    usecase "Enter time" as enter_time #Turquoise
+    usecase "Pay for the trip" as pay_for_trip #Turquoise
+    usecase "Accept request" as accept_request #Turquoise
+    usecase "Reject request" as reject_request #Turquoise
+}
+
+actor "User" as user #Gold
+actor "Organization" as organization #Turquoise
+actor "Passenger" as passenger #Lime
+actor "Driver" as driver #DodgerBlue
+
+actor "System Manager" as system_manager #White
+actor "Admin" as admin #Tomato
+actor "Automation System" as automation_system #Yellow
+
+system_manager <|- admin
+system_manager <|- automation_system
+
+user <|- organization
+user <|- passenger
+user <|- driver
+
+user -- login
+user -- make_complaint
+user -- update_profile
+user -- show_trips1
+
+organization -- register
+organization -- suspend_passenger
+organization -- delete_passenger
+organization -- show_passengers
+organization -- create_passenger
+organization -- show_joining_requests
+organization -- extend_booking
+organization -- delete_trip
+organization -- update_route
+organization -- create_route
+
+passenger -- cancel_booking
+passenger -- join_trip
+passenger -- show_notifications
+
+driver -- open_trip
+driver -- show_location
+driver -- excuse_trip
+
+automation_system -- reset_password
+automation_system -- activate_organization
+automation_system -- assign_driver
+automation_system -- activate_trip
+
+admin -- delete_organization
+admin -- suspend_driver
+admin -- show_drivers
+admin -- delete_driver
+admin -- create_driver
+admin -- show_complaints
+admin -- show_trips2
+admin -- show_drivers_excuses
+
+login <... reset_password : extends
+
+show_joining_requests <.. reject_request : extends
+show_joining_requests <.. accept_request : extends
+
+show_trips1 <.. filter_criteria : extends
+
+activate_organization <.. register : includes
+
+assign_driver <... pay_for_trip : includes
+
+show_complaints <.. mark_handled1 : extends
+
+show_drivers_excuses <.. change_driver : extends
+show_drivers_excuses <.. suspend_trip : extends
+show_drivers_excuses <.. mark_handled2 : extends
+
+create_stops <.. create_route : includes
+
+create_trip <.. create_route : includes
+
+accept_request <.. activate_passenger : extends
+
+pay_for_trip <.. create_trip : includes
+
+enter_time <.. create_trip : includes
+
+@enduml

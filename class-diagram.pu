@@ -22,6 +22,7 @@ class AutomationSystem {
 class SystemManager {
     #service: DataService
 }
+
 class Driver {
     -busID: int[]
     -name: String
@@ -51,7 +52,7 @@ class User {
     #username: String
     #email: String
     #password: String
-    +makeComplain(Complain complain): void
+    +makeComplaint(Complaint Complaint): void
     +updateProfile(): void
     +login(): void
 }
@@ -147,9 +148,9 @@ class NotificationService {
 }
 
 class ExcuseService {
-    +add(Complain)
-    +update(Complain)
-    +delete(Complain)
+    +add(Complaint)
+    +update(Complaint)
+    +delete(Complaint)
     +get(id)
 }
 
@@ -165,22 +166,23 @@ class RouteService {
 }
 
 class ComplaintService {
-    +add(Complain)
-    +update(Complain)
-    +delete(Complain)
+    +add(Complaint)
+    +update(Complaint)
+    +delete(Complaint)
     +get(id)
 }
 
 class Admin {
     +createDriverAccount(): Driver
     +deleteDriverAccount(): boolean
-    +handleComplain(): boolean
+    +handleComplaint(): boolean
     +handleExcuse(Excuse excuse): boolean
     +showAllDrivers(): Driver[]
 }
 
 Notification <-- AutomationSystem
 
+AutomationSystem <-- Driver
 AutomationSystem <-- Organization
 
 SystemManager <|-- Admin
