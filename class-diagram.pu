@@ -1,27 +1,90 @@
+/'
+    spider ma7moud
+    thank you for your permission
+    a32al team graduation project ever
+    howa lma bft7 el chat window bta3t zoom
+    btzhr 3ndkom?
+    zy mo3az
+    ft7t
+    mo3az 3shan ubuntu
+    momken bardo
+    mt3rfosh enny bl3b fe l background
+    views & user interfaces
+    setuser 3shan nzawar el reports
+    5aleena fl classes
+
+    5aleena fl el soura el kbeera
+    5aleena ndeef dlw2ty classes
+    w nseeb el attributes wl functions b3den
+
+    fe views & UI
+    in accordance with mvc
+    hns2l bokra
+    brb
+    ana aft7 el use case?
+    el shasha htb2a dy2a fash**
+    momken n5ly el ashom straight lines bs msh btb2a 7lwa
+    curves are for winners
+    3eed ya m7moud
+    ok
+    alf salama
+    fe fkra a7sn
+    msh mohm el class diagram
+    esmo usecasediagram 3la el repo
+
+'/
+
 @startuml class-diagram
 
-class Notification {
-    -id: int
-    -email: String
-    -subject: String
-    -body: String
+
+interface User {
+    +updateProfile(): void
+    +login(): void
+}
+
+interface Report {
+    +getUser(): User
     +setTitle(String title): void
     +getTitle(): String
     +getBody(): String
     +setBody(String body): void
 }
 
+' class Notification {
+'     -id: int
+'     -email: String
+'     -subject: String
+'     -body: String
+'     +setTitle(String title): void
+'     +getTitle(): String
+'     +getBody(): String
+'     +setBody(String body): void
+' }
+
+' i suggest removing all ids from all classes
+' useless and repetitive
+' :(
+' whatever
+' why didn't we add id to trip? for example
+' see? that's what i am talking about
+' this is repetitive
+' REPEITIVE
+' my internet connection disconnected for a few seconds
+' let's go
+' why put constructor
+' 3ashan n2dr ndeno w ntl3 ****
+' rabna yostor el mo3eda mtshofsh el comment da ^^
+' ma7na 3mlna make complaint
+' yes we removed
+' ana shoftaha 5atwa gare2a
+' bs 3gbtny
 class Driver {
     -busID: int[]
     -name: String
     -nationalID: String
     -drivingLicense: ImageIcon
     -trips: Trip[]
-    -execuses: Execuse[]
-    +Driver(int busID)
-    +showTripsInfo(): void
     +makeExcuse(Excuse excuse): void
-    +showAllExecuses(): Execuse[]
 }
 
 class Excuse {
@@ -29,24 +92,10 @@ class Excuse {
     -title: String
     -body: String
     -status: String
-    +getDriver(): User
-    +setDriver(Driver driver): boolean
-    +setTitle(String title): void
-    +getTitle(): String
-    +getBody(): String
 }
 
-class User {
-    #username: String
-    #email: String
-    #password: String
-    +makeComplaint(Complaint Complaint): void
-    +updateProfile(): void
-    +login(): void
-}
-
+' msh hatetshal
 class Bus {
-    -id: int
     -passengersNumber: int
     -driver: Driver
     -vehicleLicense: ImageIcon
@@ -55,36 +104,88 @@ class Bus {
     +assignDriver(Driver driver): boolean
 }
 
+' sawany hwd7 el sora
+' sorry
+' el views hatedaf k functions?!!!
+' fe aswat 3'reeba
+' payment is out of scope?
+' ok
+' hns2l bokra
+' hatedaf feen?
+' law etshalet?
+' msh e7na msh hn3ml view?
+' fhmtk
+' payForTrip and payForRoute?
+' amsa7 route bs
+' mafeesh route
+' bs fe pay for trip
+' tab enta mota5ayel el daf3 ezay
+' bey7aseb 3la kol trip lw7daha
+' dof3a b dof3a
+' wla ezay
+' da kwayes kalam mohsen
+' 3ashan mnwrtsh nfsna nsheel kol el pay
+' wogod activate w create passenger msh manteqy?
+' tanaqod
+' el org bt3m
+' el kalam 3la men?
+
+' men howa?
+' fe create
+' bs fe 7agat bt7sl fe el controller lma btkret route
+' ezay ashelha
+' m2oltosh 3la el class de abl kda
+' route manager
+' tamam
+' KAN NEFSY ATLA3 COMPUTER SCIENTIST :(
+' mbdrsesh fe canada
+' esmaha eh ya m7moud fkrny
+' albertaaaaaaa
+' bl zabt
+' bokra
+' ht3mlo m3ana
+' isa
+' tamam
+' ah sa7
+' f3ln extend msh hna
+' asl de 7aga so8ayra/baseeta
+' boso el 7arka el gaya de
+' byb2a feha t3deel route / path / mwa3eed
+' aked lazm
+' hn handlha b ay taree2a
+' maho lazm tb2a flexible
+' la2 efrd 3ayz tzwd path fe route
+' 3mlt route w 3ayz adeef path gded h3ml eh?
+' into the next class
+' ya 3m el tas7ee7 bzramet
+' sa2alt abl kda wa7d akbar mny fl kolya
+' 2aly mashroo3 el ta5arog mn ashal el mawad w byzwd el gpa
+' mn el noo3 elly bysheel
+' howa bysheel bs msh 7aramy
+' 5aleeh kda
+' m2sood beh el controller
+' this is the controller!!
+' surprise
+' msh fahmk
 class Organization {
+    -name: string
     -passengers: Passenger[]
     -routes: Route[]
-    -extendBookingTime(Trip trip): boolean
-    +handleRequests(): void
     +createRoute(Route route): void
-    +payForTrip(Trip trip): void
-    +showAllRoutes(): void
-    +showAllTrips(): Trip[]
-    +deleteRoute(): boolean
-    +showAllPassengers(): Passenger[]
-    +createPassengerAccount(Passenger p): void
-    +deletePassengerAccount(Passenger p): void
-    +activatePassengerAccount(Passenger p): void
-    +suspendPassengerAccount(Passenger p): void
+    +modifyRoute(Route route): void
+    +deleteRoute(Route route): void
+    +createPassenger(Passenger p): void
+    +suspendPassenger(Passenger p): void
+    +activatePassenger(Passenger p): void
+    +deletePassenger(Passenger p): void
     +payForRoute(Route route): boolean
     +createTrip(Trip trip): boolean
-    +createTrip(): Trip
 }
 
 class Complaint {
     -user: User
     -title: String
     -body: String
-    +getUser(): User
-    +setUser(User user): boolean
-    +setTitle(String title): void
-    +getTitle(): String
-    +getBody(): String
-    +setBody(String body): void
 }
 
 class UserModel {
@@ -94,32 +195,48 @@ class UserModel {
     +get(id)
 }
 
+' msh lazem
+' fokak
+' hns2l bokra
+' boso el 7arakat elly gaya de
+' 3la asas 3ayz yjoin trip motakrera
+' fby book path
+' someone has his job daily
+' does he have to join the same trip everyday
+' bookTrip is for one-time maybe?
+' book = join msh far2a
+' momken
+' 3la asas el book trip de el controller msh el view
+' i agree
+' what do you think about modify
+' does makeComplaint have arguments?
+' 3la asas el make complaint de btwsl el shakwa fo2 ll ghat el ma3neya
+' wslt?
+' whatever
+' 3adeha
 class Passenger {
-    +showAllTrips(): Trip[]
-    +joinTrip(): void
-    +cancelBooking(Trip trip): void
     +joinTrip(Trip trip): void
+    +modifyBooking(Trip trip): void
+    +cancelBooking(Trip trip): void
+    +makeComplaint(Complaint complaint): void
 }
+
 'Each route contains multiple paths'
 'Each route contains source and destination only'
 'Each path contains multiple stops'
 'Each path contains multiple trips'
 'Each trip has one start time'
-
 class Route {
-    -id: int
     -source: String
     -destination: String
     -trips: Trip[]
-    
+    -paths: Path[]
     +getTrip(Trip trip): boolean
     +getAllTrips(): Trip[]
 }
 
 class Trip {
-    -id: int
-    -buses: Bus[]
-    -path: Path[]
+    -bus: Bus
     -startTime: Time
     +assignDriver(Bus, Driver): boolean
     +isCompleted(): boolean
@@ -127,6 +244,7 @@ class Trip {
 ''
 class Path {
     -stops: Stop[]
+    -trips: Trip[]
     +getAllStops(): boolean
     +addStops(Stop stop): boolean
 }
@@ -136,12 +254,12 @@ class Stop {
     -latitude: double
 }
 
-class NotificationModel {
-    +add(Notification)
-    +update(Notification)
-    +delete(Notification)
-    +get(id)
-}
+' class NotificationModel {
+'     +add(Notification)
+'     +update(Notification)
+'     +delete(Notification)
+'     +get(id)
+' }
 
 class ExcuseModel {
     +add(Complaint)
@@ -164,47 +282,112 @@ class ComplaintModel {
     +get(id)
 }
 
+' everything is done
+' very clean
+' no entity
+' yes model
+' what model is missing?
+' el rasma momken tet3adel de msh moshkla
+' momken tetlawen 7ta
+' da elly b2olo
+' el id dayman mwgood
 class Admin {
-    +createDriverAccount(): Driver
-    +deleteDriverAccount(): boolean
-    +handleComplaint(): boolean
-    +handleExcuse(Excuse excuse): boolean
-    +showAllDrivers(): Driver[]
+    +createDriver(): Driver
+    +suspendDriver(): boolean
+    +deleteDriver(): boolean
+    +deleteOrganization(): boolean
+    +handleComplaint(Complaint complaint): void
+    +handleExcuse(Excuse excuse): void
 }
+
+User <|.. Driver
+User <|.. Organization
+User <|.. Passenger
+User <|.. Admin
+
+Report <|.. Excuse
+Report <|.. Complaint
+
+Report <- User
 
 Driver o-- Trip
 
-Excuse <-- Driver
-
-User <|-- Driver
-User <|-- Organization
-User <|-- Passenger
-
-Bus o-- Passenger
+Bus o- Passenger
 Bus o-- Driver
 
 Organization o-- Passenger
 
-Complaint <-- User
+User --o UserModel
 
-UserModel <-- Admin
-UserModel <-- User
-
-Route "1" o-- "n" Trip
-Trip "1" o-- "1" Path
+' de aggregation
+' el 3aks?
+' keda driver w trip sa7
+' el error bsbb en ana m3mltsh refresh ll preview
+Route "1" o-- "n" Path
+Path "1" o-- "n" Trip
 Route <-- Organization
 
-Trip "1" o-- "n" Bus
+Trip "1" *-- "n" Bus
 
 Path "1" *-- "n" Stop
 
-ExcuseModel <-- Admin
-ExcuseModel <-- Driver
+Route --o RouteModel
 
-Route <-- RouteModel
-RouteModel <-- Organization
+Complaint --o ComplaintModel
 
-ComplaintModel <-- User
-ComplaintModel <-- Admin
+Excuse --o ExcuseModel
 
 @enduml
+
+' el notification marbouta be meeeeen?
+' mb7bsh el franco :(
+' ashel el notification?
+' sorry
+' kalam beny w benk?
+' msh moktn3 b ay aggregation m3 model
+
+
+' el user wl report 3laka eh?
+
+' el user wl report 3laka eh?
+
+' el user wl report 3laka eh?
+
+' el user wl report 3laka eh?
+
+' el user wl report 3laka eh?
+
+' association or aggregation
+
+' m7moud shayfha eh
+
+' ana shayf zy m7moud
+
+' ana shayf mfesh 3laka ben report w user
+
+' tb2a el 3laka ben 3yalhom
+
+' passenger & complaint
+
+' driver & excuse
+
+' it is my idea
+
+' organization doesn't complain
+
+' f men?
+
+' da fe makatebna
+
+' anything else?
+
+' hns2l bokra
+
+' we will ask tomorrow about:
+' 1- adding views
+' 2- ?
+
+' the number of dashes mean:
+' 1 dash: horizontal
+' 2 dashes: vertical
+' 3 or more: longer
