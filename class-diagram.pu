@@ -1,9 +1,7 @@
 @startuml class-diagram
 
 
-' kont 3ayz 7aga ya m7moud?
-package Views {
-    ' class or interface?
+package UserUI {
     interface UserView {
 
     }
@@ -33,14 +31,7 @@ package Views {
         ' includes handle them
     }
 
-    ' bta3t el organization bt3to
-    ' omal hy7gz ezay
-    ' efrd 3ayz y7gz yawmyan fe path mo3yn
-    ' read the comment
-    ' de tb2a fl model b2a
-    ' fe time ll trip bas
-    ' btkreat trip aw path w yb2a leh automatic trips
-    ' lazm hy7dd f3ln
+    ' check facebook group chat
     class PassengerView {
         +showRoutes()
         ' includes show paths, trips and book them
@@ -56,7 +47,9 @@ package Views {
         +createExcuse()
         +showMyExcuses()
     }
+}
 
+package RouteUI {
     class TripView {
 
     }
@@ -64,7 +57,9 @@ package Views {
     class RouteView {
         +showPaths()
     }
+}
 
+package ReportUI {
     class ComplaintView {
 
     }
@@ -74,26 +69,31 @@ package Views {
     }
 }
 
-' ana lma a3ml driver msln
-' htrg3ly object mn el class de leh?
-' bzabt ya mayo
-' bravo mayo
-package Services {
+
+' good idea
+package ReportManagement {
+    interface Report {
+        +store()
+        +retrieve()
+    }
+
+    class ComplaintServices {
+        +store()
+        +retrieve()
+    }
+
+    class ExcuseServices {
+        +store()
+        +retrieve()
+    }
+}
+
+package UserManagement {
     interface UserServices {
         +updateProfile(): void
         +login(): void
     }
 
-    interface FormReport {
-        +getUser(): UserModel
-        +setTitle(string title): void
-        +getTitle(): string
-        +getBody(): string
-        +setBody(string): void
-    }
-
-    ' sada2ny mb2tsh fahem
-    ' law enta fahm w mota2aked 2ol
     class AdminServices {
         +createDriver(): DriverModel
         +suspendDriver(): boolean
@@ -105,24 +105,33 @@ package Services {
     }
 
     class DriverServices {
-        +makeExcuse(ExcuseModel): void
-    }
-
-    class ExcuseServices {
-        +getUser(): DriverModel
-        +setTitle(string): void
-        +getTitle(): string
-        +getBody(): string
-        +setBody(string body): void
+        +makeExcuse(): void
     }
 
     class PassengerServices {
-        +joinTrip(TripModel): void
-        +modifyBooking(TripModel): void
-        +cancelBooking(TripModel): void
-        +makeComplaint(Complaint): void
+        +joinTrip(int id): void
+        +modifyBooking(int id): void
+        +cancelBooking(int id): void
+        +makeComplaint(): void
     }
 
+    ' maybe
+    class OrganizationServices {
+        +createRoute(Route route): void
+        +modifyRoute(Route route): void
+        +deleteRoute(Route route): void
+        +createPassenger(Passenger p): void
+        +suspendPassenger(Passenger p): void
+        +activatePassenger(Passenger p): void
+        +deletePassenger(Passenger p): void
+        +payForRoute(Route route): boolean
+        +createTrip(Trip trip): boolean
+    }
+}
+
+
+' 7araka say3a awiiiiiii
+package RouteManagement {
     'Each route contains multiple paths'
     'Each route contains source and destination only'
     'Each path contains multiple stops'
@@ -144,43 +153,19 @@ package Services {
         +getAllStops(): boolean
         +addStops(StopModel): boolean
     }
+}
 
-    class OrganizationServices {
-        +createRoute(Route route): void
-        +modifyRoute(Route route): void
-        +deleteRoute(Route route): void
-        +createPassenger(Passenger p): void
-        +suspendPassenger(Passenger p): void
-        +activatePassenger(Passenger p): void
-        +deletePassenger(Passenger p): void
-        +payForRoute(Route route): boolean
-        +createTrip(Trip trip): boolean
-    }
-
-    ' taradat
-    ' ben 5ater mohamed wl manteq
-    class ComplaintServices {
-        +getUser(): User
-        +setTitle(string title): void
-        +getTitle(): string
-        +getBody(): string
-        +setBody(string body): void
-    }
-
-    ' this is used by passenger to book paths
-    ' t2rybn 3ndk 7a2
-    ' bs 7agz ywmyn hn3mlo ezay
-    ' la2 blash kda
-    ' el booking de trip wa7da only
-    ' heya absat ma yakoon 3n el booking y3ny
+' bos 3ade el members dlw2ty 5leena fl packaging
+package BookingManagement {
     class BookingServices {
-        -bookTrip()
+        +bookTrip()
+        +cancelBooking()
     }
 }
 
-' nseeb tyb el kalam da b3den w n5ls el relationships wl interfaces elly fadla 3shan nkon angazna
-' ah shayel
-package Models {
+
+' 7arakt soha
+package UserDataModel {
     class UserModel {
         -name:string
         -email:string
@@ -219,57 +204,6 @@ package Models {
         -excuses:Excuse
     }
 
-    class ExcuseModel {
-        -driver: DriverModel
-        -title: string
-        -body: string
-        -status: string
-    }
-
-    class RouteModel {
-        -source: string
-        -destination: string
-        -paths: Path[]
-    }
-
-    class ComplaintModel {
-        -user: UserModel
-        -title: string
-        -body: string
-    }
-
-    ' 3adooha 3shan nngz hnfkr feha
-    class PathModel {
-        -stops: Stop[]
-        -trips: Trip[]
-        -start: datetime
-        -end: datetime
-    }
-
-    class StopModel {
-        -name: string
-        -longitude: double
-        -latitude: double
-    }
-
-    class BusModel {
-        -passengersNumber: int
-        -driver: DriverModel
-        -vehicleLicense: ImageIcon
-        -passengers: PassengerModel[]
-    }
-
-    class TripModel {
-        -date: datetime
-        -busCount: int
-        -busIDs: int[]
-    }
-
-    class BookingModel {
-        -passengerID: int
-        -bookedTripID: int
-    }
-
     interface IUserDataAccess {
         +add(UserModel): boolean
         +update(UserModel): boolean
@@ -281,27 +215,6 @@ package Models {
         +add(AdminModel)
         +update(AdminModel)
         +delete(AdminModel)
-        +get(int)
-    }
-
-    interface IExcuseDataAccess {
-        +add(ExcuseModel)
-        +update(ExcuseModel)
-        +delete(ExcuseModel)
-        +get(int)
-    }
-
-    interface IRouteDataAccess {
-        +add(RouteModel)
-        +update(RouteModel)
-        +delete(RouteModel)
-        +get(int)
-    }
-
-    interface IComplaintDataAccess {
-        +add(ComplaintModel)
-        +update(ComplaintModel)
-        +delete(ComplaintModel)
         +get(int)
     }
 
@@ -340,27 +253,6 @@ package Models {
         +get(int)
     }
 
-    class ExcuseDataAccess {
-        +add(ExcuseModel)
-        +update(ExcuseModel)
-        +delete(ExcuseModel)
-        +get(int)
-    }
-
-    class RouteDataAccess {
-        +add(RouteModel)
-        +update(RouteModel)
-        +delete(RouteModel)
-        +get(int)
-    }
-
-    class ComplaintDataAccess {
-        +add(ComplaintModel)
-        +update(ComplaintModel)
-        +delete(ComplaintModel)
-        +get(int)
-    }
-
     class DriverDataAccess {
         +add(DriverModel)
         +update(DriverModel)
@@ -383,34 +275,117 @@ package Models {
     }
 }
 
-' tamam awl package 5lst
-' model package
-' el relationships 5lst
+package ReportDataModel {
+    class ExcuseModel {
+        -driver: DriverModel
+        -title: string
+        -body: string
+        -status: string
+    }
+
+    class ComplaintModel {
+        -user: UserModel
+        -title: string
+        -body: string
+    }
+
+    interface IExcuseDataAccess {
+        +add(ExcuseModel)
+        +update(ExcuseModel)
+        +delete(ExcuseModel)
+        +get(int)
+    }
+
+    interface IComplaintDataAccess {
+        +add(ComplaintModel)
+        +update(ComplaintModel)
+        +delete(ComplaintModel)
+        +get(int)
+    }
+
+    class ExcuseDataAccess {
+        +add(ExcuseModel)
+        +update(ExcuseModel)
+        +delete(ExcuseModel)
+        +get(int)
+    }
+
+    class ComplaintDataAccess {
+        +add(ComplaintModel)
+        +update(ComplaintModel)
+        +delete(ComplaintModel)
+        +get(int)
+    }
+}
+
+package RouteDataModel {
+    class PathModel {
+        -stops: Stop[]
+        -trips: Trip[]
+        -start: datetime
+        -end: datetime
+    }
+
+    class RouteModel {
+        -source: string
+        -destination: string
+        -paths: Path[]
+    }
+
+    class StopModel {
+        -name: string
+        -longitude: double
+        -latitude: double
+    }
+
+    class TripModel {
+        -date: datetime
+        -busCount: int
+        -busIDs: int[]
+    }
+
+    interface IRouteDataAccess {
+        +add(RouteModel)
+        +update(RouteModel)
+        +delete(RouteModel)
+        +get(int)
+    }
+
+    class RouteDataAccess {
+        +add(RouteModel)
+        +update(RouteModel)
+        +delete(RouteModel)
+        +get(int)
+    }
+
+    class BusModel {
+        -passengersNumber: int
+        -driver: DriverModel
+        -vehicleLicense: ImageIcon
+        -passengers: PassengerModel[]
+    }
+}
+
+' daloo3t el models
+package BookingDataModel {
+    class BookingModel {
+        -passengerID: int
+        -bookedTripID: int
+    }
+}
 
 UserServices <|.. DriverServices
 UserServices <|.. OrganizationServices
 UserServices <|.. PassengerServices
 UserServices <|.. AdminServices
 
-FormReport <|.. ExcuseServices
-FormReport <|.. ComplaintServices
-
-FormReport <- UserServices
-
-DriverServices o-- TripServices
-
-' Bus o- PassengerServices
-' Bus o-- DriverServices
+Report <|.. ExcuseServices
+Report <|.. ComplaintServices
 
 OrganizationServices o-- PassengerServices
 
 RouteServices "1" o-- "n" PathServices
 PathServices "1" o-- "n" TripServices
-RouteServices <-- OrganizationServices
-
-' TripServices "1" *-- "n" Bus
-
-' PathServices "1" *-- "n" Stop
 
 IUserDataAccess <|.. UserDataAccess
 IUserDataAccess o-- UserModel
@@ -428,7 +403,7 @@ IPassengerDataAccess <|.. PassengerDataAccess
 PassengerDataAccess o-- PassengerModel
 
 IOrganizationDataAccess <|.. OrganizationDataAccess
-IOrganizationDataAccess o-- OrganizationModel
+IOrganizationDataAccess --> OrganizationModel
 
 IExcuseDataAccess <|.. ExcuseDataAccess
 IExcuseDataAccess o-- ExcuseModel
@@ -439,29 +414,32 @@ IRouteDataAccess o-- RouteModel
 TripModel --o PathModel
 PathModel o-- StopModel
 
-DriverModel "1" -- "1" BusModel
-
-PassengerServices -- BookingServices
-
 UserView <|.. OrganizationView
 UserView <|.. AdminView
 UserView <|.. PassengerView
 UserView <|.. DriverView
 
-OrganizationView -- RouteView
-
-DriverView -- ExcuseView
-
 RouteView -- TripView
 
-OrganizationView -- ComplaintView
-PassengerView -- ComplaintView
 
-DriverView -- TripView
+UserUI --> RouteUI
+UserUI --> ReportUI
+
+UserUI ---> UserManagement
+RouteUI ---> RouteManagement
+ReportUI ---> ReportManagement
+
+UserManagement --> RouteManagement
+UserManagement --> BookingManagement
+UserManagement --> ReportManagement
+
+UserManagement ---> UserDataModel
+ReportManagement ---> ReportDataModel
+RouteManagement ---> DataModel
+BookingManagement ---> BookingDataModel
+
+UserDataModel --> RouteDataModel
+UserDataModel --> BookingDataModel
+UserDataModel --> ReportDataModel
 
 @enduml
-
-' el packages msh hata5od wa2t
-' n3mlha 3la tool
-' yes
-' homa 3 4 ashom
