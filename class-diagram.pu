@@ -69,8 +69,6 @@ package ReportUI {
     }
 }
 
-
-' good idea
 package ReportManagement {
     interface Report {
         +store()
@@ -163,8 +161,6 @@ package BookingManagement {
     }
 }
 
-
-' 7arakt soha
 package UserDataModel {
     class UserModel {
         -name:string
@@ -422,24 +418,24 @@ UserView <|.. DriverView
 RouteView -- TripView
 
 
-UserUI --> RouteUI
-UserUI --> ReportUI
+UserUI ---> RouteUI
+UserUI ---> ReportUI
 
 UserUI ---> UserManagement
 RouteUI ---> RouteManagement
-ReportUI ---> ReportManagement
+ReportUI --> ReportManagement
 
-UserManagement --> RouteManagement
-UserManagement --> BookingManagement
-UserManagement --> ReportManagement
+UserManagement ---> RouteManagement
+UserManagement ---> BookingManagement
+UserManagement ---> ReportManagement
 
-UserManagement ---> UserDataModel
+UserManagement -> UserDataModel
 ReportManagement ---> ReportDataModel
-RouteManagement ---> DataModel
+RouteManagement ---> RouteDataModel
 BookingManagement ---> BookingDataModel
 
-UserDataModel --> RouteDataModel
-UserDataModel --> BookingDataModel
-UserDataModel --> ReportDataModel
+UserDataModel ---> RouteDataModel
+UserDataModel ---> BookingDataModel
+UserDataModel ---> ReportDataModel
 
 @enduml
