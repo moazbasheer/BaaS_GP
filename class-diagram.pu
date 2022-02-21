@@ -3,7 +3,9 @@
 
 package UserUI {
     interface UserView {
-
+        +login()
+        +showProfile()
+        +updateProfile()
     }
 
     class OrganizationView {
@@ -15,8 +17,9 @@ package UserUI {
         ' include suspend, activate and delete
         +showPassengers()
         ' include suspend, activate and delete
-        +showRoutes()
-        +payRoute()
+        +showMyRoutes()
+        +payMyRoutes()
+        +showMyComplaints()
     }
 
     class AdminView {
@@ -31,7 +34,6 @@ package UserUI {
         ' includes handle them
     }
 
-    ' check facebook group chat
     class PassengerView {
         +showRoutes()
         ' includes show paths, trips and book them
@@ -40,9 +42,6 @@ package UserUI {
         ' includes making new ones
     }
 
-    ' el stops fl path el mfrood mn no3 StopModel
-    ' 5aleena fl asasyat
-    ' yb2a enta 3ayz class booking
     class DriverView {
         +createExcuse()
         +showMyExcuses()
@@ -51,38 +50,46 @@ package UserUI {
 
 package RouteUI {
     class TripView {
+        +showInfo()
+        +showBuses()
+    }
 
+    class PathView {
+        +showInfo()
+        +showTrips()
     }
 
     class RouteView {
+        +showInfo()
         +showPaths()
     }
 }
 
 package ReportUI {
-    class ComplaintView {
+    interface ReportView {
+        +showInfo()
+        +create()
+        ' represents the form filled to create a report
+    }
 
+    class ComplaintView {
+        
     }
 
     class ExcuseView {
-
     }
 }
 
 package ReportManagement {
-    interface Report {
+    interface ReportServices {
         +store()
         +retrieve()
     }
 
     class ComplaintServices {
-        +store()
-        +retrieve()
     }
 
     class ExcuseServices {
-        +store()
-        +retrieve()
     }
 }
 
@@ -113,7 +120,6 @@ package UserManagement {
         +makeComplaint(): void
     }
 
-    ' maybe
     class OrganizationServices {
         +createRoute(Route route): void
         +modifyRoute(Route route): void
@@ -127,14 +133,12 @@ package UserManagement {
     }
 }
 
-
-' 7araka say3a awiiiiiii
 package RouteManagement {
-    'Each route contains multiple paths'
-    'Each route contains source and destination only'
-    'Each path contains multiple stops'
-    'Each path contains multiple trips'
-    'Each trip has one start time'
+    /'Each route contains multiple paths
+    Each route contains source and destination only
+    Each path contains multiple stops
+    Each path contains multiple trips
+    Each trip has one start time'/
     class RouteServices {
         +getTrip(TripModel): boolean
         +getAllTrips(): TripModel[]
@@ -153,7 +157,6 @@ package RouteManagement {
     }
 }
 
-' bos 3ade el members dlw2ty 5leena fl packaging
 package BookingManagement {
     class BookingServices {
         +bookTrip()
@@ -171,7 +174,6 @@ package UserDataModel {
         -userModel:UserModel
     }
 
-    ' yes
     class PassengerModel {
         -phoneNumber: string
         -userModel: UserModel
@@ -186,10 +188,6 @@ package UserDataModel {
         -routes: RouteModel[]
     }
 
-    ' howa bus id da byt8yr kol ad eh?
-    ' eshm3na kol youm
-    ' momken yso2 aktar mn marra fl youm
-    ' 3ashan 5atrk bs
     class DriverModel {
         -userModel: UserModel
         -nationalID: string
@@ -208,66 +206,46 @@ package UserDataModel {
     }
 
     interface IAdminDataAccess {
-        +add(AdminModel)
-        +update(AdminModel)
-        +delete(AdminModel)
-        +get(int)
+        +add(AdminModel): boolean
+        +update(AdminModel): boolean
+        +delete(AdminModel): boolean
+        +get(int): AdminModel
     }
 
     interface IDriverDataAccess {
-        +add(DriverModel)
-        +update(DriverModel)
-        +delete(DriverModel)
-        +get(int)
+        +add(DriverModel): boolean
+        +update(DriverModel): boolean
+        +delete(DriverModel): boolean
+        +get(int): DriverModel
     }
 
     interface IOrganizationDataAccess {
-        +add(OrganizationModel)
-        +update(OrganizationModel)
-        +delete(OrganizationModel)
-        +get(int)
+        +add(OrganizationModel): boolean
+        +update(OrganizationModel): boolean
+        +delete(OrganizationModel): boolean
+        +get(int): OrganizationModel
     }
 
     interface IPassengerDataAccess {
-        +add(PassengerModel)
-        +update(PassengerModel)
-        +delete(PassengerModel)
-        +get(int)
+        +add(PassengerModel): boolean
+        +update(PassengerModel): boolean
+        +delete(PassengerModel): boolean
+        +get(int): PassengerModel
     }
 
     class UserDataAccess {
-        +add(UserModel)
-        +update(UserModel)
-        +delete(UserModel)
-        +get(int)
     }
 
     class AdminDataAccess {
-        +add(AdminModel)
-        +update(AdminModel)
-        +delete(AdminModel)
-        +get(int)
     }
 
     class DriverDataAccess {
-        +add(DriverModel)
-        +update(DriverModel)
-        +delete(DriverModel)
-        +get(int)
     }
 
     class OrganizationDataAccess {
-        +add(OrganizationModel)
-        +update(OrganizationModel)
-        +delete(OrganizationModel)
-        +get(int)
     }
 
     class PassengerDataAccess {
-        +add(PassengerModel)
-        +update(PassengerModel)
-        +delete(PassengerModel)
-        +get(int)
     }
 }
 
@@ -286,31 +264,23 @@ package ReportDataModel {
     }
 
     interface IExcuseDataAccess {
-        +add(ExcuseModel)
-        +update(ExcuseModel)
-        +delete(ExcuseModel)
-        +get(int)
+        +add(ExcuseModel): boolean
+        +update(ExcuseModel): boolean
+        +delete(ExcuseModel): boolean
+        +get(int): ExcuseModel
     }
 
     interface IComplaintDataAccess {
-        +add(ComplaintModel)
-        +update(ComplaintModel)
-        +delete(ComplaintModel)
-        +get(int)
+        +add(ComplaintModel): boolean
+        +update(ComplaintModel): boolean
+        +delete(ComplaintModel): boolean
+        +get(int): ComplaintModel
     }
 
     class ExcuseDataAccess {
-        +add(ExcuseModel)
-        +update(ExcuseModel)
-        +delete(ExcuseModel)
-        +get(int)
     }
 
     class ComplaintDataAccess {
-        +add(ComplaintModel)
-        +update(ComplaintModel)
-        +delete(ComplaintModel)
-        +get(int)
     }
 }
 
@@ -341,17 +311,13 @@ package RouteDataModel {
     }
 
     interface IRouteDataAccess {
-        +add(RouteModel)
-        +update(RouteModel)
-        +delete(RouteModel)
-        +get(int)
+        +add(RouteModel): boolean
+        +update(RouteModel): boolean
+        +delete(RouteModel): boolean
+        +get(int): RouteModel
     }
 
     class RouteDataAccess {
-        +add(RouteModel)
-        +update(RouteModel)
-        +delete(RouteModel)
-        +get(int)
     }
 
     class BusModel {
@@ -362,7 +328,6 @@ package RouteDataModel {
     }
 }
 
-' daloo3t el models
 package BookingDataModel {
     class BookingModel {
         -passengerID: int
@@ -375,8 +340,8 @@ UserServices <|.. OrganizationServices
 UserServices <|.. PassengerServices
 UserServices <|.. AdminServices
 
-Report <|.. ExcuseServices
-Report <|.. ComplaintServices
+ReportServices <|.. ExcuseServices
+ReportServices <|.. ComplaintServices
 
 OrganizationServices o-- PassengerServices
 
@@ -384,38 +349,44 @@ RouteServices "1" o-- "n" PathServices
 PathServices "1" o-- "n" TripServices
 
 IUserDataAccess <|.. UserDataAccess
-IUserDataAccess o-- UserModel
+UserDataAccess --> UserModel
 
 IAdminDataAccess <|.. AdminDataAccess
-IAdminDataAccess o-- AdminModel
+AdminDataAccess --> AdminModel
 
 IComplaintDataAccess <|.. ComplaintDataAccess
-IComplaintDataAccess o-- ComplaintModel
+ComplaintDataAccess --> ComplaintModel
 
 IDriverDataAccess <|.. DriverDataAccess
-IDriverDataAccess o-- DriverModel
+DriverDataAccess --> DriverModel
 
 IPassengerDataAccess <|.. PassengerDataAccess
-PassengerDataAccess o-- PassengerModel
+PassengerDataAccess --> PassengerModel
 
 IOrganizationDataAccess <|.. OrganizationDataAccess
-IOrganizationDataAccess --> OrganizationModel
+OrganizationDataAccess --> OrganizationModel
 
 IExcuseDataAccess <|.. ExcuseDataAccess
-IExcuseDataAccess o-- ExcuseModel
+ExcuseDataAccess --> ExcuseModel
 
 IRouteDataAccess <|.. RouteDataAccess
-IRouteDataAccess o-- RouteModel
+RouteDataAccess --> RouteModel
 
-TripModel --o PathModel
+TripModel -o PathModel
 PathModel o-- StopModel
+RouteModel o-- PathModel
+TripModel o-- BusModel
 
 UserView <|.. OrganizationView
 UserView <|.. AdminView
 UserView <|.. PassengerView
 UserView <|.. DriverView
 
-RouteView -- TripView
+RouteView -- PathView
+PathView - TripView
+
+ReportView <|.. ExcuseView
+ReportView <|.. ComplaintView
 
 
 UserUI ---> RouteUI
