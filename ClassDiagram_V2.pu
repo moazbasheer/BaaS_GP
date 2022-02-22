@@ -1,0 +1,413 @@
+@startuml class-diagram
+
+
+package UserUI {
+    interface UserView {
+        +login()
+        +showProfile()
+        +updateProfile()
+    }
+
+    class OrganizationView {
+        +createRoute()
+        +createPath()
+        +createTrip()
+        +createPassenger()
+        +showAllPassengers()
+        ' include suspend, activate and delete
+        +showPassengers()
+        ' include suspend, activate and delete
+        +showMyRoutes()
+        +payMyRoutes()
+        +showMyComplaints()
+    }
+
+    class AdminView {
+        +createDriver()
+        +showDrivers()
+        ' include suspend, activate and delete
+        +showOrganizations()
+        ' include suspend, activate and delete
+        +showComplaints()
+        ' includes handle them
+        +showExcuses()
+        ' includes handle them
+    }
+
+    class PassengerView {
+        +showRoutes()
+        ' includes show paths, trips and book them
+        +showMyBookings()
+        +showMyComplaints()
+        ' includes making new ones
+    }
+
+    class DriverView {
+        +createExcuse()
+        +showMyExcuses()
+    }
+}
+
+package RouteUI {
+    class TripView {
+        +showInfo()
+        +showBuses()
+    }
+
+    class PathView {
+        +showInfo()
+        +showTrips()
+    }
+
+    class RouteView {
+        +showInfo()
+        +showPaths()
+    }
+}
+
+package ReportUI {
+    interface ReportView {
+        +showInfo()
+        +create()
+        +ShowAll()
+        ' represents the form filled to create a report
+    }
+
+    class ComplaintView {
+        
+    }
+
+    class ExcuseView {
+    }
+}
+
+package ReportManagement {
+    interface ReportServices {
+        +store()
+        +retrieve()
+    }
+
+    class ComplaintServices {
+    }
+
+    class ExcuseServices {
+    }
+}
+
+package UserManagement {
+    interface UserServices {
+        +updateProfile(): void
+        +login(): void
+    }
+
+    class AdminServices {
+        +createDriver(): DriverModel
+        +suspendDriver(): boolean
+        +deleteDriver(): boolean
+        +deleteOrganization(): boolean
+        +handleComplaint(): void
+        +handleExcuse(): void
+        +assignDriver(): boolean
+    }
+
+    class DriverServices {
+        +makeExcuse(): void
+    }
+
+    class PassengerServices {
+        +joinTrip(): void
+        +modifyBooking(): void
+        +cancelBooking(): void
+        +makeComplaint(): void
+    }
+
+    class OrganizationServices {
+        +createRoute(): void
+        +modifyRoute(): void
+        +deleteRoute(): void
+        +createPassenger(): void
+        +suspendPassenger(): void
+        +activatePassenger(): void
+        +deletePassenger(): void
+        +payForRoute(): boolean
+        +createTrip(): boolean
+    }
+}
+
+package RouteManagement {
+    /'Each route contains multiple paths
+    Each route contains source and destination only
+    Each path contains multiple stops
+    Each path contains multiple trips
+    Each trip has one start time'/
+    class RouteServices {
+        +getTrip(): boolean
+        +getAllTrips(): TripModel[]
+    }
+
+    class TripServices {
+        -bus: BusModel
+        -startTime: datetime
+        +assignDriver(): boolean
+        +isCompleted(): boolean
+    }
+
+    class PathServices {
+        +getAllStops(): boolean
+        +addStops(): boolean
+    }
+}
+
+package BookingManagement {
+    class BookingServices {
+        +bookTrip()
+        +cancelBooking()
+    }
+}
+
+package UserDataModel {
+    class UserModel {
+        -name:string
+        -email:string
+    }
+
+    class AdminModel {
+        -userModel:UserModel
+    }
+
+    class PassengerModel {
+        -phoneNumber: string
+        -userModel: UserModel
+        -complaints: ComplaintModel
+        -bookingIDs: int[]
+        ' booked by the passenger
+    }
+
+    class OrganizationModel {
+        -userModel:UserModel
+        -passengers: PassengerModel[]
+        -routes: RouteModel[]
+    }
+
+    class DriverModel {
+        -userModel: UserModel
+        -nationalID: string
+        -drivingLicense: ImageIcon
+        -driverImg: string
+        -tripIDs: int[]
+        -busID: int
+        -excuses:Excuse
+    }
+
+    interface IUserDataAccess {
+        +add(UserModel): boolean
+        +update(UserModel): boolean
+        +delete(UserModel): boolean
+        +get(int): UserModel
+    }
+
+    interface IAdminDataAccess {
+        +add(AdminModel): boolean
+        +update(AdminModel): boolean
+        +delete(AdminModel): boolean
+        +get(int): AdminModel
+    }
+
+    interface IDriverDataAccess {
+        +add(DriverModel): boolean
+        +update(DriverModel): boolean
+        +delete(DriverModel): boolean
+        +get(int): DriverModel
+    }
+
+    interface IOrganizationDataAccess {
+        +add(OrganizationModel): boolean
+        +update(OrganizationModel): boolean
+        +delete(OrganizationModel): boolean
+        +get(int): OrganizationModel
+    }
+
+    interface IPassengerDataAccess {
+        +add(PassengerModel): boolean
+        +update(PassengerModel): boolean
+        +delete(PassengerModel): boolean
+        +get(int): PassengerModel
+    }
+
+    class UserDataAccess {
+    }
+
+    class AdminDataAccess {
+    }
+
+    class DriverDataAccess {
+    }
+
+    class OrganizationDataAccess {
+    }
+
+    class PassengerDataAccess {
+    }
+}
+
+package ReportDataModel {
+    class ExcuseModel {
+        -driver: DriverModel
+        -title: string
+        -body: string
+        -status: string
+    }
+
+    class ComplaintModel {
+        -user: UserModel
+        -title: string
+        -body: string
+    }
+
+    interface IExcuseDataAccess {
+        +add(ExcuseModel): boolean
+        +update(ExcuseModel): boolean
+        +delete(ExcuseModel): boolean
+        +get(int): ExcuseModel
+    }
+
+    interface IComplaintDataAccess {
+        +add(ComplaintModel): boolean
+        +update(ComplaintModel): boolean
+        +delete(ComplaintModel): boolean
+        +get(int): ComplaintModel
+    }
+
+    class ExcuseDataAccess {
+    }
+
+    class ComplaintDataAccess {
+    }
+}
+
+package RouteDataModel {
+    class PathModel {
+        -stops: Stop[]
+        -trips: Trip[]
+        -start: datetime
+        -end: datetime
+    }
+
+    class RouteModel {
+        -source: string
+        -destination: string
+        -paths: Path[]
+    }
+
+    class StopModel {
+        -name: string
+        -longitude: double
+        -latitude: double
+    }
+
+    class TripModel {
+        -date: datetime
+        -busCount: int
+        -busIDs: int[]
+    }
+
+    interface IRouteDataAccess {
+        +add(RouteModel): boolean
+        +update(RouteModel): boolean
+        +delete(RouteModel): boolean
+        +get(int): RouteModel
+    }
+
+    class RouteDataAccess {
+    }
+
+    class BusModel {
+        -passengersNumber: int
+        -driver: DriverModel
+        -vehicleLicense: ImageIcon
+        -passengers: PassengerModel[]
+    }
+}
+
+package BookingDataModel {
+    class BookingModel {
+        -passengerID: int
+        -bookedTripID: int
+    }
+}
+
+UserServices <|.. DriverServices
+UserServices <|.. OrganizationServices
+UserServices <|.. PassengerServices
+UserServices <|.. AdminServices
+
+ReportServices <|.. ExcuseServices
+ReportServices <|.. ComplaintServices
+
+OrganizationServices o-- PassengerServices
+
+RouteServices "1" o-- "n" PathServices
+PathServices "1" o-- "n" TripServices
+
+IUserDataAccess <|.. UserDataAccess
+UserDataAccess --> UserModel
+
+IAdminDataAccess <|.. AdminDataAccess
+AdminDataAccess --> AdminModel
+
+IComplaintDataAccess <|.. ComplaintDataAccess
+ComplaintDataAccess --> ComplaintModel
+
+IDriverDataAccess <|.. DriverDataAccess
+DriverDataAccess --> DriverModel
+
+IPassengerDataAccess <|.. PassengerDataAccess
+PassengerDataAccess --> PassengerModel
+
+IOrganizationDataAccess <|.. OrganizationDataAccess
+OrganizationDataAccess --> OrganizationModel
+
+IExcuseDataAccess <|.. ExcuseDataAccess
+ExcuseDataAccess --> ExcuseModel
+
+IRouteDataAccess <|.. RouteDataAccess
+RouteDataAccess --> RouteModel
+
+TripModel -o PathModel
+PathModel o-- StopModel
+RouteModel o-- PathModel
+TripModel o-- BusModel
+
+UserView <|.. OrganizationView
+UserView <|.. AdminView
+UserView <|.. PassengerView
+UserView <|.. DriverView
+
+RouteView -- PathView
+PathView - TripView
+
+ReportView <|.. ExcuseView
+ReportView <|.. ComplaintView
+
+
+UserUI ---> RouteUI
+UserUI ---> ReportUI
+
+UserUI ---> UserManagement
+RouteUI ---> RouteManagement
+ReportUI --> ReportManagement
+
+UserManagement ---> RouteManagement
+UserManagement ---> BookingManagement
+UserManagement ---> ReportManagement
+
+UserManagement -> UserDataModel
+ReportManagement ---> ReportDataModel
+RouteManagement ---> RouteDataModel
+BookingManagement ---> BookingDataModel
+
+UserDataModel ---> RouteDataModel
+UserDataModel ---> BookingDataModel
+UserDataModel ---> ReportDataModel
+
+@enduml
