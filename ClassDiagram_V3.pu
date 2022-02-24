@@ -82,11 +82,12 @@ package ReportUI {
 
 package ReportManagement {
     interface ReportServices {
-        +store()
-        +retrieve()
+        +store(ReportModel):void
+        +retrieve():list<ReportModel>
     }
 
     class ComplaintServices {
+       
     }
 
     class ExcuseServices {
@@ -95,41 +96,43 @@ package ReportManagement {
 
 package UserManagement {
     interface UserServices {
-        +updateProfile(): void
-        +login(): void
+        +updateProfile(UserModel): void
+        +login(UserModel): void
     }
 
     class AdminServices {
-        +createDriver(): DriverModel
-        +suspendDriver(): boolean
-        +deleteDriver(): boolean
-        +deleteOrganization(): boolean
-        +handleComplaint(): void
-        +handleExcuse(): void
-        +assignDriver(): boolean
+        +createDriver(DriverModel): DriverModel
+        +suspendDriver(DriverID): boolean
+        +deleteDriver(DriverID): boolean
+        +deleteOrganization(OrganizationID): boolean
+        +handleComplaint(UserID): void
+        +handleExcuse(DriverID): void
+        +assignDriver(DriverID): boolean
     }
 
     class DriverServices {
-        +makeExcuse(): void
+        +makeExcuse(DriverID): void
     }
 
     class PassengerServices {
-        +joinTrip(): void
-        +modifyBooking(): void
-        +cancelBooking(): void
-        +makeComplaint(): void
+        +joinTrip(PassengerID): void
+        'change his seat or change the bus'
+        +modifyBooking(PassengerID): void
+        +cancelBooking(PassengerID): void
+        +makeComplaint(PassengerID): void
     }
 
     class OrganizationServices {
-        +createRoute(): void
-        +modifyRoute(): void
-        +deleteRoute(): void
-        +createPassenger(): void
-        +suspendPassenger(): void
-        +activatePassenger(): void
-        +deletePassenger(): void
-        +payForRoute(): boolean
-        +createTrip(): boolean
+        +createRoute(RouteModel): void
+        +modifyRoute(RouteModel): void
+        +deleteRoute(RouteID): void
+        +createPassenger(PassengerModel): void
+        +suspendPassenger(PassengerID): void
+        +activatePassenger(PassengerID): void
+        +deletePassenger(PassengerID): void
+        'we are decide that the pay for trip not route !!!!!'
+        +payForTrip(): boolean
+        +createTrip(TripModel): boolean
         +showAllTrips():List<TripModel>
     }
 }
@@ -141,27 +144,27 @@ package RouteManagement {
     Each path contains multiple trips
     Each trip has one start time'/
     class RouteServices {
-        +getTrip(): boolean
+        +getTrip(): TripModel
         +getAllTrips(): List<TripModel>
     }
 
     class TripServices {
         -bus: BusModel
         -startTime: datetime
-        +assignDriver(): boolean
-        +isCompleted(): boolean
+        +assignDriver(DriverID): boolean
+        +isCompleted(TripID): boolean
     }
 
     class PathServices {
-        +getAllStops(): boolean
-        +addStops(): boolean
+        +getAllStops(): List<StopModel>
+        +addStops(StopModel): boolean
     }
 }
 
 package BookingManagement {
     class BookingServices {
-        +bookTrip()
-        +cancelBooking()
+        +bookTrip(TripID,PassengerID)
+        +cancelBooking(TripID,PassengerID)
     }
 }
 
@@ -169,28 +172,29 @@ package UserDataModel {
     class UserModel {
         -name:string
         -email:string
+        -password:string
     }
 
     class AdminModel {
-        -userModel:UserModel
+        -userID:int
     }
 
     class PassengerModel {
         -phoneNumber: string
-        -userModel: UserModel
-        -complaints: ComplaintModel
+        -userID: int
+        -complaintsID: int
         -bookingIDs: List<int>
         ' booked by the passenger
     }
 
     class OrganizationModel {
-        -userModel:UserModel
-        -passengers: List<PassengerModel>
-        -routes: List<RouteModel>
+        -userID:int
+        -passengersID: List<int>
+        -routesID: List<int>
     }
 
     class DriverModel {
-        -userModel: UserModel
+        -userID: int
         -nationalID: string
         -drivingLicense: ImageIcon
         -driverImg: string
@@ -251,19 +255,20 @@ package UserDataModel {
 }
 
 package ReportDataModel {
-    class ExcuseModel {
-        -driver: DriverModel
+    class ReportModel{
         -title: string
         -body: string
         -status: string
     }
-
-    class ComplaintModel {
-        -user: UserModel
-        -title: string
-        -body: string
+    class ExcuseModel {
+        -DriverID: int
+        -ReportID : int
     }
 
+    class ComplaintModel {
+        -UserID: int
+        -ReportID: int 
+    }
     interface IExcuseDataAccess {
         +add(ExcuseModel): boolean
         +update(ExcuseModel): boolean
@@ -287,8 +292,8 @@ package ReportDataModel {
 
 package RouteDataModel {
     class PathModel {
-        -stops: List<StopModel>
-        -trips: List<TripModel>
+        -StopsID: List<int>
+        -TripsID: List<int>
         -start: datetime
         -end: datetime
     }
@@ -296,7 +301,7 @@ package RouteDataModel {
     class RouteModel {
         -source: string
         -destination: string
-        -paths: List<PathModel>
+        -PathsID: List<int>
     }
 
     class StopModel {
@@ -308,7 +313,7 @@ package RouteDataModel {
     class TripModel {
         -date: datetime
         -busCount: int
-        -busIDs: List<int>
+        -BusIDs: List<int>
     }
 
     interface IRouteDataAccess {
@@ -322,10 +327,10 @@ package RouteDataModel {
     }
 
     class BusModel {
-        -passengersNumber: int
+        -passengersNumber: string
         -driver: DriverModel
         -vehicleLicense: ImageIcon
-        -passengers: List<PassengerModel>
+        -PassengersID: List<int>
     }
 }
 
@@ -346,7 +351,7 @@ ReportServices <|.. ComplaintServices
 
 OrganizationServices o-- PassengerServices
 
-RouteServices "1" o-- "n" PathServices
+RouteServices "1" *-- "n" PathServices
 PathServices "1" o-- "n" TripServices
 
 IUserDataAccess <|.. UserDataAccess
@@ -374,8 +379,8 @@ IRouteDataAccess <|.. RouteDataAccess
 RouteDataAccess --> RouteModel
 
 TripModel -o PathModel
-PathModel o-- StopModel
-RouteModel o-- PathModel
+PathModel o- StopModel
+RouteModel *-- PathModel
 TripModel o-- BusModel
 
 UserView <|.. OrganizationView
@@ -383,8 +388,8 @@ UserView <|.. AdminView
 UserView <|.. PassengerView
 UserView <|.. DriverView
 
-RouteView -- PathView
-PathView - TripView
+RouteView <-- PathView
+PathView <-- TripView
 
 ReportView <|.. ExcuseView
 ReportView <|.. ComplaintView
@@ -409,5 +414,10 @@ BookingManagement ---> BookingDataModel
 UserDataModel ---> RouteDataModel
 UserDataModel ---> BookingDataModel
 UserDataModel ---> ReportDataModel
-
+ReportModel  <--- ExcuseModel
+ReportModel  <--- ComplaintModel
+AdminModel <--- UserModel
+DriverModel <--- UserModel
+PassengerModel <--- UserModel
+OrganizationModel <--- UserModel
 @enduml
