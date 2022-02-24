@@ -8,7 +8,7 @@
       <x>120</x>
       <y>0</y>
       <w>820</w>
-      <h>1220</h>
+      <h>1270</h>
     </coordinates>
     <panel_attributes>Baas System 
 halign=center
@@ -153,7 +153,7 @@ layer=1</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>140</x>
-      <y>1080</y>
+      <y>1130</y>
       <w>140</w>
       <h>50</h>
     </coordinates>
@@ -431,8 +431,8 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>150</x>
-      <y>1160</y>
+      <x>140</x>
+      <y>1200</y>
       <w>140</w>
       <h>50</h>
     </coordinates>
@@ -737,18 +737,18 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>40</x>
-      <y>1030</y>
+      <y>1080</y>
       <w>120</w>
-      <h>120</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>97.0;10.0;10.0;100.0</additional_attributes>
+    <additional_attributes>97.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>130</x>
-      <y>1010</y>
+      <y>1060</y>
       <w>160</w>
       <h>50</h>
     </coordinates>
@@ -763,23 +763,23 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>40</x>
-      <y>1100</y>
+      <y>1120</y>
       <w>130</w>
-      <h>50</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>110.0;20.0;10.0;30.0</additional_attributes>
+    <additional_attributes>110.0;50.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>40</x>
       <y>1120</y>
-      <w>140</w>
-      <h>70</h>
+      <w>130</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>120.0;50.0;10.0;10.0</additional_attributes>
+    <additional_attributes>110.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -1209,5 +1209,52 @@ fg=white</panel_attributes>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>10.0;440.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>20</x>
+      <y>710</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Use case 1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>20</x>
+      <y>710</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Use case 1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>130</x>
+      <y>1010</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Modify Booking
+bg=green
+layer=1
+fg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>50</x>
+      <y>870</y>
+      <w>120</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;100.0;140.0</additional_attributes>
   </element>
 </diagram>

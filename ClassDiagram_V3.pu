@@ -9,6 +9,7 @@ package UserUI {
     }
 
     class OrganizationView {
+        +Register()
         +createRoute()
         +createPath()
         +createTrip()
@@ -123,6 +124,7 @@ package UserManagement {
     }
 
     class OrganizationServices {
+        +createOrganization(OrganizationModel):void
         +createRoute(RouteModel): void
         +modifyRoute(RouteModel): void
         +deleteRoute(RouteID): void
