@@ -126,6 +126,7 @@ package UserManagement {
     class OrganizationServices {
         +createOrganization():void
         +createRoute(): void
+        +addPathInfo():void
         +modifyRoute(): void
         +deleteRoute(): void
         +createPassenger(): void
@@ -396,26 +397,26 @@ PathView <-- TripView
 ReportView <|.. ExcuseView
 ReportView <|.. ComplaintView
 
-
-UserUI ---> RouteUI
-UserUI ---> ReportUI
-
-UserUI ---> UserManagement
-RouteUI ---> RouteManagement
+UserUI --> UserManagement
+RouteUI --> RouteManagement
 ReportUI --> ReportManagement
 
-UserManagement ---> RouteManagement
-UserManagement ---> BookingManagement
-UserManagement ---> ReportManagement
+UserManagement --> UserDataModel
+ReportManagement --> ReportDataModel
+RouteManagement --> RouteDataModel
+BookingManagement --> BookingDataModel
 
-UserManagement -> UserDataModel
-ReportManagement ---> ReportDataModel
-RouteManagement ---> RouteDataModel
-BookingManagement ---> BookingDataModel
+UserUI ---> RouteUI
+UserUI -------> ReportUI
 
-UserDataModel ---> RouteDataModel
-UserDataModel ---> BookingDataModel
-UserDataModel ---> ReportDataModel
+UserManagement -------> RouteManagement
+UserManagement --------> ReportManagement
+UserManagement --------> BookingManagement
+
+UserDataModel ----------> RouteDataModel
+UserDataModel ----------> ReportDataModel
+UserDataModel -----------> BookingDataModel
+
 Report  <--- Excuse
 Report  <--- Complaint
 Admin <--- User
