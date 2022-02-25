@@ -3,7 +3,7 @@
 
 package UserUI {
     interface UserView {
-        +login()
+        +Login()
         +showProfile()
         +updateProfile()
     }
@@ -98,7 +98,7 @@ package ReportManagement {
 package UserManagement {
     interface UserServices {
         +updateProfile(): void
-        +login(): void
+        +checkLoginInfo(): void
     }
 
     class AdminServices {
