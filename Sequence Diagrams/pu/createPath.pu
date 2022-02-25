@@ -1,0 +1,48 @@
+@startuml create-Path
+
+title Create Path
+actor Organization as org
+participant View as v
+participant Service as s
+participant "Data Access" as da
+database Database as db
+
+activate org
+org -> v: Create Path
+activate v
+v --> org :add Path form
+note left of v 
+view return a form to
+enter path info -stops- .
+end note
+org -> v: Enter stops of the path
+note left of v 
+Specify the location
+of stops using a map
+end note
+alt "valid stops"
+v -> s: createPath(pathInfo)
+activate s
+s -> da: Send created Path model
+activate da
+da -> db: Add model to database
+activate db
+db --> da: model added
+deactivate db
+da --> s : path added
+deactivate da
+s --> v :path created
+v --> org: path created confirmation message
+deactivate v
+deactivate org
+else else
+s --> v :invalid stops
+deactivate s
+v --> org : invalid stops message
+
+end
+' org -> v: Specify using a map the route start and destination
+
+
+
+@enduml

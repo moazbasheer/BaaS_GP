@@ -1,0 +1,44 @@
+@startuml   
+  actor Organization  as Organization
+  participant OrganizationView as OrganizationView
+  participant OrganizationServices as OrganizationServices
+  participant OrganizationDataAccess as OrganizationDataAccess
+  database BAASDB as BaasDB
+  Organization -> OrganizationView : Register()
+  activate Organization
+  activate OrganizationView
+  OrganizationView -> OrganizationServices : createOrgnaization()
+  activate OrganizationServices
+  OrganizationServices -> OrganizationDataAccess : get(int)
+  activate OrganizationDataAccess
+  OrganizationDataAccess -> BaasDB : get Organization info
+  activate BaasDB
+
+  alt  if organization isn't found  
+    BaasDB --> OrganizationDataAccess : Return Organization not found 
+    OrganizationDataAccess --> OrganizationServices : Throw exception that the organization not found
+    OrganizationServices -> OrganizationDataAccess : Add the organization
+    OrganizationDataAccess -> BaasDB : Store the organization
+    BaasDB --> OrganizationDataAccess : The organization is stored successfully
+    deactivate BaasDB  
+    OrganizationDataAccess --> OrganizationServices : The Addition is done 
+    deactivate OrganizationDataAccess
+    OrganizationServices --> OrganizationView: The Registration is successfully
+    deactivate OrganizationServices
+    OrganizationView --> Organization : Display The registration is successfully
+    deactivate OrganizationView
+  else
+    activate BaasDB
+    BaasDB --> OrganizationDataAccess : Return Organization info 
+    deactivate BaasDB
+    activate OrganizationDataAccess
+    activate OrganizationServices
+    OrganizationDataAccess --> OrganizationServices : Return Organization object
+    deactivate OrganizationDataAccess
+    activate OrganizationView
+    OrganizationServices --> OrganizationView: The Organization is exist
+    deactivate OrganizationServices
+    OrganizationView --> Organization : Display The Organization username is exist
+    deactivate OrganizationView
+  end
+@enduml

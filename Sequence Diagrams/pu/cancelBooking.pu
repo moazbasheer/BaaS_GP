@@ -1,0 +1,47 @@
+@startuml   
+  actor Passenger  as Passenger
+  participant PassengerView as PassengerView
+  participant BookingServices as BookingServices
+  participant BookingDataAccess as BookingDataAccess
+  database BAASDB as BaasDB
+  Passenger -> PassengerView : showMyBookings()
+  activate Passenger
+  activate PassengerView
+  PassengerView -> BookingServices : showAllBookings()
+  activate BookingServices
+  BookingServices->BookingDataAccess:getAll()
+  activate BookingDataAccess
+  BookingDataAccess -> BaasDB:get all bookings info
+  activate BaasDB
+  alt if there is bookings
+    BaasDB --> BookingDataAccess : Return bookings info
+    BookingDataAccess --> BookingServices : Return booking objects
+    BookingServices --> PassengerView : Return bookings
+    PassengerView --> Passenger : Display all bookings
+    Passenger -> PassengerView : cancel Booking for a trip
+    PassengerView -> BookingServices :cancelBooking()
+    BookingServices -> BookingDataAccess : delete(Booking)
+    BookingDataAccess -> BaasDB : Delete booking info
+    BaasDB --> BookingDataAccess : The deletion is successfully
+    deactivate BaasDB
+    BookingDataAccess --> BookingServices : The cancellation is done
+    deactivate BookingDataAccess
+    BookingServices --> PassengerView : The cancellation is confirmed
+    deactivate BookingServices
+    PassengerView --> Passenger : Display The cancellation is successfully
+    deactivate PassengerView
+  else
+    activate BaasDB
+    BaasDB --> BookingDataAccess : Return bookings not found
+    deactivate BaasDB
+    activate BookingDataAccess
+    BookingDataAccess --> BookingServices : Throw exception that bookings not found
+    deactivate BookingDataAccess
+    activate BookingServices
+    BookingServices --> PassengerView : There is no bookings 
+    deactivate BookingServices
+    activate PassengerView
+    PassengerView --> Passenger : Display no bookings found
+    deactivate PassengerView
+  end
+@enduml

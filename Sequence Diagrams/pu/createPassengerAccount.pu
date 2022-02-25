@@ -1,0 +1,36 @@
+@startuml Create Passenger Account.
+
+title Create Passenger Account
+actor Organization as org
+participant View as v
+participant Service as s
+participant "Data Access" as da
+database Database as db
+
+activate org
+org -> v: add passenger 
+activate v
+v --> org : add Passenger form
+org -> v: Enter Passenger Info
+activate s
+v -> s : createPassenger(passengerInfo)
+alt " valid passenger Info"
+s -> da :Send created Passenger model
+activate da
+da -> db: Add model to database
+activate db
+db --> da: Model Added
+deactivate db
+da --> s : Passenger Added
+deactivate da
+s --> v :Passenger Created
+v --> org: Passenger Created Confirmation Message
+else else 
+s --> v : invalid passenger info
+deactivate s
+v -->org :invalid passenger info message
+deactivate v
+end
+deactivate org
+
+@enduml

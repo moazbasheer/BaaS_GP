@@ -1,0 +1,39 @@
+@startuml create-trip
+
+
+actor Organization as a
+participant View as v
+participant Service as s
+participant "Data Access" as da
+database Database as db
+
+activate a
+a ->> v: Choose the route
+activate v
+a ->> v: Choose the path
+a ->> v: Create trip
+a ->> v: Specify the trip date and time
+a ->> v: Specify the number of buses needed
+v -> s: Send request
+activate s
+alt Sufficient funds
+    s -> s: Set trip status (enabled)
+else Insufficient funds
+    s -> s: Set trip status (disabled)
+end
+s -> da: Send trip model
+activate da
+da -> db: Add trip to database
+activate db
+db --> da: Confirm
+deactivate db
+da --> s
+deactivate da
+s --> v
+deactivate s
+v --> a: Show confirmation message
+deactivate v
+deactivate a
+
+
+@enduml
