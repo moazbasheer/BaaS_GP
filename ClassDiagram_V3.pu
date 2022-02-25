@@ -206,6 +206,7 @@ package UserDataModel {
         +update(User): boolean
         +delete(User): boolean
         +get(int): User
+        +getAll():List<User>
     }
 
     interface IAdminDataAccess {
@@ -213,6 +214,7 @@ package UserDataModel {
         +update(Admin): boolean
         +delete(Admin): boolean
         +get(int): Admin
+        +getAll():List<Admin>
     }
 
     interface IDriverDataAccess {
@@ -220,6 +222,7 @@ package UserDataModel {
         +update(Driver): boolean
         +delete(Driver): boolean
         +get(int): Driver
+        +getAll():List<Driver>
     }
 
     interface IOrganizationDataAccess {
@@ -227,6 +230,7 @@ package UserDataModel {
         +update(Organization): boolean
         +delete(Organization): boolean
         +get(int): Organization
+        +getAll():List<Organization>
     }
 
     interface IPassengerDataAccess {
@@ -234,6 +238,7 @@ package UserDataModel {
         +update(Passenger): boolean
         +delete(Passenger): boolean
         +get(int): Passenger
+        +getAll():List<Passenger>
     }
 
     class UserDataAccess {
@@ -272,6 +277,7 @@ package ReportDataModel {
         +update(Excuse): boolean
         +delete(Excuse): boolean
         +get(int): Excuse
+        +getAll():List<Excuse>
     }
 
     interface IComplaintDataAccess {
@@ -279,6 +285,7 @@ package ReportDataModel {
         +update(Complaint): boolean
         +delete(Complaint): boolean
         +get(int): Complaint
+        +getAll():List<Complaint>
     }
 
     class ExcuseDataAccess {
@@ -319,6 +326,7 @@ package RouteDataModel {
         +update(Route): boolean
         +delete(Route): boolean
         +get(int): Route
+        +getAll():List<Route>
     }
 
     class RouteDataAccess {
@@ -338,6 +346,7 @@ package BookingDataModel {
        +update(Booking): boolean
        +delete(Booking): boolean
        +get(int): Booking
+       +getAll():List<Booking>
     }
     class BookingDataAccess{
 
