@@ -116,10 +116,6 @@ package UserManagement {
     }
 
     class PassengerServices {
-        +joinTrip(): void
-        'change his seat or change the bus'
-        +modifyBooking(): void
-        +cancelBooking(): void
         +makeComplaint(): void
     }
 
@@ -152,8 +148,6 @@ package RouteManagement {
     }
 
     class TripServices {
-        -bus: Bus
-        -startTime: datetime
         +assignDriver(): boolean
         +isCompleted(): boolean
     }
@@ -168,6 +162,7 @@ package BookingManagement {
     class BookingServices {
         +bookTrip()
         +cancelBooking()
+        +modifyBooking()
     }
 }
 
@@ -338,6 +333,15 @@ package RouteDataModel {
 }
 
 package BookingDataModel {
+    interface IBookingDataAccess{
+       +add(Booking): boolean
+       +update(Booking): boolean
+       +delete(Booking): boolean
+       +get(int): Booking
+    }
+    class BookingDataAccess{
+
+    }
     class Booking {
         -passengerID: int
         -bookedTripID: int
@@ -385,7 +389,8 @@ Trip -o Path
 Path o- Stop
 Route *-- Path
 Trip o-- Bus
-
+IBookingDataAccess <|.. BookingDataAccess 
+BookingDataAccess --> Booking
 UserView <|.. OrganizationView
 UserView <|.. AdminView
 UserView <|.. PassengerView
