@@ -1,0 +1,103 @@
+@startuml erd
+entity Users {
+  id: bigint [PK]
+  name : text
+  email : text
+}
+entity Passengers {
+  id: bigint [PK]
+  user_id: bigint [FK]
+  organization_id: bigint [FK]
+  phone_number: text
+  booking_ids: text
+}
+
+entity Organizations {
+  id: bigint [PK]
+  user_id: bigint [FK]
+}
+
+entity Drivers {
+  id: bigint [PK]
+  user_id: bigint [FK]
+  national_id: text
+  driving_license: image
+  driver_img: image
+}
+entity Admin {
+  id: bigint [PK]
+  user_id: bigint [FK]
+}
+entity Excuses {
+  id: bigint [PK]
+  driver_id: bigint [FK]
+  title: text
+  body: text
+  status: boolean
+}
+entity Routes {
+  id: bigint [PK]
+  organiztion_id: bigint [FK]
+  source: text
+  destination: text
+
+}
+entity Paths {
+  id: bigint [PK]
+  route_id: bigint [FK]
+  start_time: datetime
+  end_time: datetime
+}
+entity Stops {
+  id: bigint [PK]
+  path_id: int [FK]
+  name: text
+  longtitude: double
+  latitude: double
+}
+entity Bus {
+  id: int [PK]
+  driver_id: bigint [FK]
+  trip_id: bigint [FK]
+  passengers_number: int
+  vehicle_license: image
+}
+entity Bookings {
+  id: bigint [PK]
+  passenger_id: bigint [FK]
+  trip_id: bigint [FK]
+}
+
+entity Trips {
+  id: bigint [PK]
+  path_id: bigint [FK]
+  date: datetime
+}
+entity Complaints {
+  id: bigint [PK]
+  user_id: bigint [FK]
+  title: text
+  body: text
+
+}
+Users ||--|| Passengers
+Users ||--|| Drivers
+Users ||--|| Organizations
+Users ||--|| Admin
+
+Users ||---o{ Complaints
+Organizations ||--o{ Passengers
+Organizations ||--o{ Routes
+Drivers ||--o{ Excuses
+
+Routes ||--|| Paths
+Paths ||--|{ Stops
+Paths ||--o{ Trips
+Trips ||--|| Bus
+Drivers ||--|| Bus
+
+Passengers ||--|{ Bookings
+Trips ||--|{ Bookings
+
+
+@enduml
