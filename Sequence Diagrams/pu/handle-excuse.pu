@@ -1,0 +1,35 @@
+@startuml
+    actor Admin as Admin
+    participant AdminView as AdminView
+    participant AdminServices as AdminServices
+    participant ExcuseDataAccess as ExcuseDataAccess
+    database database as db
+    activate Admin 
+    Admin --> AdminView: request to show all execuses
+    activate AdminView
+    AdminView --> AdminServices: showExcuses()
+    activate AdminServices
+    AdminServices --> ExcuseDataAccess: showAllExcuses()
+    activate ExcuseDataAccess
+    ExcuseDataAccess --> db: getAll()
+    activate db
+    db --> ExcuseDataAccess: return list of excuses
+    ExcuseDataAccess --> AdminServices: return the excuses
+    AdminServices --> AdminView: return the excuses
+    AdminView --> Admin: display the excuses
+
+    Admin --> AdminView: change the status of the excuse and submit
+    AdminView --> AdminServices: handleExcuse()
+    AdminServices --> ExcuseDataAccess: handleExcuse()
+    ExcuseDataAccess --> db: update(Excuse)
+    
+    db --> ExcuseDataAccess: return success message
+    deactivate db
+    ExcuseDataAccess --> AdminServices: return the message to the service admin
+    deactivate ExcuseDataAccess
+    AdminServices --> AdminView: return the message to the view
+    deactivate AdminServices
+    AdminView --> Admin: display success message
+    deactivate AdminView
+    deactivate Admin
+@enduml

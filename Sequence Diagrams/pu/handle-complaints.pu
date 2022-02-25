@@ -1,0 +1,35 @@
+@startuml
+    actor Admin as Admin
+    participant AdminView as AdminView
+    participant AdminServices as AdminServices
+    participant ComplaintDataAccess as ComplaintDataAccess
+    database database as db
+    activate Admin 
+    Admin --> AdminView: request to show all complaints
+    activate AdminView
+    AdminView --> AdminServices: showComplaints()
+    activate AdminServices
+    AdminServices --> ComplaintDataAccess: showAllComplaints()
+    activate ComplaintDataAccess
+    ComplaintDataAccess --> db: getAll()
+    activate db
+    db --> ComplaintDataAccess: return list of complaints
+    ComplaintDataAccess --> AdminServices: return the complaints
+    AdminServices --> AdminView: return the complaints
+    AdminView --> Admin: display the complaints
+
+    Admin --> AdminView: handle the complaint and mark as completed
+    AdminView --> AdminServices: handleComplaint()
+    AdminServices --> ComplaintDataAccess: handleComplaint()
+    ComplaintDataAccess --> db: update(Complaint)
+    
+    db --> ComplaintDataAccess: return success message
+    deactivate db
+    ComplaintDataAccess --> AdminServices: return the message to the service admin
+    deactivate ComplaintDataAccess
+    AdminServices --> AdminView: return the message to the view
+    deactivate AdminServices
+    AdminView --> Admin: display success message
+    deactivate AdminView
+    deactivate Admin
+@enduml
