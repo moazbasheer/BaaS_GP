@@ -1213,28 +1213,6 @@ fg=white</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>20</x>
-      <y>710</y>
-      <w>120</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>Use case 1</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLUseCase</id>
-    <coordinates>
-      <x>20</x>
-      <y>710</y>
-      <w>120</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>Use case 1</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLUseCase</id>
-    <coordinates>
       <x>130</x>
       <y>1010</y>
       <w>120</w>
