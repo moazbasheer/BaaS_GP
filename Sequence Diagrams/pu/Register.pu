@@ -27,7 +27,7 @@
     deactivate OrganizationServices
     OrganizationView --> Organization : Display The registration is successfully
     deactivate OrganizationView
-  else
+  else if organization is found
     activate BaasDB
     BaasDB --> OrganizationDataAccess : Return Organization info 
     deactivate BaasDB

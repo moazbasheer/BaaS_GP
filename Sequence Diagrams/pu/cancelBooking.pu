@@ -30,7 +30,7 @@
     deactivate BookingServices
     PassengerView --> Passenger : Display The cancellation is successfully
     deactivate PassengerView
-  else
+  else if there is no bookings
     activate BaasDB
     BaasDB --> BookingDataAccess : Return bookings not found
     deactivate BaasDB

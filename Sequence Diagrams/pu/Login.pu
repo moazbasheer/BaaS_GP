@@ -18,12 +18,12 @@
     deactivate BaasDB
     UserDataAccess --> UserServices : Return User object
     deactivate UserDataAccess
-    alt if userInfo doesn't match
+    alt if userInfo matches
       UserServices --> UserView: User password is matching 
       deactivate UserServices
       UserView --> User : Display The login is successfully
       deactivate UserView 
-    else
+    else if userInfo doesn't match
       activate UserServices
       UserServices --> UserView: User password isn't matching 
       deactivate UserServices
@@ -31,7 +31,7 @@
       UserView --> User : Display Wrong password
       deactivate UserView
     end  
-  else
+  else if user isn't found
     activate BaasDB
     BaasDB --> UserDataAccess : Return User not found 
     deactivate BaasDB
