@@ -162,6 +162,7 @@ package BookingManagement {
     class BookingServices {
         +bookTrip()
         +cancelBooking()
+        +showAllBookings()
         +modifyBooking()
     }
 }
