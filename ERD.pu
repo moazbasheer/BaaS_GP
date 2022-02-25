@@ -90,7 +90,7 @@ Organizations ||--o{ Passengers
 Organizations ||--o{ Routes
 Drivers ||--o{ Excuses
 
-Routes ||--|| Paths
+Routes ||--|{ Paths
 Paths ||--|{ Stops
 Paths ||--o{ Trips
 Trips ||--|| Bus
