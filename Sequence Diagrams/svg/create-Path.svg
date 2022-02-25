@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="757px" preserveAspectRatio="none" style="width:841px;height:757px;background:#FFFFFF;" version="1.1" viewBox="0 0 841 757" width="841px" zoomAndPan="magnify"><defs><filter height="300%" id="f9j8mzb1zrbt9" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="sans-serif" font-size="18" lengthAdjust="spacing" textLength="96" x="370.75" y="30.6855">Create Path</text><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="434.2734" style="stroke:#A80036;stroke-width:1.0;" width="10" x="58" y="136.25"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="411.9219" style="stroke:#A80036;stroke-width:1.0;" width="10" x="295" y="158.6016"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="228.2969" style="stroke:#A80036;stroke-width:1.0;" width="10" x="440" y="388.4141"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="91.0547" style="stroke:#A80036;stroke-width:1.0;" width="10" x="616" y="418.7656"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="779" y="449.1172"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="307.3516" style="stroke:#000000;stroke-width:2.0;" width="817.5" x="10" y="347.7109"/><rect fill="#FFFFFF" height="76.5391" style="stroke:none;stroke-width:1.0;" width="817.5" x="10" y="578.5234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="63" x2="63" y1="126.25" y2="672.0625"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="299.5" x2="299.5" y1="126.25" y2="672.0625"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="444.5" x2="444.5" y1="126.25" y2="672.0625"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="620.5" x2="620.5" y1="126.25" y2="672.0625"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="783.5" x2="783.5" y1="126.25" y2="672.0625"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80" x="20" y="123.1738">Organization</text><ellipse cx="63" cy="51.6406" fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M63,59.6406 L63,86.6406 M50,67.6406 L76,67.6406 M63,86.6406 L50,101.6406 M63,86.6406 L76,101.6406 " fill="none" filter="url(#f9j8mzb1zrbt9)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80" x="20" y="685.5957">Organization</text><ellipse cx="63" cy="698.6719" fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M63,706.6719 L63,733.6719 M50,714.6719 L76,714.6719 M63,733.6719 L50,748.6719 M63,733.6719 L76,748.6719 " fill="none" filter="url(#f9j8mzb1zrbt9)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="43" x="276.5" y="89.6406"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="283.5" y="111.1738">View</text><rect fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="43" x="276.5" y="671.0625"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="283.5" y="692.5957">View</text><rect fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="61" x="412.5" y="89.6406"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="47" x="419.5" y="111.1738">Service</text><rect fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="61" x="412.5" y="671.0625"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="47" x="419.5" y="692.5957">Service</text><rect fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="93" x="572.5" y="89.6406"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79" x="579.5" y="111.1738">Data Access</text><rect fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="93" x="572.5" y="671.0625"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79" x="579.5" y="692.5957">Data Access</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="61" x="750.5" y="123.1738">Database</text><path d="M766,72.6406 C766,62.6406 784,62.6406 784,62.6406 C784,62.6406 802,62.6406 802,72.6406 L802,98.6406 C802,108.6406 784,108.6406 784,108.6406 C784,108.6406 766,108.6406 766,98.6406 L766,72.6406 " fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" style="stroke:#000000;stroke-width:1.5;"/><path d="M766,72.6406 C766,82.6406 784,82.6406 784,82.6406 C784,82.6406 802,82.6406 802,72.6406 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="61" x="750.5" y="685.5957">Database</text><path d="M766,698.6719 C766,688.6719 784,688.6719 784,688.6719 C784,688.6719 802,688.6719 802,698.6719 L802,724.6719 C802,734.6719 784,734.6719 784,734.6719 C784,734.6719 766,734.6719 766,724.6719 L766,698.6719 " fill="#FEFECE" filter="url(#f9j8mzb1zrbt9)" style="stroke:#000000;stroke-width:1.5;"/><path d="M766,698.6719 C766,708.6719 784,708.6719 784,708.6719 C784,708.6719 802,708.6719 802,698.6719 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="434.2734" style="stroke:#A80036;stroke-width:1.0;" width="10" x="58" y="136.25"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="411.9219" style="stroke:#A80036;stroke-width:1.0;" width="10" x="295" y="158.6016"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="228.2969" style="stroke:#A80036;stroke-width:1.0;" width="10" x="440" y="388.4141"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="91.0547" style="stroke:#A80036;stroke-width:1.0;" width="10" x="616" y="418.7656"/><rect fill="#FFFFFF" filter="url(#f9j8mzb1zrbt9)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="779" y="449.1172"/><polygon fill="#A80036" points="283,154.6016,293,158.6016,283,162.6016,287,158.6016" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="68" x2="289" y1="158.6016" y2="158.6016"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="69" x="75" y="153.7451">Create Path</text><polygon fill="#A80036" points="79,184.9531,69,188.9531,79,192.9531,75,188.9531" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="73" x2="294" y1="188.9531" y2="188.9531"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="81" x="85" y="184.0967">add Path form</text><path d="M131,201.9531 L131,243.9531 L286,243.9531 L286,211.9531 L276,201.9531 L131,201.9531 " fill="#FBFB77" filter="url(#f9j8mzb1zrbt9)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M276,201.9531 L276,211.9531 L286,211.9531 L276,201.9531 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="116" x="137" y="220.4482">view return a form to</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="134" x="137" y="236.7998">enter path info -stops- .</text><polygon fill="#A80036" points="283,272.0078,293,276.0078,283,280.0078,287,276.0078" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="68" x2="289" y1="276.0078" y2="276.0078"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="132" x="75" y="271.1514">Enter stops of the path</text><path d="M144,289.0078 L144,331.0078 L286,331.0078 L286,299.0078 L276,289.0078 L144,289.0078 " fill="#FBFB77" filter="url(#f9j8mzb1zrbt9)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M276,289.0078 L276,299.0078 L286,299.0078 L276,289.0078 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="114" x="150" y="307.5029">Specify the location</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="121" x="150" y="323.8545">of stops using a map</text><path d="M10,347.7109 L71,347.7109 L71,355.7109 L61,365.7109 L10,365.7109 L10,347.7109 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.0;"/><rect fill="none" height="307.3516" style="stroke:#000000;stroke-width:2.0;" width="817.5" x="10" y="347.7109"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="16" x="25" y="362.2061">alt</text><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="78" x="86" y="361.1299">["valid stops"]</text><polygon fill="#A80036" points="428,384.4141,438,388.4141,428,392.4141,432,388.4141" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="305" x2="434" y1="388.4141" y2="388.4141"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="116" x="312" y="383.5576">createPath(pathInfo)</text><polygon fill="#A80036" points="604,414.7656,614,418.7656,604,422.7656,608,418.7656" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="450" x2="610" y1="418.7656" y2="418.7656"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="147" x="457" y="413.9092">Send created Path model</text><polygon fill="#A80036" points="767,445.1172,777,449.1172,767,453.1172,771,449.1172" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="626" x2="773" y1="449.1172" y2="449.1172"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="134" x="633" y="444.2607">Add model to database</text><polygon fill="#A80036" points="637,475.4688,627,479.4688,637,483.4688,633,479.4688" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="631" x2="783" y1="479.4688" y2="479.4688"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="74" x="643" y="474.6123">model added</text><polygon fill="#A80036" points="461,505.8203,451,509.8203,461,513.8203,457,509.8203" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="455" x2="620" y1="509.8203" y2="509.8203"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64" x="467" y="504.9639">path added</text><polygon fill="#A80036" points="316,536.1719,306,540.1719,316,544.1719,312,540.1719" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="310" x2="439" y1="540.1719" y2="540.1719"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="72" x="322" y="535.3154">path created</text><polygon fill="#A80036" points="74,566.5234,64,570.5234,74,574.5234,70,570.5234" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="68" x2="299" y1="570.5234" y2="570.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="203" x="80" y="565.667">path created confirmation message</text><line style="stroke:#000000;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="10" x2="827.5" y1="579.5234" y2="579.5234"/><text fill="#000000" font-family="sans-serif" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="32" x="15" y="590.9424">[else]</text><polygon fill="#A80036" points="311,612.7109,301,616.7109,311,620.7109,307,616.7109" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="305" x2="444" y1="616.7109" y2="616.7109"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="71" x="317" y="611.8545">invalid stops</text><polygon fill="#A80036" points="74,643.0625,64,647.0625,74,651.0625,70,647.0625" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="68" x2="299" y1="647.0625" y2="647.0625"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="128" x="80" y="642.2061">invalid stops message</text><!--MD5=[c90319f1bc4c894debdb5b3ea5216f9c]
+@startuml create-Path
+
+title Create Path
+actor Organization as org
+participant View as v
+participant Service as s
+participant "Data Access" as da
+database Database as db
+
+activate org
+org -> v: Create Path
+activate v
+v - -> org :add Path form
+note left of v 
+view return a form to
+enter path info -stops- .
+end note
+org -> v: Enter stops of the path
+note left of v 
+Specify the location
+of stops using a map
+end note
+alt "valid stops"
+v -> s: createPath(pathInfo)
+activate s
+s -> da: Send created Path model
+activate da
+da -> db: Add model to database
+activate db
+db - -> da: model added
+deactivate db
+da - -> s : path added
+deactivate da
+s - -> v :path created
+v - -> org: path created confirmation message
+deactivate v
+deactivate org
+else else
+s - -> v :invalid stops
+deactivate s
+v - -> org : invalid stops message
+
+end
+' org -> v: Specify using a map the route start and destination
+
+
+
+@enduml
+
+@startuml create-Path
+
+title Create Path
+actor Organization as org
+participant View as v
+participant Service as s
+participant "Data Access" as da
+database Database as db
+
+activate org
+org -> v: Create Path
+activate v
+v - -> org :add Path form
+note left of v 
+view return a form to
+enter path info -stops- .
+end note
+org -> v: Enter stops of the path
+note left of v 
+Specify the location
+of stops using a map
+end note
+alt "valid stops"
+v -> s: createPath(pathInfo)
+activate s
+s -> da: Send created Path model
+activate da
+da -> db: Add model to database
+activate db
+db - -> da: model added
+deactivate db
+da - -> s : path added
+deactivate da
+s - -> v :path created
+v - -> org: path created confirmation message
+deactivate v
+deactivate org
+else else
+s - -> v :invalid stops
+deactivate s
+v - -> org : invalid stops message
+
+end
+
+
+
+@enduml
+
+PlantUML version 1.2022.0(Tue Jan 11 18:16:42 EET 2022)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: en
+Country: US
+--></g></svg>
