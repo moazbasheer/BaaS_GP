@@ -13,23 +13,23 @@ activate v
 a ->> v: Choose booking
 v -> s: Get chosen booking
 activate s
-s -> da
+s -> da: Get chosen booking
 activate da
-da -> db
+da -> db: Get chosen booking from database
 activate db
-db --> da
-da --> s
-s --> v
-v --> a: Display chosen booking
+db --> da: Return booking
+da --> s: Return booking
+s --> v: Return booking
+v --> a: Display booking
 a ->> v: Edit the required details (Bus, Seat number)
 v -> s: Send modified booking model
 s -> da: Update booking
 da -> db: Update booking in database
 db --> da: Confirm
 deactivate db
-da --> s
+da --> s: Confirm
 deactivate da
-s --> v
+s --> v: Confirm
 deactivate s
 v --> a: Show confirmation message
 deactivate v
