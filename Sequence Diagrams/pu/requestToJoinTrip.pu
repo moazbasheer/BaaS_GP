@@ -1,0 +1,82 @@
+@startuml   
+  actor Passenger  as Passenger
+  participant PassengerView as PassengerView
+  participant BookingServices as BookingServices
+  participant BookingDataAccess as BookingDataAccess
+  database BAASDB as BaasDB
+  Passenger -> PassengerView : searchOrganizations'sTrips()
+  activate Passenger
+  activate PassengerView
+  PassengerView -> BookingServices : bookTrip()
+  activate BookingServices
+  alt if the passenegr is client
+   BookingServices -> BookingServices:suspendBooking()
+   note right
+      the booking info will be added 
+      but with status false as a suspend
+   end note
+   BookingServices->BookingDataAccess:add(Booking)
+   activate BookingDataAccess
+   BookingDataAccess -> BaasDB:add booking info
+   activate BaasDB
+   BaasDB --> BookingDataAccess : The addititon is successfully
+   BookingDataAccess --> BookingServices : The addition is done  
+   alt if there is no available seats
+    BookingServices -> BookingDataAccess : delete(Booking)
+    BookingDataAccess -> BaasDB : Delete booking info
+    BaasDB --> BookingDataAccess : The deletion is successfully
+    deactivate BaasDB
+    BookingDataAccess --> BookingServices : The deletion is done
+    deactivate BookingDataAccess
+    BookingServices --> PassengerView : The request is rejected
+    deactivate BookingServices
+    PassengerView --> Passenger : Display the request is rejected
+    deactivate PassengerView
+   else if there is available seats
+    BookingServices->BookingServices:activateBooking()
+    activate BookingServices
+    note right
+      the booking status will we be updated
+      with status true as activate
+      and this will happend if there is seats
+    end note
+    BookingServices -> BookingDataAccess:update(Booking)
+    activate BookingDataAccess
+    BookingDataAccess->BaasDB:update booking info
+    activate BaasDB
+    BaasDB --> BookingDataAccess : the updating is successfully 
+    deactivate BaasDB
+    BookingDataAccess -->BookingServices : the updating is done
+    deactivate BookingDataAccess
+    BookingServices --> PassengerView: The request is accepted and send QRcode
+    activate PassengerView
+    deactivate BookingServices
+    PassengerView --> Passenger : send QRcode
+    deactivate PassengerView
+   end 
+  else if the passenger is member
+    alt if there is available seats
+     BookingServices -> BookingDataAccess : add(booking)
+     activate BookingServices
+     activate BookingDataAccess
+     BookingDataAccess->BaasDB : add booking info
+     activate BaasDB
+     BaasDB -->BookingDataAccess : the addititon is successfully
+     deactivate BaasDB
+     BookingDataAccess --> BookingServices : The addition is done
+     deactivate BookingDataAccess
+     BookingServices --> PassengerView : The request is accepted and send QRcode
+     deactivate BookingServices 
+     activate PassengerView 
+     PassengerView --> Passenger : send QRcode
+     deactivate PassengerView       
+    else if there isn't available seats
+     activate BookingServices
+     BookingServices --> PassengerView : The request is rejected
+     deactivate BookingServices
+     activate PassengerView
+     PassengerView --> Passenger : Display the request is rejected
+     deactivate PassengerView
+    end
+  end 
+@enduml

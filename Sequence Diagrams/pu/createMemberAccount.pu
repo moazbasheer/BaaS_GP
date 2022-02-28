@@ -1,0 +1,42 @@
+@startuml Create Passenger Account.
+
+title Create Member Account
+actor Organization as org
+participant View as v
+participant Service as s
+participant "Data Access" as da
+database Database as db
+
+activate org
+org -> v: add member 
+activate v
+v --> org : add member form
+org -> v: Enter member Info
+activate s
+v -> s : createMember(memberInfo)
+note right
+  member and client have the same data
+  so they shared the same class(Passenger)
+  but member has organization Id
+  and client has no organization Id 
+end note
+alt " valid Member Info"
+s -> da :Send created Member model
+activate da
+da -> db: Add model to database
+activate db
+db --> da: Model Added
+deactivate db
+da --> s : Member Added
+deactivate da
+s --> v :Member Created
+v --> org: Member Created Confirmation Message
+else else 
+s --> v : invalid Member info
+deactivate s
+v -->org :invalid Member info message
+deactivate v
+end
+deactivate org
+
+@enduml
