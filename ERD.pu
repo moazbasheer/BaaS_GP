@@ -61,17 +61,22 @@ entity Bus {
   trip_id: bigint [FK]
   passengers_number: int
   vehicle_license: image
+  numberOfSeats:int
 }
 entity Bookings {
   id: bigint [PK]
   passenger_id: bigint [FK]
   trip_id: bigint [FK]
+  status : boolean
+  requestTime:datetime
 }
 
 entity Trips {
   id: bigint [PK]
   path_id: bigint [FK]
   date: datetime
+  Appearance : boolean
+  TripSeats:int
 }
 entity Complaints {
   id: bigint [PK]
