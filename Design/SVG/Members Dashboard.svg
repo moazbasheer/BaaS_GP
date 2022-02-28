@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="70" height="62" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-Members_Dashboard">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="Members_Dashboard" data-name="Members Dashboard" clip-path="url(#clip-Members_Dashboard)">
+    <rect width="1920" height="1080" fill="#fff"/>
+    <g id="Group_9" data-name="Group 9">
+      <g id="Rectangle_694" data-name="Rectangle 694" transform="translate(395 270)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="1525" height="88" stroke="none"/>
+        <rect x="0.5" y="0.5" width="1524" height="87" fill="none"/>
+      </g>
+      <g id="Normal_Button" data-name="Normal Button" transform="translate(1647 281)">
+        <g id="Rectangle_1091" data-name="Rectangle 1091" fill="none" stroke="#2699fb" stroke-width="2">
+          <rect width="257" height="67" rx="4" stroke="none"/>
+          <rect x="1" y="1" width="255" height="65" rx="3" fill="none"/>
+        </g>
+        <text id="Add_Member" data-name="Add Member" transform="translate(129 44)" fill="#2699fb" font-size="30" font-family="Arial-BoldMT, Arial" font-weight="700" style="mix-blend-mode: darken;isolation: isolate"><tspan x="-90.842" y="0">Add Member</tspan></text>
+      </g>
+    </g>
+    <text id="ID" transform="translate(437 334)" font-size="50" font-family="Tahoma"><tspan x="0" y="0">ID</tspan></text>
+    <text id="Member_Name" data-name="Member Name" transform="translate(582 334)" font-size="50" font-family="Tahoma"><tspan x="0" y="0">Member Name</tspan></text>
+    <text id="Email" transform="translate(996 334)" font-size="50" font-family="Tahoma"><tspan x="0" y="0">Email</tspan></text>
+    <text id="Phone_No." data-name="Phone No." transform="translate(1256 334)" font-size="50" font-family="Tahoma"><tspan x="0" y="0">Phone No.</tspan></text>
+    <g id="Group_7" data-name="Group 7">
+      <g id="sideNav">
+        <g id="Rectangle_1" data-name="Rectangle 1" fill="#203134" stroke="#707070" stroke-width="1">
+          <rect width="393" height="1080" stroke="none"/>
+          <rect x="0.5" y="0.5" width="392" height="1079" fill="none"/>
+        </g>
+      </g>
+      <g id="Group_5" data-name="Group 5">
+        <g id="Path_209" data-name="Path 209" transform="translate(0 395)" fill="#fff" opacity="0.25">
+          <path d="M 391.5 79.5 L 0.5 79.5 L 0.5 0.5 L 391.5 0.5 L 391.5 79.5 Z" stroke="none"/>
+          <path d="M 1 1 L 1 79 L 391 79 L 391 1 L 1 1 M 0 0 L 392 0 L 392 80 L 0 80 L 0 0 Z" stroke="none" fill="#707070"/>
+        </g>
+        <line id="Line_1" data-name="Line 1" x1="1" y2="1080" transform="translate(391.5 0.5)" fill="none" stroke="#707070" stroke-width="1"/>
+        <g id="Group_4" data-name="Group 4">
+          <g id="Baas">
+            <g id="Rectangle_2" data-name="Rectangle 2" fill="#0d29eb" stroke="#707070" stroke-width="1">
+              <rect width="395" height="211" stroke="none"/>
+              <rect x="0.5" y="0.5" width="394" height="210" fill="none"/>
+            </g>
+            <g id="Group_1" data-name="Group 1" transform="translate(99 51)">
+              <g id="BaaS_Logo" data-name="BaaS Logo">
+                <text id="BaaS-2" data-name="BaaS" transform="translate(0 90)" fill="#fff" font-size="90" font-family="Tahoma"><tspan x="0" y="0">BaaS</tspan></text>
+              </g>
+            </g>
+          </g>
+          <g id="Rectangle_3" data-name="Rectangle 3" fill="#fff" stroke="#707070" stroke-width="1">
+            <rect width="395" height="37" stroke="none"/>
+            <rect x="0.5" y="0.5" width="394" height="36" fill="none"/>
+          </g>
+          <g id="Rectangle_4" data-name="Rectangle 4" transform="translate(0 174)" fill="#fff" stroke="#707070" stroke-width="1">
+            <rect width="395" height="37" stroke="none"/>
+            <rect x="0.5" y="0.5" width="394" height="36" fill="none"/>
+          </g>
+        </g>
+        <text id="Dashboard" transform="translate(39 325)" fill="#fff" font-size="55" font-family="Tahoma"><tspan x="0" y="0">Dashboard</tspan></text>
+        <text id="Members" transform="translate(39 453)" fill="#fff" font-size="55" font-family="Tahoma"><tspan x="0" y="0">Members</tspan></text>
+        <text id="Routes" transform="translate(39 578)" fill="#fff" font-size="55" font-family="Tahoma"><tspan x="0" y="0">Routes</tspan></text>
+        <text id="Organization_Dashboard" data-name="Organization Dashboard" transform="translate(448 95)" font-size="55" font-family="Tahoma"><tspan x="0" y="0">Organization Dashboard</tspan></text>
+        <g id="Rectangle_6" data-name="Rectangle 6" transform="translate(442 138)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="551" height="73" stroke="none"/>
+          <rect x="0.5" y="0.5" width="550" height="72" fill="none"/>
+        </g>
+        <g id="Search" transform="translate(916 144)" opacity="0.52" clip-path="url(#clip-path)">
+          <rect id="Rectangle_693" data-name="Rectangle 693" fill="none"/>
+          <path id="Path_208" data-name="Path 208" d="M69.9,56.45,55.392,43.6a24.728,24.728,0,0,0,6.155-16.351C61.547,12.069,47.919,0,30.774,0S0,12.069,0,27.252,13.628,54.5,30.774,54.5a32.722,32.722,0,0,0,18.464-5.45L63.745,61.9ZM8.792,27.252c0-10.9,9.672-19.465,21.981-19.465s21.981,8.565,21.981,19.465S43.083,46.717,30.774,46.717,8.792,38.152,8.792,27.252Z" transform="translate(0)"/>
+        </g>
+        <text id="search_by_name" data-name="search by name" transform="translate(463 193)" font-size="55" font-family="Tahoma" opacity="0.44"><tspan x="0" y="0">search by name</tspan></text>
+        <text id="_20180235_Mohamed_Mohsen" data-name="20180235    Mohamed Mohsen" transform="translate(420 420)" font-size="30" font-family="Tahoma"><tspan x="0" y="0" xml:space="preserve">20180235    Mohamed Mohsen</tspan></text>
+        <text id="ma5027300_gmail.com" data-name="ma5027300@gmail.com" transform="translate(904 420)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">ma5027300@gmail.com</tspan></text>
+        <text id="_01102488789" data-name="01102488789" transform="translate(1280 420)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">01102488789</tspan></text>
+        <text id="_20180193_Fady_Emad" data-name="20180193    Fady Emad" transform="translate(420 488)" font-size="30" font-family="Tahoma"><tspan x="0" y="0" xml:space="preserve">20180193    Fady Emad</tspan></text>
+        <text id="ma5027300_gmail.com-2" data-name="ma5027300@gmail.com" transform="translate(904 488)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">ma5027300@gmail.com</tspan></text>
+        <text id="_01102488789-2" data-name="01102488789" transform="translate(1280 488)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">01102488789</tspan></text>
+        <text id="_20180253_Moaz_Bashir" data-name="20180253    Moaz Bashir" transform="translate(420 556)" font-size="30" font-family="Tahoma"><tspan x="0" y="0" xml:space="preserve">20180253    Moaz Bashir</tspan></text>
+        <text id="ma5027300_gmail.com-3" data-name="ma5027300@gmail.com" transform="translate(904 556)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">ma5027300@gmail.com</tspan></text>
+        <text id="_01102488789-3" data-name="01102488789" transform="translate(1280 556)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">01102488789</tspan></text>
+        <text id="_20180250_Mahmoud_Ashraf" data-name="20180250    Mahmoud Ashraf" transform="translate(420 624)" font-size="30" font-family="Tahoma"><tspan x="0" y="0" xml:space="preserve">20180250    Mahmoud Ashraf</tspan></text>
+        <text id="ma5027300_gmail.com-4" data-name="ma5027300@gmail.com" transform="translate(904 624)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">ma5027300@gmail.com</tspan></text>
+        <text id="_01102488789-4" data-name="01102488789" transform="translate(1280 624)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">01102488789</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <clipPath id="clip-Routes_Dashboard">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="Routes_Dashboard" data-name="Routes Dashboard" clip-path="url(#clip-Routes_Dashboard)">
+    <rect width="1920" height="1080" fill="#fff"/>
+    <g id="Group_10" data-name="Group 10" transform="translate(0 -29)">
+      <g id="Rectangle_694" data-name="Rectangle 694" transform="translate(395 270)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="1525" height="88" stroke="none"/>
+        <rect x="0.5" y="0.5" width="1524" height="87" fill="none"/>
+      </g>
+      <g id="Normal_Button" data-name="Normal Button" transform="translate(1647 281)">
+        <g id="Rectangle_1091" data-name="Rectangle 1091" fill="none" stroke="#2699fb" stroke-width="2">
+          <rect width="257" height="67" rx="4" stroke="none"/>
+          <rect x="1" y="1" width="255" height="65" rx="3" fill="none"/>
+        </g>
+        <text id="Add_Route" data-name="Add Route" transform="translate(129 44)" fill="#2699fb" font-size="30" font-family="Arial-BoldMT, Arial" font-weight="700" style="mix-blend-mode: darken;isolation: isolate"><tspan x="-75.82" y="0">Add Route</tspan></text>
+      </g>
+    </g>
+    <g id="Component_1_6" data-name="Component 1 – 6">
+      <g id="sideNav">
+        <g id="Rectangle_1" data-name="Rectangle 1" fill="#203134" stroke="#707070" stroke-width="1">
+          <rect width="393" height="1080" stroke="none"/>
+          <rect x="0.5" y="0.5" width="392" height="1079" fill="none"/>
+        </g>
+      </g>
+      <g id="Group_8" data-name="Group 8" transform="translate(22 394)">
+        <g id="Baas" transform="translate(-22 -394)">
+          <g id="Rectangle_2" data-name="Rectangle 2" fill="#0d29eb" stroke="#707070" stroke-width="1">
+            <rect width="395" height="211" stroke="none"/>
+            <rect x="0.5" y="0.5" width="394" height="210" fill="none"/>
+          </g>
+          <g id="Group_1" data-name="Group 1" transform="translate(22 394)">
+            <g id="BaaS_Logo" data-name="BaaS Logo" transform="translate(77 -343)">
+              <text id="BaaS-2" data-name="BaaS" transform="translate(0 90)" fill="#fff" font-size="90" font-family="Tahoma"><tspan x="0" y="0">BaaS</tspan></text>
+            </g>
+          </g>
+        </g>
+        <g id="Rectangle_3" data-name="Rectangle 3" transform="translate(-22 -394)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="395" height="37" stroke="none"/>
+          <rect x="0.5" y="0.5" width="394" height="36" fill="none"/>
+        </g>
+        <g id="Rectangle_4" data-name="Rectangle 4" transform="translate(-22 -220)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="395" height="37" stroke="none"/>
+          <rect x="0.5" y="0.5" width="394" height="36" fill="none"/>
+        </g>
+      </g>
+      <text id="Dashboard" transform="translate(39 325)" fill="#fff" font-size="55" font-family="Tahoma"><tspan x="0" y="0">Dashboard</tspan></text>
+      <text id="Members" transform="translate(39 453)" fill="#fff" font-size="55" font-family="Tahoma"><tspan x="0" y="0">Members</tspan></text>
+      <text id="Routes" transform="translate(39 578)" fill="#fff" font-size="55" font-family="Tahoma"><tspan x="0" y="0">Routes</tspan></text>
+    </g>
+    <text id="Organization_Dashboard" data-name="Organization Dashboard" transform="translate(448 95)" font-size="55" font-family="Tahoma"><tspan x="0" y="0">Organization Dashboard</tspan></text>
+    <g id="Rectangle_1092" data-name="Rectangle 1092" transform="translate(0 517)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0.33">
+      <rect width="395" height="82" stroke="none"/>
+      <rect x="0.5" y="0.5" width="394" height="81" fill="none"/>
+    </g>
+    <text id="RouteID" transform="translate(416 305)" font-size="50" font-family="Tahoma"><tspan x="0" y="0">RouteID</tspan></text>
+    <text id="from_" data-name="from " transform="translate(740 305)" font-size="50" font-family="Tahoma"><tspan x="0" y="0">from </tspan></text>
+    <text id="to" transform="translate(1069 305)" font-size="50" font-family="Tahoma"><tspan x="0" y="0">to</tspan></text>
+    <text id="No._of_Paths" data-name="No. of Paths" transform="translate(1340 305)" font-size="50" font-family="Tahoma"><tspan x="0" y="0">No. of Paths</tspan></text>
+    <text id="coct123as" transform="translate(416 380)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">coct123as</tspan></text>
+    <text id="october" transform="translate(720 380)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">october</tspan></text>
+    <text id="Cairo_University" data-name="Cairo University" transform="translate(992 380)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">Cairo University</tspan></text>
+    <text id="_3" data-name="3" transform="translate(1371 380)" font-size="30" font-family="Tahoma"><tspan x="0" y="0">3</tspan></text>
+    <g id="Normal_Button-2" data-name="Normal Button" transform="translate(1675 350)">
+      <g id="Rectangle_1091-2" data-name="Rectangle 1091" fill="none" stroke="#2699fb" stroke-width="2">
+        <rect width="231" height="50" rx="4" stroke="none"/>
+        <rect x="1" y="1" width="229" height="48" rx="3" fill="none"/>
+      </g>
+      <text id="Add_Path" data-name="Add Path" transform="translate(116 36)" font-size="30" font-family="Arial-BoldMT, Arial" font-weight="700" style="mix-blend-mode: darken;isolation: isolate"><tspan x="-65.83" y="0">Add Path</tspan></text>
+    </g>
+  </g>
+</svg>
