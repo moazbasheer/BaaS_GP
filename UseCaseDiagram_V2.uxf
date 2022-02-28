@@ -3,44 +3,30 @@
   <help_text/>
   <zoom_level>10</zoom_level>
   <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>120</x>
-      <y>0</y>
-      <w>820</w>
-      <h>1270</h>
-    </coordinates>
-    <panel_attributes>Baas System 
-halign=center
-fg=blue
-bg=gray</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>160</x>
-      <y>20</y>
+      <y>30</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Login
 bg=yellow
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>130</x>
-      <y>140</y>
+      <y>150</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Register
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -48,14 +34,14 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>160</x>
-      <y>260</y>
+      <y>270</y>
       <w>160</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Delete 
 Passenger account
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -63,21 +49,21 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>150</x>
-      <y>80</y>
+      <y>90</y>
       <w>140</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Update profile info
 bg=yellow
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>20</x>
-      <y>190</y>
+      <y>200</y>
       <w>30</w>
       <h>360</h>
     </coordinates>
@@ -88,7 +74,7 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>20</x>
-      <y>520</y>
+      <y>530</y>
       <w>30</w>
       <h>380</h>
     </coordinates>
@@ -99,7 +85,7 @@ fg=white</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>20</x>
-      <y>590</y>
+      <y>600</y>
       <w>100</w>
       <h>110</h>
     </coordinates>
@@ -111,7 +97,7 @@ bg=magenta</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>20</x>
-      <y>850</y>
+      <y>860</y>
       <w>80</w>
       <h>110</h>
     </coordinates>
@@ -122,22 +108,22 @@ bg=green</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>190</x>
-      <y>880</y>
+      <x>140</x>
+      <y>1150</y>
       <w>90</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Join a trip
-bg=green
+bg=gray
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>710</x>
-      <y>10</y>
+      <y>20</y>
       <w>150</w>
       <h>60</h>
     </coordinates>
@@ -145,7 +131,7 @@ fg=white</panel_attributes>
 organization
 account
 bg=red
-fg=white
+fg=black
 layer=1</panel_attributes>
     <additional_attributes/>
   </element>
@@ -153,7 +139,7 @@ layer=1</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>140</x>
-      <y>1130</y>
+      <y>1420</y>
       <w>140</w>
       <h>50</h>
     </coordinates>
@@ -161,14 +147,14 @@ layer=1</panel_attributes>
 map
 bg=blue
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>20</x>
-      <y>30</y>
+      <y>40</y>
       <w>160</w>
       <h>140</h>
     </coordinates>
@@ -179,7 +165,7 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>20</x>
-      <y>90</y>
+      <y>100</y>
       <w>150</w>
       <h>80</h>
     </coordinates>
@@ -190,7 +176,7 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>350</y>
+      <y>360</y>
       <w>130</w>
       <h>300</h>
     </coordinates>
@@ -201,7 +187,7 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>460</y>
+      <y>470</y>
       <w>130</w>
       <h>190</h>
     </coordinates>
@@ -212,7 +198,7 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>20</x>
-      <y>510</y>
+      <y>520</y>
       <w>70</w>
       <h>130</h>
     </coordinates>
@@ -223,14 +209,14 @@ fg=white</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>150</x>
-      <y>510</y>
+      <y>520</y>
       <w>160</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Activate 
 passenger account
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -238,14 +224,14 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>140</x>
-      <y>190</y>
+      <y>200</y>
       <w>160</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Suspend 
 passenger account
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -253,14 +239,14 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>720</x>
-      <y>340</y>
+      <y>350</y>
       <w>130</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>Create 
 driver account
 bg=red
-fg=white
+fg=black
 layer=1</panel_attributes>
     <additional_attributes/>
   </element>
@@ -268,7 +254,7 @@ layer=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>360</y>
+      <y>370</y>
       <w>190</w>
       <h>110</h>
     </coordinates>
@@ -279,14 +265,14 @@ layer=1</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>710</x>
-      <y>80</y>
+      <y>90</y>
       <w>130</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Suspend 
 driver account 
 bg=red
-fg=white
+fg=black
 layer=1</panel_attributes>
     <additional_attributes/>
   </element>
@@ -294,7 +280,7 @@ layer=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>820</x>
-      <y>150</y>
+      <y>160</y>
       <w>210</w>
       <h>320</h>
     </coordinates>
@@ -304,7 +290,7 @@ layer=1</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>250</x>
+      <x>130</x>
       <y>810</y>
       <w>150</w>
       <h>70</h>
@@ -314,25 +300,25 @@ booking for
 a trip
 bg=green
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>50</x>
-      <y>810</y>
+      <x>60</x>
+      <y>1080</y>
       <w>100</w>
-      <h>90</h>
+      <h>170</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;70.0;80.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;80.0;150.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>40</y>
+      <y>50</y>
       <w>190</w>
       <h>430</h>
     </coordinates>
@@ -343,7 +329,7 @@ fg=white</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>780</x>
-      <y>580</y>
+      <y>590</y>
       <w>110</w>
       <h>70</h>
     </coordinates>
@@ -352,14 +338,14 @@ drivers
 execuses
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>830</x>
-      <y>440</y>
+      <y>450</y>
       <w>200</w>
       <h>300</h>
     </coordinates>
@@ -370,7 +356,7 @@ fg=white</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>0</x>
-      <y>110</y>
+      <y>120</y>
       <w>60</w>
       <h>120</h>
     </coordinates>
@@ -383,7 +369,7 @@ bg=yellow</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>60</x>
-      <y>610</y>
+      <y>620</y>
       <w>40</w>
       <h>40</h>
     </coordinates>
@@ -394,7 +380,7 @@ bg=yellow</panel_attributes>
     <id>UMLActor</id>
     <coordinates>
       <x>20</x>
-      <y>1090</y>
+      <y>1360</y>
       <w>60</w>
       <h>110</h>
     </coordinates>
@@ -406,14 +392,14 @@ bg=blue</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>170</x>
-      <y>380</y>
+      <y>390</y>
       <w>170</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Create 
 Passenger account
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -421,7 +407,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>290</y>
+      <y>300</y>
       <w>120</w>
       <h>360</h>
     </coordinates>
@@ -432,28 +418,28 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>140</x>
-      <y>1200</y>
+      <y>1490</y>
       <w>140</w>
-      <h>50</h>
+      <h>40</h>
     </coordinates>
     <panel_attributes>Execuse for 
 trip
 bg=blue
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>160</x>
-      <y>580</y>
+      <x>150</x>
+      <y>590</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Delete trip
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -461,7 +447,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>220</y>
+      <y>230</y>
       <w>110</w>
       <h>430</h>
     </coordinates>
@@ -472,13 +458,13 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>150</x>
-      <y>690</y>
+      <y>700</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Create route
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -486,13 +472,13 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>350</x>
-      <y>680</y>
+      <y>690</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Create path
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -500,7 +486,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>250</x>
-      <y>680</y>
+      <y>690</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
@@ -512,7 +498,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>620</y>
+      <y>630</y>
       <w>100</w>
       <h>100</h>
     </coordinates>
@@ -523,7 +509,7 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>520</x>
-      <y>630</y>
+      <y>640</y>
       <w>140</w>
       <h>60</h>
     </coordinates>
@@ -531,21 +517,21 @@ bg=cyan</panel_attributes>
 for a trip
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>700</x>
-      <y>200</y>
+      <y>210</y>
       <w>150</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Delete 
 driver account
 bg=red
-fg=white
+fg=black
 layer=1</panel_attributes>
     <additional_attributes/>
   </element>
@@ -553,7 +539,7 @@ layer=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>390</x>
-      <y>710</y>
+      <y>720</y>
       <w>120</w>
       <h>100</h>
     </coordinates>
@@ -565,13 +551,13 @@ layer=1</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>440</x>
-      <y>780</y>
+      <y>790</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Create a trip
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -579,14 +565,14 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>170</x>
-      <y>320</y>
+      <y>330</y>
       <w>100</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>show all 
 passengers
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -594,7 +580,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>160</y>
+      <y>170</y>
       <w>90</w>
       <h>490</h>
     </coordinates>
@@ -605,7 +591,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>410</y>
+      <y>420</y>
       <w>130</w>
       <h>240</h>
     </coordinates>
@@ -616,13 +602,13 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>180</x>
-      <y>440</y>
+      <y>450</y>
       <w>100</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>show all trips
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -630,7 +616,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>420</x>
-      <y>810</y>
+      <y>820</y>
       <w>130</w>
       <h>180</h>
     </coordinates>
@@ -642,13 +628,13 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>370</x>
-      <y>970</y>
+      <y>980</y>
       <w>120</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>enter time
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -656,18 +642,18 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>80</x>
-      <y>590</y>
-      <w>100</w>
+      <y>600</y>
+      <w>90</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>layer=1</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;40.0</additional_attributes>
+    <additional_attributes>70.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLActor</id>
     <coordinates>
       <x>990</x>
-      <y>420</y>
+      <y>430</y>
       <w>60</w>
       <h>110</h>
     </coordinates>
@@ -678,22 +664,22 @@ bg=red</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>130</x>
-      <y>800</y>
+      <x>140</x>
+      <y>1210</y>
       <w>100</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Show all trips
-bg=green
+bg=gray
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>530</y>
+      <y>540</y>
       <w>100</w>
       <h>120</h>
     </coordinates>
@@ -703,52 +689,52 @@ fg=white</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>50</x>
-      <y>870</y>
-      <w>160</w>
-      <h>50</h>
+      <x>60</x>
+      <y>1080</y>
+      <w>100</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>140.0;30.0;10.0;10.0</additional_attributes>
+    <additional_attributes>80.0;90.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>50</x>
       <y>840</y>
-      <w>220</w>
-      <h>60</h>
+      <w>100</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>200.0;10.0;10.0;40.0</additional_attributes>
+    <additional_attributes>80.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>50</x>
-      <y>870</y>
-      <w>140</w>
-      <h>100</h>
+      <y>880</y>
+      <w>120</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;120.0;80.0</additional_attributes>
+    <additional_attributes>10.0;20.0;100.0;30.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>40</x>
-      <y>1080</y>
-      <w>120</w>
-      <h>70</h>
+      <y>1360</y>
+      <w>110</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>97.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>87.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>130</x>
-      <y>1060</y>
+      <y>1350</y>
       <w>160</w>
       <h>50</h>
     </coordinates>
@@ -756,36 +742,36 @@ fg=white</panel_attributes>
 a trip
 bg=blue
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>40</x>
-      <y>1120</y>
+      <y>1390</y>
       <w>130</w>
-      <h>70</h>
+      <h>130</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>110.0;50.0;10.0;10.0</additional_attributes>
+    <additional_attributes>110.0;108.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>40</x>
-      <y>1120</y>
-      <w>130</w>
-      <h>110</h>
+      <y>1390</y>
+      <w>120</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>110.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>100.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>420</y>
+      <y>430</y>
       <w>190</w>
       <h>50</h>
     </coordinates>
@@ -796,7 +782,7 @@ fg=white</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>730</x>
-      <y>430</y>
+      <y>440</y>
       <w>140</w>
       <h>50</h>
     </coordinates>
@@ -804,14 +790,14 @@ fg=white</panel_attributes>
 complains
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>750</x>
-      <y>510</y>
+      <y>520</y>
       <w>130</w>
       <h>50</h>
     </coordinates>
@@ -819,21 +805,21 @@ fg=white</panel_attributes>
 trips
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>710</x>
-      <y>140</y>
+      <y>150</y>
       <w>120</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Show all
 drivers
 bg=red
-fg=white
+fg=black
 layer=1</panel_attributes>
     <additional_attributes/>
   </element>
@@ -841,14 +827,14 @@ layer=1</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>500</x>
-      <y>960</y>
+      <y>970</y>
       <w>100</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>pay for 
 the trip 
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -856,7 +842,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>480</x>
-      <y>810</y>
+      <y>820</y>
       <w>120</w>
       <h>170</h>
     </coordinates>
@@ -869,7 +855,7 @@ layer=2</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>460</x>
-      <y>450</y>
+      <y>460</y>
       <w>130</w>
       <h>50</h>
     </coordinates>
@@ -877,14 +863,14 @@ layer=2</panel_attributes>
 handled
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>570</x>
-      <y>440</y>
+      <y>450</y>
       <w>180</w>
       <h>40</h>
     </coordinates>
@@ -896,22 +882,21 @@ fg=white</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>580</x>
-      <y>700</y>
+      <y>710</y>
       <w>90</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Suspend trip
-
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>850</x>
-      <y>440</y>
+      <y>450</y>
       <w>180</w>
       <h>100</h>
     </coordinates>
@@ -922,7 +907,7 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>650</x>
-      <y>620</y>
+      <y>630</y>
       <w>150</w>
       <h>110</h>
     </coordinates>
@@ -935,7 +920,7 @@ layer=2</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>650</x>
-      <y>590</y>
+      <y>600</y>
       <w>150</w>
       <h>80</h>
     </coordinates>
@@ -948,7 +933,7 @@ layer=2</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>670</x>
-      <y>630</y>
+      <y>640</y>
       <w>150</w>
       <h>140</h>
     </coordinates>
@@ -960,7 +945,7 @@ layer=2</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>610</x>
-      <y>750</y>
+      <y>760</y>
       <w>120</w>
       <h>50</h>
     </coordinates>
@@ -968,14 +953,14 @@ layer=2</panel_attributes>
 handled
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>840</x>
-      <y>220</y>
+      <y>230</y>
       <w>190</w>
       <h>250</h>
     </coordinates>
@@ -986,7 +971,7 @@ fg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>20</x>
-      <y>860</y>
+      <y>870</y>
       <w>60</w>
       <h>40</h>
     </coordinates>
@@ -996,19 +981,19 @@ fg=white</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>20</x>
-      <y>870</y>
-      <w>30</w>
-      <h>260</h>
+      <x>10</x>
+      <y>880</y>
+      <w>60</w>
+      <h>540</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;240.0;10.0;10.0</additional_attributes>
+    <additional_attributes>40.0;520.0;10.0;520.0;20.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>830</x>
-      <y>90</y>
+      <y>100</y>
       <w>200</w>
       <h>380</h>
     </coordinates>
@@ -1020,13 +1005,13 @@ fg=white</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>160</x>
-      <y>630</y>
+      <y>640</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Modify route
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -1034,7 +1019,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>620</y>
+      <y>630</y>
       <w>110</w>
       <h>50</h>
     </coordinates>
@@ -1044,28 +1029,28 @@ bg=cyan</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>140</x>
-      <y>950</y>
+      <x>150</x>
+      <y>890</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Make a complaint
 bg=green
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>130</x>
-      <y>750</y>
+      <y>760</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Make a complaint
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -1073,7 +1058,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>620</y>
+      <y>630</y>
       <w>110</w>
       <h>150</h>
     </coordinates>
@@ -1084,13 +1069,13 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>450</x>
-      <y>530</y>
+      <y>540</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Create stops
 layer=1
-fg=white
+fg=black
 bg=cyan</panel_attributes>
     <additional_attributes/>
   </element>
@@ -1098,7 +1083,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>410</x>
-      <y>560</y>
+      <y>570</y>
       <w>140</w>
       <h>140</h>
     </coordinates>
@@ -1110,7 +1095,7 @@ bg=cyan</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>830</x>
-      <y>440</y>
+      <y>450</y>
       <w>200</w>
       <h>160</h>
     </coordinates>
@@ -1121,7 +1106,7 @@ bg=cyan</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>750</x>
-      <y>720</y>
+      <y>730</y>
       <w>150</w>
       <h>60</h>
     </coordinates>
@@ -1129,14 +1114,14 @@ bg=cyan</panel_attributes>
 organizations
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
       <x>750</x>
-      <y>790</y>
+      <y>800</y>
       <w>160</w>
       <h>50</h>
     </coordinates>
@@ -1144,14 +1129,14 @@ fg=white</panel_attributes>
 driver account 
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>890</x>
-      <y>440</y>
+      <y>450</y>
       <w>140</w>
       <h>380</h>
     </coordinates>
@@ -1162,14 +1147,14 @@ fg=white</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>690</x>
-      <y>260</y>
+      <y>270</y>
       <w>150</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>Suspend 
 organization account
 bg=red
-fg=white
+fg=black
 layer=1</panel_attributes>
     <additional_attributes/>
   </element>
@@ -1177,7 +1162,7 @@ layer=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>810</x>
-      <y>290</y>
+      <y>300</y>
       <w>220</w>
       <h>180</h>
     </coordinates>
@@ -1188,7 +1173,7 @@ layer=1</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>770</x>
-      <y>870</y>
+      <y>880</y>
       <w>150</w>
       <h>60</h>
     </coordinates>
@@ -1196,14 +1181,14 @@ layer=1</panel_attributes>
 organization account
 bg=red
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>900</x>
-      <y>440</y>
+      <y>450</y>
       <w>130</w>
       <h>460</h>
     </coordinates>
@@ -1213,26 +1198,262 @@ fg=white</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>130</x>
-      <y>1010</y>
+      <x>150</x>
+      <y>940</y>
       <w>120</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>Modify Booking
 bg=green
 layer=1
-fg=white</panel_attributes>
+fg=black</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>50</x>
-      <y>870</y>
+      <y>890</y>
       <w>120</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;100.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>30</x>
+      <y>1050</y>
+      <w>80</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Employee
+bg=gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>20</x>
+      <y>1070</y>
+      <w>70</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;20.0;50.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>60</x>
+      <y>940</y>
+      <w>30</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>30</x>
+      <y>1010</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>30</x>
+      <y>1020</y>
+      <w>30</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>30</x>
+      <y>1080</y>
+      <w>30</w>
       <h>160</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;100.0;140.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>40</x>
+      <y>1200</y>
+      <w>60</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Client
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>30</x>
+      <y>1220</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;20.0;40.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>20</x>
+      <y>1220</y>
+      <w>40</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;20.0;20.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>30</x>
+      <y>1210</y>
+      <w>30</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>30</x>
+      <y>1060</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>30</x>
+      <y>1210</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>40.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>10</x>
+      <y>1220</y>
+      <w>80</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>60.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>130</x>
+      <y>1290</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Register
+bg=pink
+layer=1
+fg=black</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>60</x>
+      <y>1230</y>
+      <w>90</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>70.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>140</x>
+      <y>1000</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Request to join trip
+bg=green
+layer=1
+fg=black
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>50</x>
+      <y>890</y>
+      <w>110</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>90.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>130</x>
+      <y>1060</y>
+      <w>210</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Search about 
+particular Organization's trips
+bg=green
+layer=1
+fg=black</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>50</x>
+      <y>890</y>
+      <w>100</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>80.0;202.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>120</x>
+      <y>0</y>
+      <w>820</w>
+      <h>1550</h>
+    </coordinates>
+    <panel_attributes>Baas System 
+halign=center
+fg=blue
+bg=gray</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
