@@ -1,0 +1,43 @@
+@startuml   
+  actor Client  as Client
+  participant ClientView as ClientView
+  participant ClientServices as ClientServices
+  participant PassengerDataAccess as PassengerDataAccess
+  database BAASDB as BaasDB
+  Client -> ClientView : Register()
+  activate Client
+  activate ClientView
+  ClientView -> ClientServices : createClient()
+  activate ClientServices
+  ClientServices -> PassengerDataAccess : get(int)
+  activate PassengerDataAccess
+  PassengerDataAccess -> BaasDB : get Client info
+  activate BaasDB
+  alt  if Client isn't found  
+    BaasDB --> PassengerDataAccess : Return Client not found 
+    PassengerDataAccess --> ClientServices : Throw exception that the Client not found
+    ClientServices -> PassengerDataAccess : Add the Client
+    PassengerDataAccess -> BaasDB : Store the Client
+    BaasDB --> PassengerDataAccess : The Client is stored successfully
+    deactivate BaasDB  
+    PassengerDataAccess --> ClientServices : The Addition is done 
+    deactivate PassengerDataAccess
+    ClientServices --> ClientView: The Registration is successfully
+    deactivate ClientServices
+    ClientView --> Client : Display The registration is successfully
+    deactivate ClientView
+  else if Client is found
+    activate BaasDB
+    BaasDB --> PassengerDataAccess : Return Client info 
+    deactivate BaasDB
+    activate PassengerDataAccess
+    activate ClientServices
+    PassengerDataAccess --> ClientServices : Return Client object
+    deactivate PassengerDataAccess
+    activate ClientView
+    ClientServices --> ClientView: The Client is exist
+    deactivate ClientServices
+    ClientView --> Client : Display The Client username is exist
+    deactivate ClientView
+  end
+@enduml
