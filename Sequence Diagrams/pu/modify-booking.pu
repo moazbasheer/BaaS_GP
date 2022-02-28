@@ -22,18 +22,24 @@ da --> s: Return booking
 s --> v: Return booking
 v --> a: Display booking
 a ->> v: Edit the required details (Bus, Seat number)
-v -> s: Send modified booking model
-s -> da: Update booking
-da -> db: Update booking in database
-db --> da: Confirm
+v -> s: Send request
+s -> da: Get trip information
+da -> db: Get trip information
+db --> da: Return trip information
 deactivate db
-da --> s: Confirm
+da --> s: Return trip information
+s -> s: Compare and check if modifications are allowed
 deactivate da
-s --> v: Confirm
-deactivate s
-v --> a: Show confirmation message
+alt modifications are allowed
+    s --> v: Confirm
+    v --> a: Show confirmation message
+else modifications are not allowed
+    s --> v: Modifications rejected
+    deactivate s
+    v --> a: Show rejection message
 deactivate v
 deactivate a
+end
 
 
 @enduml
