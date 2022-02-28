@@ -83,7 +83,15 @@ entity Complaints {
   user_id: bigint [FK]
   title: text
   body: text
-
+}
+entity Payment_details {
+  id: bigint [PK]
+  booking_id: bigint [FK]
+  amount: double
+  currency: text
+  date: datetime
+  method: text
+  status: boolean
 }
 Users ||--|| Passengers
 Users ||--|| Drivers
@@ -94,6 +102,7 @@ Users ||---o{ Complaints
 Organizations ||--o{ Passengers
 Organizations ||--o{ Routes
 Drivers ||--o{ Excuses
+Bookings ||--|{ Payment_details
 
 Routes ||--|{ Paths
 Paths ||--|{ Stops
