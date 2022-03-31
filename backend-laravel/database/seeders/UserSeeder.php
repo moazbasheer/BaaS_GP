@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'name' => 'Mahmoud Ashraf',
             'email' => "mahmoud@gmail.com",
             'password' => Hash::make('123456'),
-            'role_name' => 'organization'
+            'role_name' => 'client'
         ]);
     }
 }

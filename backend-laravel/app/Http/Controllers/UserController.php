@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Client;
 use Hash;
 use Validator;
 use Auth;
+
 /**
  * @OA\Info(
  *      version="1.0.0",
@@ -46,52 +48,99 @@ class UserController extends Controller
      *      ),
      *      @OA\Parameter(
      *          name="role_name",
-     *          description="role_name",
+     *          description="role name",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="first_name",
+     *          description="first name (for client)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="last_name",
+     *          description="last name (for client)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="username",
+     *          description="username (for client)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="phone_number",
+     *          description="phone number (for client)",
      *          required=true,
      *          in="path"
      *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
-     *       ),
-     *       @OA\Response(response=400, description="Bad request"),
-     *       security={
-     *           {"api_key_security_example": {}}
-     *       }
-     *     )
+     *      ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      security={
+     *          {"api_key_security_example": {}}
+     *      }
+     * )
      *
      * Returns status of registration.
      */
     function register(Request $req) {
         // use validator.
         $validator = Validator::make($req->all(), [
-            'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required',
+            'password' => 'required|min:8',
             'role_name' => 'required'
         ]);
+        $is_failed = false;
         $message = [];
-        $message = format_message($message, $validator);
+        if($validator->fails()) {
+            $is_failed = true;
+            $message = $this->format_message($message, $validator);
+        }
+        $role_name = $req->role_name;
         if($role_name === "organization") {
             // use validator.
         } elseif($role_name === "client") {
-            // use validator.
+            $validator = Validator::make($req->all(), [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'username' => 'required',
+                'phone_number' => 'required|min:11'
+            ]);
+            if($validator->fails()) {
+                $is_failed = true;
+                $message = $this->format_message($message, $validator);
+            } else {
+                User::create([
+                    'email' => $req->email,
+                    'password' => Hash::make($req->password),
+                    'role_name' => $req->role_name
+                ]);
+                
+                Client::create([
+                    'user_id' => User::latest()->first()->id,
+                    'first_name' => $req->first_name,
+                    'last_name' => $req->last_name,
+                    'username' => $req->username,
+                    'phone_number' => $req->phone_number
+                ]);
+            }
         } else {
             // add to the message. (invalid role_name)
             // either client or organization.
+            $message []= 'role name is required';
         }
-        if($validator->fails()) {
+        
+        if($is_failed) {
             return response(json_encode([
                 'status' => false,
                 'message' => $message
             ]), 400);
         }
-        User::create([
-            'name' => $req->name,
-            'email' => $req->email,
-            'password' => Hash::make($req->password),
-            'role_name' => $req->role_name
-        ]);
         // $user_id = User::latest()->first()->id;
         return response(json_encode([
             'status' => true,
@@ -120,8 +169,8 @@ class UserController extends Controller
      *      summary="log in user",
      *      description="log in user",
      *      @OA\Parameter(
-     *          name="email",
-     *          description="email",
+     *          name="emailorusername",
+     *          description="email or username",
      *          required=true,
      *          in="path"
      *      ),
@@ -145,7 +194,7 @@ class UserController extends Controller
      */
     function login(Request $req) {
         $validator = Validator::make($req->all(), [
-            'email' => 'required',
+            'emailorusername' => 'required',
             'password' => 'required'
         ]);
         $message = [];
@@ -161,18 +210,48 @@ class UserController extends Controller
                 'message' => $message
             ]), 400);
         }
-        $user = User::where('email', $req->email)->first();
-    
-        if (! $user || ! Hash::check($req->password, $user->password)) {
+        $user1 = User::where('email', $req->emailorusername)->first();
+        $user2 = null;
+        if($user1->role_name == "client") {
+            $user2 = Client::where('username', $req->emailorusername)->first();
+            if($user2) {
+                $user2 = User::find($user2->user_id);
+            } else {
+                $user2 = null;
+            }
+        }
+        $temp = $user1??$user2; //
+        if($temp) {
+            $user = [
+                'email' => $temp->email,
+                'password' => $temp->password,
+                'role_name' => $temp->role_name
+            ];
+            // dd(Hash::check($req->password, $user["password"]));
+            // dd($req->password . ' ' . $user["password"]);
+            if($temp->role_name == 'client') {
+                $temp1 = Client::where('user_id', $temp->id)->first();
+                $user["first_name"] = $temp1->first_name;
+                $user["last_name"] = $temp1->last_name;
+                $user["username"] = $temp1->username;
+                $user["phone_number"] = $temp1->phone_number;
+            }
+            // dd($user);
+        }
+        if (! $user || ! Hash::check($req->password, $user["password"])) {
             return response(json_encode([
                 'status' => false,
                 'message' => ['Unauthenticated']
             ]), 401);
         }
-        $token = $user->createToken('my-app')->plainTextToken;
+        
+        $auth_user = $temp;
+        if($auth_user) {
+            $token = $auth_user->createToken('my-app')->plainTextToken;
+        }
         return response(json_encode([
             'status' => true,
-            'message' => 'user logged in successfully!',
+            'message' => ['user logged in successfully!'],
             'user' => $user,
             'token' => $token
         ]), 200);
@@ -223,6 +302,26 @@ class UserController extends Controller
      * Returns status of logout.
      */
     function user_info() {
+        $user = Auth::user();
+        $message = [
+            'email' => $user->email,
+            'role_name' => $user->role_name
+        ];
+        $user_info = null;
+        if($user->role_name === "client") {
+            $user_info = Client::where('user_id', $user->id)->first();
+            $message['profile_image_name'] = $user_info->profile_image_name;
+            $message['profile_image_src'] = $user_info->profile_image_src;
+            $message['first_name'] = $user_info->first_name;
+            $message['last_name'] = $user_info->last_name;
+            $message['username'] = $user_info->username;
+            $message['phone_number'] = $user_info->phone_number;
+            
+            return response([
+                'status' => true,
+                'message' => $message
+            ], 200);
+        }
         return response(json_encode(Auth::user()), 200);
     }
 }
