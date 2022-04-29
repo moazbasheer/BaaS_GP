@@ -1,3 +1,7 @@
+:root{
+  --mainYellow:rgb(238, 238, 6);
+  --mainBG : rgba(238, 238, 6,0.8);
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +14,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.busColor{
+  background-color: rgba(238, 238, 6,0.8) !important;
 }
