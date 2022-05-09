@@ -7,18 +7,21 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import NotFound from './Components/Not Found/NotFound';
 import { useEffect, useState } from 'react';
 import RoutingGuard from './Components/RoutingGuard/RoutingGuard';
+import Statistics from './Components/Statistics/Statistics';
+import Passengers from './Components/Passengers/Passengers';
+import OrgRoutes from './Components/OrgRoutes/OrgRoutes';
 
 
 
 function App() {
   const [loggedOrg, setLoggedOrg] = useState({});
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
   function logout() {
     localStorage.removeItem("organization");
     setLoggedOrg(null);
     navigate("/login");
-    
+
   }
 
   useEffect(() => {
@@ -35,7 +38,11 @@ function App() {
         <Route path="/home" element={
           <RoutingGuard logOut={logout} Component={Home}>
           </RoutingGuard>}
-        />
+        >
+          <Route path='statistics' element={<Statistics/>} />
+          <Route path='passengers' element={<Passengers/>} />
+          <Route path='routes' element={<OrgRoutes/>} />
+        </Route>
         <Route path='/' element={<Navigate to="/home" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
