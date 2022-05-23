@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Http\Controllers\UserSeeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\ClientSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -15,7 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            ClientSeeder::class
+            ClientSeeder::class,
+            RoleSeeder::class
         ]);
     }
 }

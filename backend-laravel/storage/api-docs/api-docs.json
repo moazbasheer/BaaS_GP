@@ -9,6 +9,157 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/organization/routes": {
+            "get": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "get all routes",
+                "description": "get all routes",
+                "operationId": "get all routes",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "add a route",
+                "description": "add a route",
+                "operationId": "add a route",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "path",
+                        "description": "source of the route",
+                        "required": true
+                    },
+                    {
+                        "name": "destination",
+                        "in": "path",
+                        "description": "destination of the route",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/routes/{id}": {
+            "get": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "get a route",
+                "description": "get a route",
+                "operationId": "get a route",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "path",
+                        "description": "source of the route",
+                        "required": true
+                    },
+                    {
+                        "name": "destination",
+                        "in": "path",
+                        "description": "destination of the route",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "update the route",
+                "description": "update the route",
+                "operationId": "update the route",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "path",
+                        "description": "source of the route",
+                        "required": true
+                    },
+                    {
+                        "name": "destination",
+                        "in": "path",
+                        "description": "destination of the route",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "delete the route",
+                "description": "delete the route",
+                "operationId": "delete the route",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/register": {
             "post": {
                 "tags": [
@@ -39,7 +190,31 @@
                     {
                         "name": "role_name",
                         "in": "path",
-                        "description": "role_name",
+                        "description": "role name",
+                        "required": true
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "path",
+                        "description": "first name (for client)",
+                        "required": true
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "path",
+                        "description": "last name (for client)",
+                        "required": true
+                    },
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "username (for client)",
+                        "required": true
+                    },
+                    {
+                        "name": "phone_number",
+                        "in": "path",
+                        "description": "phone number (for client)",
                         "required": true
                     }
                 ],
@@ -68,9 +243,9 @@
                 "operationId": "loginUser",
                 "parameters": [
                     {
-                        "name": "email",
+                        "name": "emailorusername",
                         "in": "path",
-                        "description": "email",
+                        "description": "email or username",
                         "required": true
                     },
                     {
@@ -123,8 +298,8 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "get user info",
-                "description": "get user info",
+                "summary": "get data of authenticated user",
+                "description": "get data of authenticated user",
                 "operationId": "UserInfo",
                 "responses": {
                     "200": {

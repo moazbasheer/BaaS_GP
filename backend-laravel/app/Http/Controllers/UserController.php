@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Organization;
 use Hash;
 use Validator;
 use Auth;
-
+use Response;
+use Spatie\Permission\Models\Role;
 /**
  * @OA\Info(
  *      version="1.0.0",
@@ -91,7 +93,7 @@ class UserController extends Controller
     function register(Request $req) {
         // use validator.
         $validator = Validator::make($req->all(), [
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
             'role_name' => 'required'
         ]);
@@ -104,6 +106,31 @@ class UserController extends Controller
         $role_name = $req->role_name;
         if($role_name === "organization") {
             // use validator.
+            $validator = Validator::make($req->all(), [
+                'name' => 'required',
+                'phone_number' => 'required|min:11',
+                'postal_code' => 'required|min:5|max:5',
+                'address' => 'required'
+            ]);
+            if($is_failed || $validator->fails()) {
+                $is_failed = true;
+                $message = $this->format_message($message, $validator);
+            } else {
+                $user = User::create([
+                    'email' => $req->email,
+                    'password' => Hash::make($req->password),
+                    'role_name' => $req->role_name
+                ]);
+                
+                Organization::create([
+                    'user_id' => User::latest()->first()->id,
+                    'name' => $req->name,
+                    'postal_code' => $req->postal_code,
+                    'address' => $req->address,
+                    'phone_number' => $req->phone_number
+                ]);
+                $user->assignRole(Role::find(1));
+            }
         } elseif($role_name === "client") {
             $validator = Validator::make($req->all(), [
                 'first_name' => 'required',
@@ -111,11 +138,11 @@ class UserController extends Controller
                 'username' => 'required',
                 'phone_number' => 'required|min:11'
             ]);
-            if($validator->fails()) {
+            if($is_failed || $validator->fails()) {
                 $is_failed = true;
                 $message = $this->format_message($message, $validator);
             } else {
-                User::create([
+                $user = User::create([
                     'email' => $req->email,
                     'password' => Hash::make($req->password),
                     'role_name' => $req->role_name
@@ -128,11 +155,12 @@ class UserController extends Controller
                     'username' => $req->username,
                     'phone_number' => $req->phone_number
                 ]);
+                $user->assignRole(Role::find(2));
             }
         } else {
             // add to the message. (invalid role_name)
             // either client or organization.
-            $message []= 'role name is required';
+            
         }
         
         if($is_failed) {
@@ -212,7 +240,7 @@ class UserController extends Controller
         }
         $user1 = User::where('email', $req->emailorusername)->first();
         $user2 = null;
-        if($user1->role_name == "client") {
+        if($req->role_name == "client") {
             $user2 = Client::where('username', $req->emailorusername)->first();
             if($user2) {
                 $user2 = User::find($user2->user_id);
@@ -227,16 +255,23 @@ class UserController extends Controller
                 'password' => $temp->password,
                 'role_name' => $temp->role_name
             ];
-            // dd(Hash::check($req->password, $user["password"]));
-            // dd($req->password . ' ' . $user["password"]);
+            
             if($temp->role_name == 'client') {
                 $temp1 = Client::where('user_id', $temp->id)->first();
                 $user["first_name"] = $temp1->first_name;
                 $user["last_name"] = $temp1->last_name;
                 $user["username"] = $temp1->username;
                 $user["phone_number"] = $temp1->phone_number;
-            }
-            // dd($user);
+            } elseif($temp->role_name == 'organization') {
+                $temp1 = Organization::where('user_id', $temp->id)->first();
+                $user["name"] = $temp1->name;
+                $user["address"] = $temp1->address;
+                $user["postal_code"] = $temp1->postal_code;
+                $user["phone_number"] = $temp1->phone_number;
+            } elseif($temp->role_name === 'admin') {
+                $temp1 = Admin::where('user_id', $temp->id)->first();
+                $user["username"] = $temp1->username;
+            } // driver and passenger
         }
         if (! $user || ! Hash::check($req->password, $user["password"])) {
             return response(json_encode([
@@ -321,7 +356,30 @@ class UserController extends Controller
                 'status' => true,
                 'message' => $message
             ], 200);
+        } elseif($user->role_name === "organization") {
+            $user_info = Organization::where('user_id', $user->id)->first();
+            $message['profile_image_name'] = $user_info->profile_image_name;
+            $message['profile_image_src'] = $user_info->profile_image_src;
+            $message['name'] = $user_info->name;
+            $message['postal_code'] = $user_info->postal_code;
+            $message['address'] = $user_info->address;
+            $message['phone_number'] = $user_info->phone_number;
+            
+            return response([
+                'status' => true,
+                'message' => $message
+            ], 200);
+        } elseif($user->role_name === "admin") {
+            $user_info = Organization::where('user_id', $user->id)->first();
+            $message['username'] = $user_info->username;
+            return response([
+                'status' => true,
+                'message' => $message
+            ], 200);
         }
-        return response(json_encode(Auth::user()), 200);
+        return [
+            'status' => 'false',
+            'message' => ['role_name is not found']
+        ];
     }
 }
