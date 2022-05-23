@@ -8,7 +8,7 @@ import NotFound from './Components/Not Found/NotFound';
 import { useEffect, useState } from 'react';
 import RoutingGuard from './Components/RoutingGuard/RoutingGuard';
 import Statistics from './Components/Statistics/Statistics';
-import Passengers from './Components/Passengers/Passengers';
+import Employees from './Components/Employees/Employees';
 import OrgRoutes from './Components/OrgRoutes/OrgRoutes';
 
 
@@ -40,7 +40,9 @@ function App() {
           </RoutingGuard>}
         >
           <Route path='statistics' element={<Statistics/>} />
-          <Route path='passengers' element={<Passengers/>} />
+          <Route path='passengers' element={<Employees/>}>
+          
+          </Route>
           <Route path='routes' element={<OrgRoutes/>} />
         </Route>
         <Route path='/' element={<Navigate to="/home" replace />} />

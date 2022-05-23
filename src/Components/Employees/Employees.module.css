@@ -1,0 +1,13 @@
+.whiteFont{
+    color : #FFF !important;
+}
+
+.table {
+    margin: 0 auto !important;
+    width: 90% !important;
+    padding :  10px !important;
+}
+.nowrap{
+    white-space: nowrap;
+}
+
