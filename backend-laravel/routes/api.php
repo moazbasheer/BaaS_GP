@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\PathController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/user', [UserController::class, 'user_info']);
     Route::group(['prefix' => 'organization', 'middleware' => 'role:organization'], function() {
         Route::apiResource('routes', RouteController::class);
+        Route::get('paths/{route_id}', [PathController::class, 'index']);
+        Route::apiResource('paths', PathController::class)->only(['store', 'destroy']);
     });
     Route::post('/logout', [UserController::class, 'logout']);
 });

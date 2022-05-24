@@ -75,6 +75,17 @@ class RouteController extends Controller
      */
     public function store(Request $req)
     {
+        $validator = Validator::make($req->all(), [
+            'source' => 'required',
+            'destination' => 'required'
+        ]);
+        $message = $this->format_message($message, $validator);
+        if($validator->fails()) {
+            return response([
+                'status' => false,
+                'message' => $message
+            ], 200);
+        }
         $organization_id = Auth::user()->organization->id;
         Route::create([
             'organization_id' => $organization_id,
@@ -106,6 +117,12 @@ class RouteController extends Controller
      *          required=true,
      *          in="path"
      *      ),
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id is the route id",
+     *          required=true,
+     *          in="path"
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -120,6 +137,14 @@ class RouteController extends Controller
      */
     public function show($id)
     {
+        if($id == null) {
+            return response([
+                'status' => false,
+                'message' => [
+                    'id is not provided'
+                ]
+            ], 200);
+        }
         $organization_id = Auth::user()->organization->id;
         $route = Route::where('organization_id', $organization_id)->get();
         return response([
@@ -153,6 +178,12 @@ class RouteController extends Controller
      *          required=true,
      *          in="path"
      *      ),
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id is the route id",
+     *          required=true,
+     *          in="path"
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -167,6 +198,25 @@ class RouteController extends Controller
      */
     public function update(Request $req, $id)
     {
+        if($id == null) {
+            return response([
+                'status' => false,
+                'message' => [
+                    'id is not provided'
+                ]
+            ], 200);
+        }
+        $validator = Validator::make($req->all(), [
+            'source' => 'required',
+            'destination' => 'required'
+        ]);
+        $message = $this->format_message($message, $validator);
+        if($validator->fails()) {
+            return response([
+                'status' => false,
+                'message' => $message
+            ], 200);
+        }
         $route = Route::find($id);
         $route->source = $req->source;
         $route->destination = $req->destination;
@@ -184,7 +234,13 @@ class RouteController extends Controller
      *      tags={"Routes"},
      *      summary="delete the route",
      *      description="delete the route",
-     *      @OA\Response(
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id is the route id",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *       @OA\Response(
      *          response=200,
      *          description="successful operation"
      *       ),
@@ -198,9 +254,17 @@ class RouteController extends Controller
      */
     public function destroy($id)
     {
+        if($id == null) {
+            return response([
+                'status' => false,
+                'message' => [
+                    'id is not provided'
+                ]
+            ], 200);
+        }
         $route = Route::find($id);
         $status = $route->delete();
-        if($status) {
+        if(!$status) {
             return response([
                 'status' => false,
                 'message' => [
