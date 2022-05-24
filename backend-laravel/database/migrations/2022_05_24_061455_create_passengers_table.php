@@ -15,6 +15,15 @@ class CreatePassengersTable extends Migration
     {
         Schema::create('passengers', function (Blueprint $table) {
             $table->id();
+            $table->biginteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->biginteger('organization_id')->unsigned();
+            $table->foreign('organization_id')->references('id')->on('organizations');
+            $table->string('profile_image_name')->nullable();
+            $table->string('profile_image_src')->nullable();
+            $table->string('name');
+            $table->string('phone');
+            $table->string('address');
             $table->timestamps();
         });
     }

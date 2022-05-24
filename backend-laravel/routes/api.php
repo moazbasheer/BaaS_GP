@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\PathController;
+use App\Http\Controllers\OrganizationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,12 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/user', [UserController::class, 'user_info']);
     Route::group(['prefix' => 'organization', 'middleware' => 'role:organization'], function() {
         Route::apiResource('routes', RouteController::class);
-        Route::get('paths/{route_id}', [PathController::class, 'index']);
+
+        Route::post('/passengers/import', [OrganizationController::class, 'import_passengers_data']);
+        Route::post('/passengers', [OrganizationController::class, 'create_passenger']);
+        Route::get('/passengers', [OrganizationController::class, 'show_all_passengers']);
+
+        Route::get('/paths/{route_id}', [PathController::class, 'index']);
         Route::apiResource('paths', PathController::class)->only(['store', 'destroy']);
     });
     Route::post('/logout', [UserController::class, 'logout']);

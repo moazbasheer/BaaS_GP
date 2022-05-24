@@ -9,6 +9,173 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/organization/passengers": {
+            "get": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "get all passengers",
+                "description": "get all passengers",
+                "operationId": "get all passengers",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "create a passenger",
+                "description": "create a passenger",
+                "operationId": "create a passenger",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "password",
+                        "required": true
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "name",
+                        "required": true
+                    },
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "description": "phone",
+                        "required": true
+                    },
+                    {
+                        "name": "address",
+                        "in": "path",
+                        "description": "address",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/passengers/import": {
+            "post": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "import passengers",
+                "description": "imprt passengers",
+                "operationId": "import passengers",
+                "parameters": [
+                    {
+                        "name": "file",
+                        "in": "path",
+                        "description": "file",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/paths/{route_id}": {
+            "get": {
+                "tags": [
+                    "Paths"
+                ],
+                "summary": "get a route's paths",
+                "description": "get a route's paths",
+                "operationId": "get a route's paths",
+                "parameters": [
+                    {
+                        "name": "route_id",
+                        "in": "path",
+                        "description": "route_id is the route id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Paths"
+                ],
+                "summary": "add a path to a route",
+                "description": "add a path to a route",
+                "operationId": "add a path to a route",
+                "parameters": [
+                    {
+                        "name": "route_id",
+                        "in": "path",
+                        "description": "route_id is the route id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/organization/routes": {
             "get": {
                 "tags": [
@@ -87,6 +254,12 @@
                         "in": "path",
                         "description": "destination of the route",
                         "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id is the route id",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -122,6 +295,12 @@
                         "in": "path",
                         "description": "destination of the route",
                         "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id is the route id",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -145,6 +324,14 @@
                 "summary": "delete the route",
                 "description": "delete the route",
                 "operationId": "delete the route",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id is the route id",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -298,8 +485,8 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "get data of authenticated user",
-                "description": "get data of authenticated user",
+                "summary": "get user info",
+                "description": "get user info",
                 "operationId": "UserInfo",
                 "responses": {
                     "200": {

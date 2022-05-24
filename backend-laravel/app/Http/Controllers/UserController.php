@@ -109,7 +109,7 @@ class UserController extends Controller
             $validator = Validator::make($req->all(), [
                 'name' => 'required',
                 'phone_number' => 'required|min:11',
-                'postal_code' => 'required|min:5|max:5',
+                'postal_code' => 'required|size:5',
                 'address' => 'required'
             ]);
             if($is_failed || $validator->fails()) {
@@ -167,7 +167,7 @@ class UserController extends Controller
             return response(json_encode([
                 'status' => false,
                 'message' => $message
-            ]), 400);
+            ]), 200);
         }
         // $user_id = User::latest()->first()->id;
         return response(json_encode([
@@ -277,7 +277,7 @@ class UserController extends Controller
             return response(json_encode([
                 'status' => false,
                 'message' => ['Unauthenticated']
-            ]), 401);
+            ]), 200);
         }
         
         $auth_user = $temp;
