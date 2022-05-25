@@ -3,8 +3,9 @@ const Base_URL = "http://baas-gp.herokuapp.com/api/";
 
 // get the token from the local storage.
 let org = JSON.parse(localStorage.getItem("organization"));
-let token = org?.token; // the question mark to avoid getting an error when the user is not loggedin
-const config = {
+export let token = org?.token; // the question mark to avoid getting an error when the user is not loggedin
+console.log("token is "+token);
+ const config = {
     "Authorization": `Bearer ${token}`
 }
 
@@ -15,5 +16,10 @@ export const publicRequst = axios.create({ // for requests without tokens -Loggi
 });
 export const privateRequst = axios.create({
     baseURL: Base_URL,
-    headers: config
+    headers: config,
 })
+
+// export const privateRequst = axios.create({
+//     baseURL: Base_URL,
+//     headers: config,
+// })
