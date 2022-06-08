@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -36,11 +37,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        margin: const EdgeInsets.fromLTRB(3, 0, 20, 0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text(
                               'Forgot Password?',
                               style: TextStyle(
@@ -74,7 +75,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 40.0),
+                      const SizedBox(height: 30.0),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -93,14 +94,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 40.0),
+                            const SizedBox(height: 30.0),
                             ElevatedButton(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(290, 0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(24.0))),
+                              child: const Padding(
+                                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                                 child: Text(
-                                  "Send".toUpperCase(),
-                                  style: const TextStyle(
+                                  "SEND",
+                                  style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -108,10 +113,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 ),
                               ),
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {}
+                                if (_formKey.currentState!.validate()) {
+                                  //print("successful");
+                                  _ForgotPasswordPageState();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => const LoginDemo()));
+                                  return;
+                                } else {
+                                  //print("UnSuccessfull");
+                                }
                               },
                             ),
-                            const SizedBox(height: 30.0),
+                            const SizedBox(height: 20.0),
                             Text.rich(
                               TextSpan(
                                 children: [

@@ -1,9 +1,8 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: file_names
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:learningdart/ForgotPassword.dart';
 import 'package:learningdart/app_api.dart';
 import 'Login.dart';
 import 'widgets/header_widget.dart';
@@ -39,6 +38,7 @@ class _RegisterDemoState extends State<RegisterDemo> {
       'username': usernameController.text,
     };
     http.Response response = CallApi().postData(data, 'register');
+    // ignore: unused_local_variable
     var body = json.decode(response.body);
     //print('${body}');
   }
@@ -78,7 +78,7 @@ class _RegisterDemoState extends State<RegisterDemo> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     left: 40.0, right: 40.0, top: 15, bottom: 10),
                 child: TextFormField(
                   controller: firstnameController,
@@ -120,7 +120,9 @@ class _RegisterDemoState extends State<RegisterDemo> {
                   controller: usernameController,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.person),
+                      prefixIcon: Icon(
+                        Icons.person,
+                      ),
                       //border: OutlineInputBorder(), //labelText: 'Password',
                       hintText: 'Username',
                       hintStyle: TextStyle(fontSize: 14)),
@@ -261,6 +263,10 @@ class _RegisterDemoState extends State<RegisterDemo> {
               ),
               const Padding(padding: EdgeInsets.fromLTRB(40, 10, 40, 10)),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(290, 0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0))),
                 child: const Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: Text(
