@@ -1,0 +1,17 @@
+.mainHome{
+    height: 100vh;
+    max-width: 1200px !important;
+    /* background-color: blueviolet; */
+    /* overflow: hidden; */
+}
+.outlet{
+    flex: 1 0 auto; /* (grow:1 , shrink:0 , basis:auto) to make the row takes the rest of the height of the homa page  */
+}
+
+
+
+ 
+/*.sideNav a{
+    background-color: blue;
+
+} */
