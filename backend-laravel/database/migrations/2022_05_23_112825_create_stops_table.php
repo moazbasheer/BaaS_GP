@@ -16,7 +16,7 @@ class CreateStopsTable extends Migration
         Schema::create('stops', function (Blueprint $table) {
             $table->id();
             $table->biginteger('path_id')->unsigned();
-            $table->foreign('path_id')->references('id')->on('paths');
+            $table->foreign('path_id')->references('id')->on('paths')->onDelete('cascade');
             $table->string('name');
             $table->double('longitude', 8, 2);
             $table->double('latitude', 8, 2);

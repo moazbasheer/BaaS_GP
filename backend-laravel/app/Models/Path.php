@@ -9,6 +9,7 @@ class Path extends Model
 {
     use HasFactory;
     public $fillable = [
-        'route_id'
+        'route_id',
+        'name'
     ];
 }

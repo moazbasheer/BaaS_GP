@@ -49,9 +49,20 @@ class OrganizationController extends Controller
      */
     public function show_all_passengers() {
         $passengers = Passenger::where('organization_id', Auth::user()->organization->id)->with('user')->get();
+        $messages = [];
+        foreach($passengers as $passenger) {
+            $message = [
+                'id' => $passenger->id,
+                'email' => $passenger->user->email,
+                'name' => $passenger->name,
+                'phone' => $passenger->phone,
+                'address' => $passenger->address
+            ];
+            $messages[] = $message;
+        }
         return response([
             'status' => true,
-            'message' => $passengers
+            'message' => $messages
         ]);
     }
     /**

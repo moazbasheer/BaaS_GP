@@ -36,7 +36,10 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::get('/passengers', [OrganizationController::class, 'show_all_passengers']);
 
         Route::get('/paths/{route_id}', [PathController::class, 'index']);
-        Route::apiResource('paths', PathController::class)->only(['store', 'destroy']);
+        Route::apiResource('paths', PathController::class)->only(['store']);
+        Route::delete('paths/{path_name}', [PathController::class, 'destroy']);
+        Route::put('paths/{path_name}', [PathController::class, 'update']);
+        
     });
     Route::post('/logout', [UserController::class, 'logout']);
 });

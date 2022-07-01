@@ -31,12 +31,6 @@ class UserController extends Controller
      *      summary="register new user",
      *      description="register new user",
      *      @OA\Parameter(
-     *          name="name",
-     *          description="username",
-     *          required=true,
-     *          in="path"
-     *      ),
-     *      @OA\Parameter(
      *          name="email",
      *          description="email",
      *          required=true,
@@ -74,7 +68,25 @@ class UserController extends Controller
      *      ),
      *      @OA\Parameter(
      *          name="phone_number",
-     *          description="phone number (for client)",
+     *          description="phone number (for client)(for organization)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="name",
+     *          description="name (for organization)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="postal_code",
+     *          description="postal code (for organization)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="address",
+     *          description="postal code (for organization)",
      *          required=true,
      *          in="path"
      *      ),
@@ -179,7 +191,7 @@ class UserController extends Controller
      * the function re-formats the message and add it to 
      * the old message and returns the result.
      */
-    function format_message($old_message, $validator) {
+    public static function format_message($old_message, $validator) {
         $message = $old_message;
         $messages = json_decode($validator->messages());
         foreach($messages as $key => $value) {
@@ -249,6 +261,7 @@ class UserController extends Controller
             }
         }
         $temp = $user1??$user2; //
+        $user = null;
         if($temp) {
             $user = [
                 'email' => $temp->email,
@@ -322,8 +335,8 @@ class UserController extends Controller
      *      path="/api/user",
      *      operationId="UserInfo",
      *      tags={"User"},
-     *      summary="get user info",
-     *      description="get user info",
+     *      summary="get authenticated user info",
+     *      description="get authenticated user info",
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -334,7 +347,7 @@ class UserController extends Controller
      *       }
      *     )
      *
-     * Returns status of logout.
+     * Returns authenticated user info.
      */
     function user_info() {
         $user = Auth::user();

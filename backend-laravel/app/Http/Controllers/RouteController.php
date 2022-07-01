@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Route;
+use Validator;
 class RouteController extends Controller
 {
    /**
@@ -79,7 +80,8 @@ class RouteController extends Controller
             'source' => 'required',
             'destination' => 'required'
         ]);
-        $message = $this->format_message($message, $validator);
+        $message = [];
+        $message = UserController::format_message($message, $validator);
         if($validator->fails()) {
             return response([
                 'status' => false,
@@ -146,7 +148,7 @@ class RouteController extends Controller
             ], 200);
         }
         $organization_id = Auth::user()->organization->id;
-        $route = Route::where('organization_id', $organization_id)->get();
+        $route = Route::where('id', $id)->get();
         return response([
             'status' => true,
             'message' => $route
@@ -210,6 +212,7 @@ class RouteController extends Controller
             'source' => 'required',
             'destination' => 'required'
         ]);
+        $message = [];
         $message = $this->format_message($message, $validator);
         if($validator->fails()) {
             return response([

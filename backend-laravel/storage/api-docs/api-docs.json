@@ -145,7 +145,9 @@
                         "api_key_security_example": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/organization/paths": {
             "post": {
                 "tags": [
                     "Paths"
@@ -159,8 +161,60 @@
                         "in": "path",
                         "description": "route_id is the route id",
                         "required": true
+                    },
+                    {
+                        "name": "path",
+                        "in": "path",
+                        "description": "path object contains path_name and stops array that contains (name, logitude, latitude) for each stop",
+                        "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/paths/{path_name}": {
+            "post": {
+                "tags": [
+                    "Paths"
+                ],
+                "summary": "update a path",
+                "description": "update a path",
+                "operationId": "update a path",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/paths/{path_id}": {
+            "post": {
+                "tags": [
+                    "Paths"
+                ],
+                "summary": "delete a path",
+                "description": "delete a path",
+                "operationId": "delete a path",
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -357,12 +411,6 @@
                 "operationId": "registerNewUser",
                 "parameters": [
                     {
-                        "name": "name",
-                        "in": "path",
-                        "description": "username",
-                        "required": true
-                    },
-                    {
                         "name": "email",
                         "in": "path",
                         "description": "email",
@@ -401,7 +449,25 @@
                     {
                         "name": "phone_number",
                         "in": "path",
-                        "description": "phone number (for client)",
+                        "description": "phone number (for client)(for organization)",
+                        "required": true
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "name (for organization)",
+                        "required": true
+                    },
+                    {
+                        "name": "postal_code",
+                        "in": "path",
+                        "description": "postal code (for organization)",
+                        "required": true
+                    },
+                    {
+                        "name": "address",
+                        "in": "path",
+                        "description": "postal code (for organization)",
                         "required": true
                     }
                 ],
@@ -485,8 +551,8 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "get user info",
-                "description": "get user info",
+                "summary": "get authenticated user info",
+                "description": "get authenticated user info",
                 "operationId": "UserInfo",
                 "responses": {
                     "200": {
