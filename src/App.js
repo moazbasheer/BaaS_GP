@@ -1,4 +1,3 @@
-
 import './App.css';
 import Login from './Components/Login/login';
 import Register from './Components/Register/Register';
@@ -11,8 +10,7 @@ import Statistics from './Components/Statistics/Statistics';
 import Employees from './Components/Employees/Employees';
 import OrgRoutes from './Components/OrgRoutes/OrgRoutes';
 import CreateRoute from './Components/CreateRoute/CreateRoute';
-
-
+import CreatePath from './Components/CreatePath/CreatePath';
 
 function App() {
   const [loggedOrg, setLoggedOrg] = useState({});
@@ -38,14 +36,12 @@ function App() {
 
         <Route path="/home" element={
           <RoutingGuard logOut={logout} Component={Home}>
-          </RoutingGuard>}
-        >
+          </RoutingGuard>}>
           <Route path='statistics' element={<Statistics />} />
-          <Route path='passengers' element={<Employees />}>
-
-          </Route>
+          <Route path='passengers' element={<Employees />} />
           <Route path='routes' element={<OrgRoutes />}/>
           <Route path='create-route' element={<CreateRoute />} />
+          <Route path='create-path/:id' element={<CreatePath />} />
         </Route>
         <Route path='/' element={<Navigate to="/home" replace />} />
         <Route path="*" element={<NotFound />} />

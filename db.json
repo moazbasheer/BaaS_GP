@@ -1,0 +1,101 @@
+{
+  "paths": [
+    {
+      "routeId": "7",
+      "name": "mypath",
+      "stops": [],
+      "path": "ouhvDc~l}DKo@bMwCvDm@zG_B|@dGN@NCPOuBmLYm@e@gDsDyScAsGBi@BSNe@HQvAUpAYVIxBcALEj@Ah@FTDlADv@A~BIjEW@SCK{BNcCJ_C@kBI_@u@Ka@UmAsBuXc@uBNOBSIUOgGeAGeDKyCYk@fJ",
+      "time": 465064,
+      "distance": 3490.65,
+      "id": 1
+    },
+    {
+      "routeId": "7",
+      "name": "mypath2",
+      "stops": [
+        [
+          30.014689197009744,
+          31.20951996427512
+        ]
+      ],
+      "path": "ouhvDc~l}DKo@xBi@hAdJoBPB\\nKoAx@M`OyExFyAfBa@vDo@lZwGxGiBxAe@bMoC\\A^Bh@NZRVZN\\Jh@J~@TjKJbAj@xBzB~HPZLADO{@sC?SBQwBcHIk@Eg@?{K@mED[~@gBLc@Fe@@[{@eMS}D[}BC]?]m@{EKmA_@sA[k@QQ_G_E[a@KE{AiA}BmBaBiAgHwEYQ[IQCiDAeSo@y@AsXr@kFHQAWGs@]?C",
+      "time": 658682,
+      "distance": 6006.726,
+      "id": 2
+    }
+  ],
+  "routes": [
+    {
+      "name": "my route 1",
+      "origin": [
+        30.034482412453016,
+        31.205173233761737
+      ],
+      "destination": [
+        30.033925118020747,
+        31.212490299954364
+      ],
+      "id": 1
+    },
+    {
+      "name": "MyRoute",
+      "origin": [
+        29.995011336601394,
+        31.18955812562316
+      ],
+      "destination": [
+        30.0173251771772,
+        31.231367720733253
+      ],
+      "id": 2
+    },
+    {
+      "name": "route 2",
+      "origin": [
+        30.03517613370542,
+        31.18840171216236
+      ],
+      "destination": [
+        30.035060468726613,
+        31.24133397547856
+      ],
+      "id": 3
+    },
+    {
+      "name": "543",
+      "origin": null,
+      "destination": null,
+      "id": 4
+    },
+    {
+      "name": "5432",
+      "origin": null,
+      "destination": null,
+      "id": 5
+    },
+    {
+      "name": "",
+      "origin": [
+        30.032411766009858,
+        31.201141655921525
+      ],
+      "destination": [
+        30.03052785226744,
+        31.21653299992744
+      ],
+      "id": 6
+    },
+    {
+      "name": "myrooot",
+      "origin": [
+        30.032411766009858,
+        31.201141655921525
+      ],
+      "destination": [
+        30.03052785226744,
+        31.21653299992744
+      ],
+      "id": 7
+    }
+  ]
+}
