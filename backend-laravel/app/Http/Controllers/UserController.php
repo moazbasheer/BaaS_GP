@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Admin;
 use App\Models\Organization;
+use App\Models\Passenger;
 use Hash;
 use Validator;
 use Auth;
@@ -248,7 +250,7 @@ class UserController extends Controller
             return response(json_encode([
                 'status' => false,
                 'message' => $message
-            ]), 400);
+            ]), 200);
         }
         $user1 = User::where('email', $req->emailorusername)->first();
         $user2 = null;
@@ -281,10 +283,21 @@ class UserController extends Controller
                 $user["address"] = $temp1->address;
                 $user["postal_code"] = $temp1->postal_code;
                 $user["phone_number"] = $temp1->phone_number;
-            } elseif($temp->role_name === 'admin') {
+            } elseif($temp->role_name == 'admin') {
                 $temp1 = Admin::where('user_id', $temp->id)->first();
                 $user["username"] = $temp1->username;
-            } // driver and passenger
+            } elseif($temp->role_name == 'passenger') {
+                $temp1 = Passenger::where('user_id', $temp->id)->first();
+                if($temp1->activated == 0) {
+                    return response([
+                        'status' => true,
+                        'message' => ['user is deactivated, please contact the organization']
+                    ], 200);
+                }
+                $user["name"] = $temp1->name;
+                $user["address"] = $temp1->address;
+                $user["phone"] = $temp1->phone;
+            }
         }
         if (! $user || ! Hash::check($req->password, $user["password"])) {
             return response(json_encode([
@@ -385,6 +398,7 @@ class UserController extends Controller
         } elseif($user->role_name === "admin") {
             $user_info = Organization::where('user_id', $user->id)->first();
             $message['username'] = $user_info->username;
+            
             return response([
                 'status' => true,
                 'message' => $message

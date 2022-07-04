@@ -56,7 +56,8 @@ class OrganizationController extends Controller
                 'email' => $passenger->user->email,
                 'name' => $passenger->name,
                 'phone' => $passenger->phone,
-                'address' => $passenger->address
+                'address' => $passenger->address,
+                'activated' => $passenger->activated
             ];
             $messages[] = $message;
         }
@@ -157,7 +158,7 @@ class OrganizationController extends Controller
      *      operationId="import passengers",
      *      tags={"Passengers"},
      *      summary="import passengers",
-     *      description="imprt passengers",
+     *      description="import passengers",
      *      @OA\Parameter(
      *          name="file",
      *          description="file",
@@ -196,4 +197,106 @@ class OrganizationController extends Controller
             'message' => ['passengers are added succesfully']
         ]);
     }
+
+    /**
+     * @OA\Get(
+     *      path="/api/organization/passengers/deactivate/{id}",
+     *      operationId="deactivate a passenger",
+     *      tags={"Passengers"},
+     *      summary="deactivate a passenger",
+     *      description="deactivate a passenger",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *      ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      security={
+     *          {"api_key_security_example": {}}
+     *      }
+     * )
+     *
+     * Returns all passengers data.
+     */
+    public function deactivate_passenger(Request $req) {
+        
+        $passenger = Passenger::where('id', $req->id)->first();
+        if($passenger->activated == 0) {
+            return response([
+                'status' => false,
+                'message' => ['passenger is already unactivated']
+            ], 200);
+        }
+        $passenger->activated = 0;
+        $passenger->save();
+        return response([
+            'status' => true,
+            'message' => ['passenger is deactivated successfully']
+        ], 200);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/organization/passengers/activate/{id}",
+     *      operationId="activate a passenger",
+     *      tags={"Passengers"},
+     *      summary="activate a passenger",
+     *      description="activate a passenger",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *      ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      security={
+     *          {"api_key_security_example": {}}
+     *      }
+     * )
+     *
+     * Returns all passengers data.
+     */
+    public function activate_passenger(Request $req) {
+        
+        $passenger = Passenger::where('id', $req->id)->first();
+        if($passenger->activated == 1) {
+            return response([
+                'status' => false,
+                'message' => ['passenger is already activated']
+            ], 200);
+        }
+        $passenger->activated = 1;
+        $passenger->save();
+        return response([
+            'status' => true,
+            'message' => ['passenger is activated successfully']
+        ], 200);
+    }
+
+    /**
+     * @OA\Delete(
+     *      path="/api/organization/passengers/{id}",
+     *      operationId="delete a passenger",
+     *      tags={"Passengers"},
+     *      summary="delete a passenger",
+     *      description="delete a passenger",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *      ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      security={
+     *          {"api_key_security_example": {}}
+     *      }
+     * )
+     *
+     * Returns all passengers data.
+     */
+    public function remove_passenger(Request $req) {
+        
+        Passenger::where('id', $req->id)->delete();
+        return response([
+            'status' => true,
+            'message' => ['passenger is deleted successfully']
+        ], 200);
+    }
+
+
 }

@@ -9,6 +9,98 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/organization/drivers": {
+            "post": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "create driver",
+                "description": "create driver",
+                "operationId": "create driver",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "password",
+                        "required": true
+                    },
+                    {
+                        "name": "role_name",
+                        "in": "path",
+                        "description": "role name",
+                        "required": true
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "name",
+                        "required": true
+                    },
+                    {
+                        "name": "address",
+                        "in": "path",
+                        "description": "address",
+                        "required": true
+                    },
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "description": "phone",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/drivers/import": {
+            "post": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "import drivers",
+                "description": "import drivers",
+                "operationId": "import drivers",
+                "parameters": [
+                    {
+                        "name": "file",
+                        "in": "path",
+                        "description": "the data file",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/organization/passengers": {
             "get": {
                 "tags": [
@@ -91,7 +183,7 @@
                     "Passengers"
                 ],
                 "summary": "import passengers",
-                "description": "imprt passengers",
+                "description": "import passengers",
                 "operationId": "import passengers",
                 "parameters": [
                     {
@@ -101,6 +193,75 @@
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/passengers/deactivate/{id}": {
+            "get": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "deactivate a passenger",
+                "description": "deactivate a passenger",
+                "operationId": "deactivate a passenger",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/passengers/activate/{id}": {
+            "get": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "activate a passenger",
+                "description": "activate a passenger",
+                "operationId": "activate a passenger",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/passengers/{id}": {
+            "delete": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "delete a passenger",
+                "description": "delete a passenger",
+                "operationId": "delete a passenger",
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -163,9 +324,21 @@
                         "required": true
                     },
                     {
-                        "name": "path",
+                        "name": "distance",
                         "in": "path",
-                        "description": "path object contains path_name and stops array that contains (name, logitude, latitude) for each stop",
+                        "description": "distance of path",
+                        "required": true
+                    },
+                    {
+                        "name": "time",
+                        "in": "path",
+                        "description": "time of path",
+                        "required": true
+                    },
+                    {
+                        "name": "price",
+                        "in": "path",
+                        "description": "price of path",
                         "required": true
                     }
                 ],
@@ -192,6 +365,32 @@
                 "summary": "update a path",
                 "description": "update a path",
                 "operationId": "update a path",
+                "parameters": [
+                    {
+                        "name": "stops",
+                        "in": "path",
+                        "description": "array of stops of the path",
+                        "required": true
+                    },
+                    {
+                        "name": "distance",
+                        "in": "path",
+                        "description": "distance of path",
+                        "required": true
+                    },
+                    {
+                        "name": "time",
+                        "in": "path",
+                        "description": "time of path",
+                        "required": true
+                    },
+                    {
+                        "name": "price",
+                        "in": "path",
+                        "description": "price of path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -386,6 +585,73 @@
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/trips": {
+            "get": {
+                "tags": [
+                    "Trips"
+                ],
+                "summary": "get all trips",
+                "description": "get all trips",
+                "operationId": "get all trips",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Trips"
+                ],
+                "summary": "create a trip",
+                "description": "create a trip",
+                "operationId": "create a trip",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/trips/pay/{id}": {
+            "post": {
+                "tags": [
+                    "Trips"
+                ],
+                "summary": "pay a trip",
+                "description": "pay a trip",
+                "operationId": "pay a trip",
                 "responses": {
                     "200": {
                         "description": "successful operation"

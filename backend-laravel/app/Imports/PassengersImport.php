@@ -29,7 +29,7 @@ class PassengersImport implements ToModel, WithHeadingRow
         $validator = Validator::make($row, [
             'email' => ['required','email', 'unique:users'],
             'name' => ['required'],
-            'password' => ['required', 'unique:users'],
+            'password' => ['required'],
             'phone' => ['required'],
             'address' => ['required']
         ]);

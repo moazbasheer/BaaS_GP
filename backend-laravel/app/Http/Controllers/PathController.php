@@ -88,8 +88,20 @@ class PathController extends Controller
      *          in="path"
      *      ),
      *      @OA\Parameter(
-     *          name="path",
-     *          description="path object contains path_name and stops array that contains (name, logitude, latitude) for each stop",
+     *          name="distance",
+     *          description="distance of path",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="time",
+     *          description="time of path",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="price",
+     *          description="price of path",
      *          required=true,
      *          in="path"
      *      ),
@@ -108,8 +120,11 @@ class PathController extends Controller
     public function store(Request $req)
     {
         $validator = Validator::make($req->all(),[
-            'route_id' => 'required',
-            'path' => 'required'
+            'route_id' => 'required|number',
+            'path' => 'required',
+            'distance' => 'required|number',
+            'time' => 'required|number',
+            'price' => 'required|number'
         ]);
         
         if(gettype($req->path) != "array" || array_keys($req->path) == range(0, count($req->path) - 1)) {
@@ -203,7 +218,10 @@ class PathController extends Controller
         
         $path = Path::create([
             'route_id' => $route_id,
-            'name' => $path_name
+            'name' => $path_name,
+            'distance' => $req->distance,
+            'time' => $req->time,
+            'price' => $req->price
         ]);
         foreach($path_stops as $stop) {
             $stop["path_id"] = $path->id;
@@ -244,6 +262,30 @@ class PathController extends Controller
      *      tags={"Paths"},
      *      summary="update a path",
      *      description="update a path",
+     *      @OA\Parameter(
+     *          name="stops",
+     *          description="array of stops of the path",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="distance",
+     *          description="distance of path",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="time",
+     *          description="time of path",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="price",
+     *          description="price of path",
+     *          required=true,
+     *          in="path"
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -259,7 +301,10 @@ class PathController extends Controller
     public function update(Request $req)
     {
         $validator = Validator::make($req->all(),[
-            'stops' => 'required'
+            'stops' => 'required',
+            'distance' => 'required|number',
+            'time' => 'required|number',
+            'price' => 'required|number'
         ]);
         $stops = $req->stops;
         $message = [];
@@ -294,7 +339,10 @@ class PathController extends Controller
         $path->delete();
         $path = Path::create([
             'route_id' => $route_id,
-            'name' => $path_name
+            'name' => $path_name,
+            'distance' => $req->distance,
+            'time' => $req->time,
+            'price' => $req->price
         ]);
         foreach($req->stops as $stop) {
             $stop["path_id"] = $path->id;
