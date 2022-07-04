@@ -1,0 +1,12 @@
+.leftHeader{
+    font-size: 4rem;
+    /* color: rgb(238, 238, 6); */
+    /* color: #FFF; */
+    font-weight: bolder;
+}
+
+.registerForm{
+    border: 5px solid rgb(238, 238, 6)!important;
+ /* border-color:; */
+ /* background-color: blue; */
+}
