@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Route;
+use App\Models\Wallet;
 class Organization extends Model
 {
     use HasFactory;
@@ -19,5 +20,8 @@ class Organization extends Model
     ];
     public function routes() {
         return $this->hasMany(Route::class);
+    }
+    public function wallet() {
+        return $this->hasOne(Wallet::class);
     }
 }

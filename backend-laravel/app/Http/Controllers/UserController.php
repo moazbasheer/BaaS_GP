@@ -13,6 +13,7 @@ use Validator;
 use Auth;
 use Response;
 use Spatie\Permission\Models\Role;
+use App\Models\Wallet;
 /**
  * @OA\Info(
  *      version="1.0.0",
@@ -136,7 +137,7 @@ class UserController extends Controller
                     'role_name' => $req->role_name
                 ]);
                 
-                Organization::create([
+                $organization = Organization::create([
                     'user_id' => User::latest()->first()->id,
                     'name' => $req->name,
                     'postal_code' => $req->postal_code,
@@ -144,6 +145,10 @@ class UserController extends Controller
                     'phone_number' => $req->phone_number
                 ]);
                 $user->assignRole(Role::find(1));
+                Wallet::create([
+                    'organization_id' => $organization->id,
+                    'balance' => 0
+                ]);
             }
         } elseif($role_name === "client") {
             $validator = Validator::make($req->all(), [
@@ -162,7 +167,7 @@ class UserController extends Controller
                     'role_name' => $req->role_name
                 ]);
                 
-                Client::create([
+                $client = Client::create([
                     'user_id' => User::latest()->first()->id,
                     'first_name' => $req->first_name,
                     'last_name' => $req->last_name,
@@ -170,6 +175,10 @@ class UserController extends Controller
                     'phone_number' => $req->phone_number
                 ]);
                 $user->assignRole(Role::find(2));
+                Wallet::create([
+                    'client_id' => $client->id,
+                    'balance' => 0
+                ]);
             }
         } else {
             // add to the message. (invalid role_name)

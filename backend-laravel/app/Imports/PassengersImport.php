@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Spatie\Permission\Models\Role;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Illuminate\Support\Collection;
+use App\Models\Wallet;
 use Hash;
 use Auth;
 use Validator;
@@ -43,14 +44,17 @@ class PassengersImport implements ToModel, WithHeadingRow
         ]);
         $role = Role::where('name', 'passenger')->first();
         $user->assignRole($role);
-        return new Passenger([
+        $passenger = Passenger::create([
             'user_id' => User::latest()->first()->id,
             'organization_id' => Auth::user()->organization->id,
             'name' => $row['name'],
             'phone' => $row['phone'],
             'address' => $row['address']
         ]);
-        
+        return new Wallet([
+            'passenger_id' => $passenger->id,
+            'balance' => 0
+        ]);
     }
     public function rules(): array
     {

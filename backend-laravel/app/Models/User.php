@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Organization;
+use App\Models\Client;
+use App\Models\Passenger;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -45,5 +47,11 @@ class User extends Authenticatable
     ];
     public function organization() {
         return $this->hasOne(Organization::class);
+    }
+    public function client() {
+        return $this->hasOne(Client::class);
+    }
+    public function passenger() {
+        return $this->hasOne(Passenger::class);
     }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\PathController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\ClientController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -47,6 +49,16 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::post('/trips', [TripController::class, 'create_trip']);
         Route::get('/trips', [TripController::class, 'get_all_trips']);
         Route::post('/trips/pay/{id}', [TripController::class, 'pay_trip']);
+        
+        Route::get('wallet', [OrganizationController::class, 'check_balance']);
+        Route::post('wallet/charge', [OrganizationController::class, 'charge_balance']);
+
+    });
+    Route::group(['prefix' => 'client', 'middleware' => 'role:client'], function() {
+        
+        Route::get('wallet', [ClientController::class, 'check_balance']);
+        Route::post('wallet/charge', [ClientController::class, 'charge_balance']);
+
     });
     Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
         Route::post('/drivers', [DriverController::class, 'create_driver']);

@@ -9,6 +9,60 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/client/wallet": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "check the balance for client",
+                "description": "check the balance for client",
+                "operationId": "check the balance for client",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/client/wallet/charge": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "charge the balance for client",
+                "description": "charge the balance for client",
+                "operationId": "charge the balance for client",
+                "parameters": [
+                    {
+                        "name": "file",
+                        "in": "path",
+                        "description": "file",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/organization/drivers": {
             "post": {
                 "tags": [
@@ -209,7 +263,7 @@
             }
         },
         "/api/organization/passengers/deactivate/{id}": {
-            "get": {
+            "put": {
                 "tags": [
                     "Passengers"
                 ],
@@ -232,7 +286,7 @@
             }
         },
         "/api/organization/passengers/activate/{id}": {
-            "get": {
+            "put": {
                 "tags": [
                     "Passengers"
                 ],
@@ -262,6 +316,84 @@
                 "summary": "delete a passenger",
                 "description": "delete a passenger",
                 "operationId": "delete a passenger",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/wallet": {
+            "get": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "check the balance",
+                "description": "check the balance",
+                "operationId": "check the balance",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/wallet/charge": {
+            "post": {
+                "tags": [
+                    "Organizations"
+                ],
+                "summary": "charge the balance",
+                "description": "charge the balance",
+                "operationId": "charge the balance",
+                "parameters": [
+                    {
+                        "name": "card_number",
+                        "in": "path",
+                        "description": "card number",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_month",
+                        "in": "path",
+                        "description": "expiration month",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_year",
+                        "in": "path",
+                        "description": "expiration year",
+                        "required": true
+                    },
+                    {
+                        "name": "CVC",
+                        "in": "path",
+                        "description": "CVC",
+                        "required": true
+                    },
+                    {
+                        "name": "amount",
+                        "in": "path",
+                        "description": "amount",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -324,21 +456,9 @@
                         "required": true
                     },
                     {
-                        "name": "distance",
+                        "name": "path",
                         "in": "path",
-                        "description": "distance of path",
-                        "required": true
-                    },
-                    {
-                        "name": "time",
-                        "in": "path",
-                        "description": "time of path",
-                        "required": true
-                    },
-                    {
-                        "name": "price",
-                        "in": "path",
-                        "description": "price of path",
+                        "description": "path is a json object contains path_name and stops and each stop has name, longitude and latitude",
                         "required": true
                     }
                 ],
@@ -370,24 +490,6 @@
                         "name": "stops",
                         "in": "path",
                         "description": "array of stops of the path",
-                        "required": true
-                    },
-                    {
-                        "name": "distance",
-                        "in": "path",
-                        "description": "distance of path",
-                        "required": true
-                    },
-                    {
-                        "name": "time",
-                        "in": "path",
-                        "description": "time of path",
-                        "required": true
-                    },
-                    {
-                        "name": "price",
-                        "in": "path",
-                        "description": "price of path",
                         "required": true
                     }
                 ],
@@ -629,6 +731,38 @@
                 "summary": "create a trip",
                 "description": "create a trip",
                 "operationId": "create a trip",
+                "parameters": [
+                    {
+                        "name": "path_name",
+                        "in": "path",
+                        "description": "path name",
+                        "required": true
+                    },
+                    {
+                        "name": "repitition",
+                        "in": "path",
+                        "description": "repitition",
+                        "required": true
+                    },
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "description": "date",
+                        "required": true
+                    },
+                    {
+                        "name": "time",
+                        "in": "path",
+                        "description": "time",
+                        "required": true
+                    },
+                    {
+                        "name": "num_seats",
+                        "in": "path",
+                        "description": "number of seats",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -652,6 +786,38 @@
                 "summary": "pay a trip",
                 "description": "pay a trip",
                 "operationId": "pay a trip",
+                "parameters": [
+                    {
+                        "name": "payment_method",
+                        "in": "path",
+                        "description": "payment method (wallet or credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "card_number",
+                        "in": "path",
+                        "description": "card number",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_month",
+                        "in": "path",
+                        "description": "expiration month",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_year",
+                        "in": "path",
+                        "description": "expiration year",
+                        "required": true
+                    },
+                    {
+                        "name": "CVC",
+                        "in": "path",
+                        "description": "CVC (three-digit number)",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"

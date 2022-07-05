@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\UserController;
 use App\Models\Stop;
+use Http;
 class PathController extends Controller
 {
     /**
@@ -46,7 +47,6 @@ class PathController extends Controller
         $paths = [];
         foreach($all_paths as $path) {
             $stops = ['path_name' => $path->name, 'stops' => []];
-
             $all_stops = Stop::where('path_id', $path->id)->get();
             foreach($all_stops as $stop) {
                 $stops['stops'][] = [
@@ -55,6 +55,9 @@ class PathController extends Controller
                     'latitude' => $stop->latitude
                 ];
             }
+            $stops["distance"] = $path->distance;
+            $stops["time"] = $path->time;
+            $stops["price"] = $path->price;
             $paths []= $stops;
         }
         
@@ -88,20 +91,8 @@ class PathController extends Controller
      *          in="path"
      *      ),
      *      @OA\Parameter(
-     *          name="distance",
-     *          description="distance of path",
-     *          required=true,
-     *          in="path"
-     *      ),
-     *      @OA\Parameter(
-     *          name="time",
-     *          description="time of path",
-     *          required=true,
-     *          in="path"
-     *      ),
-     *      @OA\Parameter(
-     *          name="price",
-     *          description="price of path",
+     *          name="path",
+     *          description="path is a json object contains path_name and stops and each stop has name, longitude and latitude",
      *          required=true,
      *          in="path"
      *      ),
@@ -120,11 +111,8 @@ class PathController extends Controller
     public function store(Request $req)
     {
         $validator = Validator::make($req->all(),[
-            'route_id' => 'required|number',
-            'path' => 'required',
-            'distance' => 'required|number',
-            'time' => 'required|number',
-            'price' => 'required|number'
+            'route_id' => 'required',
+            'path' => 'required'
         ]);
         
         if(gettype($req->path) != "array" || array_keys($req->path) == range(0, count($req->path) - 1)) {
@@ -144,16 +132,16 @@ class PathController extends Controller
         }
         $message = [];
         $route_id = $req->route_id;
-        if(!array_key_exists("stops", $req->path)) {
+        if(!array_key_exists("stops", $req->path) || !count($req->path["stops"]) > 1) {
             $message []= "The path field should have stops field (non-empty arrays)";
         }
-        if(!array_key_exists("path_name", $req->path) || is_null($req->path["path_name"])) {
+        if(!array_key_exists("path_name", $req->path) || is_null($req->path["path_name"]) ) {
             $message []= "The path field should have path_name field (non-empty string)";
         }
         
         if(!array_key_exists("stops", $req->path) || !count($req->path["stops"]) > 0 || !array_key_exists("path_name", $req->path) || is_null($req->path["path_name"])) {
             return response([
-                'status' => true,
+                'status' => false,
                 'message' => $message
             ], 200);
         }
@@ -200,7 +188,7 @@ class PathController extends Controller
                     'longitude' => $stop->longitude,
                     'latitude' => $stop->latitude
                 ];
-                if(!$stop->name || !$stop->longitude || !$stop->latitude) {
+                if(!$stop->name || is_null($stop->longitude) || is_null($stop->latitude)) {
                     return response([
                         'status' => false,
                         'message' => ['each stop should have name, longitude and latitude']
@@ -214,14 +202,22 @@ class PathController extends Controller
                 ]);
             }
         }
+        $str = "https://graphhopper.com/api/1/route?key=bd47e377-3534-45d4-95a1-e35b7a1ac81d";
+        foreach($path_stops as $stop) {
+            $str = $str . '&point=' . $stop["longitude"] . "," . $stop["latitude"];
+        }
         
+        $path = Http::get($str)["paths"][0];
+        $distance = $path["distance"];
+        $time = $path["time"];
+        $price = 0.2 * $distance + 0.02 * $time + 15;
         
         $path = Path::create([
             'route_id' => $route_id,
             'name' => $path_name,
-            'distance' => $req->distance,
-            'time' => $req->time,
-            'price' => $req->price
+            'distance' => $distance,
+            'time' => $time,
+            'price' => $price
         ]);
         foreach($path_stops as $stop) {
             $stop["path_id"] = $path->id;
@@ -268,24 +264,6 @@ class PathController extends Controller
      *          required=true,
      *          in="path"
      *      ),
-     *      @OA\Parameter(
-     *          name="distance",
-     *          description="distance of path",
-     *          required=true,
-     *          in="path"
-     *      ),
-     *      @OA\Parameter(
-     *          name="time",
-     *          description="time of path",
-     *          required=true,
-     *          in="path"
-     *      ),
-     *      @OA\Parameter(
-     *          name="price",
-     *          description="price of path",
-     *          required=true,
-     *          in="path"
-     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -302,9 +280,6 @@ class PathController extends Controller
     {
         $validator = Validator::make($req->all(),[
             'stops' => 'required',
-            'distance' => 'required|number',
-            'time' => 'required|number',
-            'price' => 'required|number'
         ]);
         $stops = $req->stops;
         $message = [];
@@ -333,6 +308,16 @@ class PathController extends Controller
                 ], 200);
             }
         }
+        $str = "https://graphhopper.com/api/1/route?key=bd47e377-3534-45d4-95a1-e35b7a1ac81d";
+        foreach($req->stops as $stop) {
+            $str = $str . '&point=' . $stop["longitude"] . "," . $stop["latitude"];
+        }
+        
+        $path = Http::get($str)["paths"][0];
+        $distance = $path["distance"];
+        $time = $path["time"];
+        $price = 0.2 * $distance + 0.02 * $time + 15;
+
         $path_name = $req->path_name;
         $path = Path::where('name', $path_name)->first();
         $route_id = $path->route_id;
@@ -340,9 +325,9 @@ class PathController extends Controller
         $path = Path::create([
             'route_id' => $route_id,
             'name' => $path_name,
-            'distance' => $req->distance,
-            'time' => $req->time,
-            'price' => $req->price
+            'distance' => $distance,
+            'time' => $time,
+            'price' => $price
         ]);
         foreach($req->stops as $stop) {
             $stop["path_id"] = $path->id;

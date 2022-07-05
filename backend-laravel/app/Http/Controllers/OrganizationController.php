@@ -11,7 +11,8 @@ use Auth;
 use App\Models\User;
 use App\Models\Passenger;
 use Spatie\Permission\Models\Role;
-
+use App\Models\Wallet;
+use Stripe;
 class OrganizationController extends Controller
 {
     /**
@@ -138,7 +139,7 @@ class OrganizationController extends Controller
             'role_name' => 'passenger'
         ]);
         
-        Passenger::create([
+        $passenger = Passenger::create([
             'user_id' => User::latest()->first()->id,
             'organization_id' => Auth::user()->organization->id,
             'name' => $row['name'],
@@ -147,6 +148,10 @@ class OrganizationController extends Controller
         ]);
         $role = Role::where('name', 'passenger')->first();
         $user->assignRole($role);
+        Wallet::create([
+            'passenger_id' => $passenger->id,
+            'balance' => 0
+        ]);
         return response([
             'status' => true,
             'message' => ['passenger is added successfully']
@@ -199,7 +204,7 @@ class OrganizationController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Put(
      *      path="/api/organization/passengers/deactivate/{id}",
      *      operationId="deactivate a passenger",
      *      tags={"Passengers"},
@@ -235,7 +240,7 @@ class OrganizationController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Put(
      *      path="/api/organization/passengers/activate/{id}",
      *      operationId="activate a passenger",
      *      tags={"Passengers"},
@@ -291,12 +296,164 @@ class OrganizationController extends Controller
      */
     public function remove_passenger(Request $req) {
         
-        Passenger::where('id', $req->id)->delete();
+        $passenger = Passenger::where('id', $req->id)->first();
+        if($passenger == null) {
+            return [
+                'status' => false,
+                'message' => ['id is not valid']
+            ];
+        }
+        $user = $passenger->user;
+        $passenger->delete();
+        $user->delete();
+        
         return response([
             'status' => true,
             'message' => ['passenger is deleted successfully']
         ], 200);
     }
-
-
+    /**
+     * @OA\Get(
+     *      path="/api/organization/wallet",
+     *      operationId="check the balance",
+     *      tags={"Organizations"},
+     *      summary="check the balance",
+     *      description="check the balance",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *      ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      security={
+     *          {"api_key_security_example": {}}
+     *      }
+     * )
+     *
+     * Returns all passengers data.
+     */
+    public function check_balance() {
+        $wallet = Auth::user()->organization->wallet;
+        return response([
+            'status' => true,
+            'message' => [
+                'balance' => $wallet->balance
+            ]
+        ]);
+    }
+    /**
+     * @OA\Post(
+     *      path="/api/organization/wallet/charge",
+     *      operationId="charge the balance",
+     *      tags={"Organizations"},
+     *      summary="charge the balance",
+     *      description="charge the balance",
+     *      @OA\Parameter(
+     *          name="card_number",
+     *          description="card number",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="exp_month",
+     *          description="expiration month",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="exp_year",
+     *          description="expiration year",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="CVC",
+     *          description="CVC",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="amount",
+     *          description="amount",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *      ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      security={
+     *          {"api_key_security_example": {}}
+     *      }
+     * )
+     *
+     * Returns all passengers data.
+     */
+    public function charge_balance(Request $req) {
+        $validator = Validator::make($req->all(), [
+            'card_number' => 'required|size:16',
+            'exp_month' => 'required|size:2',
+            'exp_year' => 'required|size:4',
+            'CVC' => 'required|size:3',
+            'amount' => 'required'
+        ]);
+        if(gettype($req->amount) != "integer" || $req->amount < 1) {
+            return [
+                'status' => false,
+                'message' => ['amount must be a positive integer']
+            ];
+        }
+        if($validator->fails()) {
+            $message = [];
+            $message = UserController::format_message($message, $validator);
+            return response([
+                'status' => false,
+                'message' => $message
+            ], 200);
+        }
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            
+        $name = Auth::user()->organization->name;
+        try {
+            $result = Stripe\Token::create([
+                "card" => [
+                    "name" => $req->name,
+                    "number" => $req->card_number,
+                    "exp_month" => $req->exp_month,
+                    "exp_year" => $req->exp_year,
+                    "cvc" => $req->CVC
+                ]
+            ]);
+        } catch(\Exception $e) {
+            return response([
+                'status' => false,
+                'message' => [$e->getError()->message]
+            ], 200);
+        }
+        $token = $result['id'];
+        $organization = Auth::user()->organization;
+        try{
+            $status = Stripe\Charge::create([
+                "amount" => $req->amount * 100,
+                "currency" => "egp",
+                "card" => $token,
+                "description" => "Charging wallet of organization" . $organization->id
+            ]);
+        } catch(\Exception $e) {
+            return response([
+                'status' => false,
+                'message' => [$e->getError()->message]
+            ], 200);
+        }
+        
+        $wallet = $organization->wallet;
+        $wallet->balance += $req->amount;
+        $wallet->save();
+        return response([
+            'status' => true,
+            'message' => [
+                'wallet is charged successfully your balance now is ' . $wallet->balance
+            ]
+        ]);
+    }
 }
