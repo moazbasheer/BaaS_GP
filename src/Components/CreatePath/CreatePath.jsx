@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import routeService from '../../Services/routes'
-import { getCoordinates } from "../../Utility/points";
+import { getCoordinates } from "../../Utility/map";
 import CreatePathMap from "../CreatePathMap/CreatePathMap"
 import Notification from "../Notification/Notification"
 import pathService from '../../Services/paths'
 
 function CreatePath() {
-  const routeId = useParams().id
+  const routeId = parseInt(useParams().id)
 
   const [name, setName] = useState()
   const [route, setRoute] = useState()
   const [message, setMessage] = useState()
   const [stops, setStops] = useState([])
-  const [navigationResult, setNavigationResult] = useState();
+  const [navigationResult, setNavigationResult] = useState()
 
   const createPath = async () => {
+    if (!navigationResult) {
+      setMessage('Please construct a path first.')
+      return
+    }
+    if(!name) {
+      setMessage('Please enter a name for the path.')
+      return
+    }
+
     const stopsCoords = stops.map(s => getCoordinates(s))
     const path = navigationResult.paths[0]
 

@@ -11,6 +11,8 @@ import Employees from './Components/Employees/Employees';
 import OrgRoutes from './Components/OrgRoutes/OrgRoutes';
 import CreateRoute from './Components/CreateRoute/CreateRoute';
 import CreatePath from './Components/CreatePath/CreatePath';
+import ViewRoute from './Components/ViewRoute/ViewRoute';
+import ViewPath from './Components/ViewPath/ViewPath';
 
 function App() {
   const [loggedOrg, setLoggedOrg] = useState({});
@@ -40,6 +42,8 @@ function App() {
           <Route path='statistics' element={<Statistics />} />
           <Route path='passengers' element={<Employees />} />
           <Route path='routes' element={<OrgRoutes />}/>
+          <Route path='routes/:id' element={<ViewRoute />}/>
+          <Route path='paths/:id' element={<ViewPath />}/>
           <Route path='create-route' element={<CreateRoute />} />
           <Route path='create-path/:id' element={<CreatePath />} />
         </Route>

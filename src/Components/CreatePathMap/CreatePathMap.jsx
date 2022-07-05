@@ -8,15 +8,13 @@ import { OSM } from "ol/source";
 import VectorSource from "ol/source/Vector";
 import { Stroke, Style } from "ol/style"
 import { useEffect, useState } from "react"
-import { setPointStyle, getCoordinates } from '../../Utility/points'
+import { setPointStyle, getCoordinates, coordinatesToPoint, stringToPolyline } from '../../Utility/map'
 import pathAPIService from '../../Services/graphhopper'
 import { Polyline } from "ol/format";
+import MapComponent from "../MapComponent/MapComponent";
 
 let stops = []
 let origin, destination
-const mapLayer = new TileLayer({
-  source: new OSM(),
-})
 
 // layer for origin and destination
 const endpointsVecSource = new VectorSource()
@@ -43,14 +41,6 @@ const drawAction = new Draw({
 
 const snap = new Snap({
   source: stopsVecSource
-})
-
-const map = new Map({
-  layers: [mapLayer, pathVecLayer, stopsVecLayer, endpointsVecLayer],
-  view: new View({
-    center: fromLonLat([31.210705736453235, 30.03138010028067]),
-    zoom: 16,
-  }),
 })
 
 function CreatePathMap({ route, setNavigationResult, setStops }) {
@@ -100,15 +90,7 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     points.push(getCoordinates(destination))
 
     const result = await pathAPIService.getPath(points)
-
-    const path = new Polyline({}).readGeometry(result.paths[0].points, {
-      dataProjection: 'EPSG:4326',
-      featureProjection: 'EPSG:3857',
-    })
-
-    const pathFeature = new Feature({
-      geometry: path
-    })
+    const pathFeature = stringToPolyline(result.paths[0].points)
 
     // delete previous path if any
     clearPath()
@@ -140,15 +122,8 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
   }
 
   useEffect(() => {
-    map.setTarget('map')
-
     drawAction.on('drawstart', handleStopDraw)
     setDrawing(false)
-
-    map.addInteraction(drawAction)
-    map.addInteraction(snap)
-
-    return () => map.setTarget(undefined)
   }, [])
 
   useEffect(() => {
@@ -157,18 +132,10 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
       return
     }
 
-    origin = new Feature(
-      new Point(
-        fromLonLat(route.origin.reverse())
-      )
-    )
+    origin = coordinatesToPoint(route.origin)
     origin.type = 'origin'
 
-    destination = new Feature(
-      new Point(
-        fromLonLat(route.destination.reverse())
-      )
-    )
+    destination = coordinatesToPoint(route.destination)
     destination.type = 'destination'
 
     const features = [origin, destination]
@@ -186,13 +153,15 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
       </div>
       <div>
         <button onClick={clearStops}>Clear All Stops</button>
-        {/* <button onClick={computePath}>Compute Path</button> */}
       </div>
       <div>
         <p>Estimated Time: {time ? getTimeString() : '--'}</p>
         <p>Distance: {distance ? getDistanceString() : '--'}</p>
       </div>
-      <div id='map' className='map'></div>
+      <MapComponent
+        layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]}
+        interactions={[drawAction, snap]}
+      />
     </>
   );
 }

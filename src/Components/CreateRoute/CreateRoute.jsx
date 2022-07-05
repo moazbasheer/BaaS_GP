@@ -3,7 +3,7 @@ import CreateRouteMap from '../CreateRouteMap/CreateRouteMap'
 import routeService from '../../Services/routes'
 import Notification from '../Notification/Notification'
 import { useRef } from 'react';
-import { getCoordinates } from '../../Utility/points';
+import { getCoordinates } from '../../Utility/map';
 
 function CreateRoute() {
   const [name, setName] = useState('')
@@ -11,10 +11,19 @@ function CreateRoute() {
   const [origin, setOrigin] = useState()
   const [destination, setDestination] = useState();
 
+  
   const createRoute = async () => {
+    if (!origin || !destination) {
+      setMessage('Please specify an origin AND a destination.')
+      return
+    } 
+    if (!name) {
+      setMessage('Please enter a name for the route.')
+      return
+    }
+
     const originCoords = getCoordinates(origin)
     const destinationCoords = getCoordinates(destination)
-
     const route = {
       name,
       origin: originCoords,

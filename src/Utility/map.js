@@ -1,4 +1,7 @@
-import { toLonLat } from "ol/proj"
+import { Feature } from "ol"
+import { Polyline } from "ol/format"
+import { Point } from "ol/geom"
+import { fromLonLat, toLonLat } from "ol/proj"
 import { Circle, Fill, Stroke, Style, Text } from "ol/style"
 
 export const setPointStyle = point => {
@@ -74,12 +77,27 @@ export const setPointStyle = point => {
 
 // get coordinates of a feature (point) in the form of lat long
 export const getCoordinates = feature => {
-  if (!feature) {
-    return null
-  }
-
   const coords = toLonLat(feature.getGeometry().getCoordinates())
 
   // we want latitude first so we reverse the array
   return coords.reverse()
 }
+
+// convert coordinates of form lat long to a point on map
+export const coordinatesToPoint = coordinates => (
+  new Feature(
+    new Point(
+      fromLonLat(coordinates.reverse())
+    )
+  )
+)
+
+// compressed string to polyline feature
+export const stringToPolyline = string => (
+  new Feature(
+    new Polyline({}).readGeometry(string, {
+      dataProjection: 'EPSG:4326',
+      featureProjection: 'EPSG:3857',
+    })
+  )
+)
