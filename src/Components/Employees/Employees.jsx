@@ -64,7 +64,7 @@ function Passengers() {
     const isChecked = e.target.checked;
     if (isChecked){
       try {
-        const {data}= await privateRequst.get(`organization/passengers/activate/${id}`);
+        const {data}= await privateRequst.put(`organization/passengers/activate/${id}`);
         console.log(data);
       } catch (error) {
        
@@ -72,7 +72,7 @@ function Passengers() {
       }
     }
       else{
-        const {data}= await privateRequst.get(`organization/passengers/deactivate/${id}`);
+        const {data}= await privateRequst.put(`organization/passengers/deactivate/${id}`);
         console.log(data);
         console.log(e.target.checked + " bye"+id);
       }
@@ -128,7 +128,7 @@ function Passengers() {
       </Snackbar>
 
       <AddEmpLayer showAddEmp={showAddEmp} openAlert={openAlert} setShowAddEmp={setShowAddEmp} setTrickReload={setTrickReload} ></AddEmpLayer>
-      <EditEmpLayer  showAddEmp={showEditEmp} emp={passengers} openAlert={openAlert} setShowAddEmp={setShowEditEmp} setTrickReload={setTrickReload} ></EditEmpLayer>
+      {/* <EditEmpLayer  showAddEmp={showEditEmp} emp={passengers} openAlert={openAlert} setShowAddEmp={setShowEditEmp} setTrickReload={setTrickReload} ></EditEmpLayer> */}
       <AddBulkLayer showBulkLayer={showBulkLayer} setBulkLayer={setBulkLayer} openAlert={openAlert} setTrickReload={setTrickReload} ></AddBulkLayer>
 
 
