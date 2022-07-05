@@ -9,6 +9,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\PassengerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::post('/trips', [TripController::class, 'create_trip']);
         Route::get('/trips', [TripController::class, 'get_all_trips']);
         Route::post('/trips/pay/{id}', [TripController::class, 'pay_trip']);
+        Route::get('/trips/users/{id}', [TripController::class, 'get_users_in_trip']);
         
         Route::get('wallet', [OrganizationController::class, 'check_balance']);
         Route::post('wallet/charge', [OrganizationController::class, 'charge_balance']);
@@ -59,6 +61,21 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::get('wallet', [ClientController::class, 'check_balance']);
         Route::post('wallet/charge', [ClientController::class, 'charge_balance']);
 
+        Route::get('/trips', [ClientController::class, 'get_all_trips']);
+        Route::get('/trips/joined', [ClientController::class, 'get_joined_trips']);
+        Route::post('/trips/{id}', [ClientController::class, 'join_trip']);
+        Route::post('/trips/cancel/{id}', [ClientController::class, 'cancel_trip']);
+    });
+    Route::group(['prefix' => 'passenger', 'middleware' => 'role:passenger'], function() {
+        
+        Route::get('wallet', [PassengerController::class, 'check_balance']);
+        Route::post('wallet/charge', [PassengerController::class, 'charge_balance']);
+
+        Route::get('trips/inside', [PassengerController::class, 'get_trips_inside_organization']);
+        Route::get('trips/outside', [PassengerController::class, 'get_trips_outside_organization']);
+        Route::post('trips/{id}', [PassengerController::class, 'join_trip']);
+        Route::get('/trips/joined', [PassengerController::class, 'get_joined_trips']);
+        Route::post('/trips/cancel/{id}', [PassengerController::class, 'cancel_trip']);
     });
     Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
         Route::post('/drivers', [DriverController::class, 'create_driver']);

@@ -14,6 +14,7 @@ use Auth;
 use Response;
 use Spatie\Permission\Models\Role;
 use App\Models\Wallet;
+
 /**
  * @OA\Info(
  *      version="1.0.0",
@@ -412,9 +413,21 @@ class UserController extends Controller
                 'status' => true,
                 'message' => $message
             ], 200);
+        } elseif($user->role_name == "passenger") {
+            $user_info = Passenger::where('user_id', $user->id)->first();
+            $message['profile_image_name'] = $user_info->profile_image_name;
+            $message['profile_image_src'] = $user_info->profile_image_src;
+            $message["name"] = $user_info->name;
+            $message["phone"] = $user_info->phone;
+            $message["address"] = $user_info->address;
+            $message["activated"] = $user_info->activated;
+            return response([
+                'status' => true,
+                'message' => $message
+            ], 200);
         }
         return [
-            'status' => 'false',
+            'status' => false,
             'message' => ['role_name is not found']
         ];
     }

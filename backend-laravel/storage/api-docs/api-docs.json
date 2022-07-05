@@ -40,14 +40,130 @@
                 "summary": "charge the balance for client",
                 "description": "charge the balance for client",
                 "operationId": "charge the balance for client",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/client/trips": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "get all trips for client",
+                "description": "get all trips for client",
+                "operationId": "get all trips for client",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/client/trips/joined": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "get joined trips for client",
+                "description": "get joined trips for client",
+                "operationId": "get joined trips for client",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/client/trips/{id}": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "join a trip",
+                "description": "join a trip",
+                "operationId": "join a trip",
                 "parameters": [
                     {
-                        "name": "file",
+                        "name": "payment_method",
                         "in": "path",
-                        "description": "file",
+                        "description": "payment method (wallet or credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "card_number",
+                        "in": "path",
+                        "description": "card number (for credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_month",
+                        "in": "path",
+                        "description": "expiration month (for credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_year",
+                        "in": "path",
+                        "description": "expiration year (for credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "CVC",
+                        "in": "path",
+                        "description": "CVC (for credit)",
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/client/trips/cancel/{id}": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "cancel a trip",
+                "description": "cancel a trip",
+                "operationId": "cancel a trip",
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -394,6 +510,193 @@
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/passenger/wallet": {
+            "get": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "check the balance for passenger",
+                "description": "check the balance for passenger",
+                "operationId": "check the balance for passenger",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/passenger/wallet/charge": {
+            "post": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "charge the balance for passengers",
+                "description": "charge the balance for passengers",
+                "operationId": "charge the balance for passengers",
+                "parameters": [
+                    {
+                        "name": "card_number",
+                        "in": "path",
+                        "description": "card number",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_month",
+                        "in": "path",
+                        "description": "expiration month",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_year",
+                        "in": "path",
+                        "description": "expiration year",
+                        "required": true
+                    },
+                    {
+                        "name": "CVC",
+                        "in": "path",
+                        "description": "CVC",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/passenger/trips/inside": {
+            "post": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "get the trips inside the organization",
+                "description": "get the trips inside the organization",
+                "operationId": "get the trips inside the organization",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/passenger/trips/outside": {
+            "post": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "get the trips outside the organization",
+                "description": "get the trips outside the organization",
+                "operationId": "get the trips outside the organization",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/passenger/trips/{id}": {
+            "post": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "join a trip for passengers",
+                "description": "join a trip for passengers",
+                "operationId": "join a trip for passengers",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/passenger/trips/joined": {
+            "get": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "get joined trips for passenger",
+                "description": "get joined trips for passenger",
+                "operationId": "get joined trips for passenger",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/passenger/trips/cancel/{id}": {
+            "post": {
+                "tags": [
+                    "Passengers"
+                ],
+                "summary": "cancel a trip for passengers",
+                "description": "cancel a trip for passengers",
+                "operationId": "cancel a trip for passengers",
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -796,28 +1099,51 @@
                     {
                         "name": "card_number",
                         "in": "path",
-                        "description": "card number",
+                        "description": "card number(for credit payment method)",
                         "required": true
                     },
                     {
                         "name": "exp_month",
                         "in": "path",
-                        "description": "expiration month",
+                        "description": "expiration month (for credit payment method)",
                         "required": true
                     },
                     {
                         "name": "exp_year",
                         "in": "path",
-                        "description": "expiration year",
+                        "description": "expiration year (for credit payment method)",
                         "required": true
                     },
                     {
                         "name": "CVC",
                         "in": "path",
-                        "description": "CVC (three-digit number)",
+                        "description": "CVC (three-digit number) (for credit payment method)",
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/trips/users/{id}": {
+            "get": {
+                "tags": [
+                    "Trips"
+                ],
+                "summary": "get users in a trip",
+                "description": "get users in a trip",
+                "operationId": "get users in a trip",
                 "responses": {
                     "200": {
                         "description": "successful operation"

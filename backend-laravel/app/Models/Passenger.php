@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Models\Trip;
+use App\Models\Organization;
 class Passenger extends Model
 {
     use HasFactory;
@@ -21,5 +23,11 @@ class Passenger extends Model
     }
     public function wallet() {
         return $this->hasOne(Wallet::class);
+    }
+    public function trips() {
+        return $this->belongsToMany(Trip::class, 'bookings');
+    }
+    public function organization() {
+        return $this->belongsTo(Organization::class);
     }
 }

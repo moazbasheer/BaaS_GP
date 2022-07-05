@@ -122,7 +122,8 @@ class TripController extends Controller
      * Returns status of the update
      */
     public function get_all_trips(Request $req) {
-        $all_trips = Trip::get();
+        $organization = Auth::user()->organization;
+        $all_trips = Trip::where('organization_id', $organization->id)->get();
         $trips = [];
         foreach($all_trips as $trip) {
             $trip1 = [];
@@ -149,6 +150,7 @@ class TripController extends Controller
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;
             $trip1["price"] = $trip->price;
+            $trip1["num_seats"] = $trip->num_seats;
             $trips[] = $trip1;
         }
         return response([
@@ -171,25 +173,25 @@ class TripController extends Controller
      *      ),
      *      @OA\Parameter(
      *          name="card_number",
-     *          description="card number",
+     *          description="card number(for credit payment method)",
      *          required=true,
      *          in="path"
      *      ),
      *      @OA\Parameter(
      *          name="exp_month",
-     *          description="expiration month",
+     *          description="expiration month (for credit payment method)",
      *          required=true,
      *          in="path"
      *      ),
      *      @OA\Parameter(
      *          name="exp_year",
-     *          description="expiration year",
+     *          description="expiration year (for credit payment method)",
      *          required=true,
      *          in="path"
      *      ),
      *      @OA\Parameter(
      *          name="CVC",
-     *          description="CVC (three-digit number)",
+     *          description="CVC (three-digit number) (for credit payment method)",
      *          required=true,
      *          in="path"
      *      ),
@@ -207,12 +209,12 @@ class TripController extends Controller
      */
     public function pay_trip(Request $req) {
         $trip = Trip::find($req->id);
-        /*if($trip->status == 1) {
+        if($trip->status == 1) {
             return response([
                 'status' => false,
                 'message' => ['trip is already paid']
             ], 200);
-        }*/
+        }
         if($req->payment_method && $req->payment_method == "credit") {
             $validator = Validator::make($req->all(), [
                 'card_number' => 'required|size:16',
@@ -300,5 +302,62 @@ class TripController extends Controller
                 'message' => ['The payment method is either wallet or credit']
             ], 200);
         }
+    }
+    /**
+     * @OA\Get(
+     *      path="/api/organization/trips/users/{id}",
+     *      operationId="get users in a trip",
+     *      tags={"Trips"},
+     *      summary="get users in a trip",
+     *      description="get users in a trip",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
+     *
+     * Returns status of the update
+     */
+    public function get_users_in_trip(Request $req) {
+        $trip_id = $req->id;
+        $trip = Trip::find($trip_id);
+        $all_clients = $trip->clients;
+        $clients = [];
+        foreach($all_clients as $client) {
+            $user = $client->user;
+            $clients[] = [
+                'email' => $user->email,
+                'role_name' => $user->role_name,
+                'first_name' => $client->first_name,
+                'last_name' => $client->last_name,
+                'username' => $client->username,
+                'phone_number' => $client->phone_number
+            ];
+        }
+        $all_passengers = $trip->passengers;
+        $passengers = [];
+        
+        foreach($all_passengers as $passenger) {
+            $user = $passenger->user;
+            $passengers[] = [
+                'email' => $user->email,
+                'role_name' => $user->role_name,
+                'name' => $passenger->name,
+                'phone' => $passenger->phone,
+                'address' => $passenger->address,
+                'activated' => $passenger->activated
+            ];
+        }
+        return [
+            'status' => true,
+            'message' => [
+                'clients' => $clients,
+                'passengers' => $passengers
+            ]
+        ];
     }
 }
