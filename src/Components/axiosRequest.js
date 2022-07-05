@@ -3,7 +3,7 @@ const Base_URL = "http://baas-gp.herokuapp.com/api/";
 
 // get the token from the local storage.
 let org = JSON.parse(localStorage.getItem("organization"));
-export let token = org?.token; // the question mark to avoid getting an error when the user is not loggedin
+export var token = org?.token; // the question mark to avoid getting an error when the user is not loggedin
 console.log("token is "+token);
  const config = {
     "Authorization": `Bearer ${token}`

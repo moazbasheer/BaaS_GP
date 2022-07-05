@@ -10,4 +10,15 @@
 .nowrap{
     white-space: nowrap;
 }
+.cursorPointer{
+    cursor: pointer;
+}
 
+.deleteActionIcon:hover{
+    color: red !important;
+}
+
+
+.editActionIcon:hover{
+    color: yellow !important;
+}
