@@ -935,15 +935,45 @@
                 "operationId": "add a route",
                 "parameters": [
                     {
-                        "name": "source",
+                        "name": "name",
                         "in": "path",
-                        "description": "source of the route",
+                        "description": "name of the route",
                         "required": true
                     },
                     {
-                        "name": "destination",
+                        "name": "source_name",
                         "in": "path",
-                        "description": "destination of the route",
+                        "description": "name of source of the route",
+                        "required": true
+                    },
+                    {
+                        "name": "destination_name",
+                        "in": "path",
+                        "description": "name of destination of the route",
+                        "required": true
+                    },
+                    {
+                        "name": "source_longitude",
+                        "in": "path",
+                        "description": "longitude of source of the route",
+                        "required": true
+                    },
+                    {
+                        "name": "destination_longitude",
+                        "in": "path",
+                        "description": "longitude of destination of the route",
+                        "required": true
+                    },
+                    {
+                        "name": "source_latitude",
+                        "in": "path",
+                        "description": "latitude of source of the route",
+                        "required": true
+                    },
+                    {
+                        "name": "destination_latitude",
+                        "in": "path",
+                        "description": "latitude of destination of the route",
                         "required": true
                     }
                 ],
@@ -1133,6 +1163,12 @@
                         "name": "num_seats",
                         "in": "path",
                         "description": "number of seats",
+                        "required": true
+                    },
+                    {
+                        "name": "public",
+                        "in": "path",
+                        "description": "is the trip public 0 or 1",
                         "required": true
                     }
                 ],

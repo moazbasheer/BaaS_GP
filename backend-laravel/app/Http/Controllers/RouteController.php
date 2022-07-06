@@ -36,6 +36,7 @@ class RouteController extends Controller
         foreach($all_routes as $route) {
             $routes[] = [
                 'id' => $route->id,
+                'name' => $route->name,
                 'source_name' => $route->source,
                 'source_longitude' => $route->source_longitude,
                 'source_latitude' => $route->source_latitude,
@@ -64,14 +65,44 @@ class RouteController extends Controller
      *      summary="add a route",
      *      description="add a route",
      *      @OA\Parameter(
-     *          name="source",
-     *          description="source of the route",
+     *          name="name",
+     *          description="name of the route",
      *          required=true,
      *          in="path"
      *      ),
      *      @OA\Parameter(
-     *          name="destination",
-     *          description="destination of the route",
+     *          name="source_name",
+     *          description="name of source of the route",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="destination_name",
+     *          description="name of destination of the route",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="source_longitude",
+     *          description="longitude of source of the route",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="destination_longitude",
+     *          description="longitude of destination of the route",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="source_latitude",
+     *          description="latitude of source of the route",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="destination_latitude",
+     *          description="latitude of destination of the route",
      *          required=true,
      *          in="path"
      *      ),

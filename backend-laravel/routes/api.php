@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::delete('/passengers/{id}', [OrganizationController::class, 'remove_passenger']);
 
         Route::get('/paths/{route_id}', [PathController::class, 'index']);
+        Route::get('/path/{id}', [PathController::class, 'show']);
         Route::apiResource('paths', PathController::class)->only(['store']);
         Route::delete('paths/{path_name}', [PathController::class, 'destroy']);
         Route::put('paths/{path_name}', [PathController::class, 'update']);

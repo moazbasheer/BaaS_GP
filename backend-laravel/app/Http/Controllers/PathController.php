@@ -49,7 +49,11 @@ class PathController extends Controller
         
         $paths = [];
         foreach($all_paths as $path) {
-            $stops = ['path_name' => $path->name, 'stops' => []];
+            $stops = [
+                'id' => $path->id,
+                'path_name' => $path->name,
+                'stops' => []
+            ];
             $all_stops = Stop::where('path_id', $path->id)->get();
             foreach($all_stops as $stop) {
                 $stops['stops'][] = [
@@ -251,9 +255,25 @@ class PathController extends Controller
      * @param  \App\Models\Path  $path
      * @return \Illuminate\Http\Response
      */
-    public function show(Path $path)
+    public function show($id)
     {
-        //
+        $path = Path::find($id);
+        $stops = ['path_name' => $path->name, 'stops' => []];
+        $all_stops = Stop::where('path_id', $path->id)->get();
+        foreach($all_stops as $stop) {
+            $stops['stops'][] = [
+                'name' => $stop->name,
+                'langitude' => $stop->longitude,
+                'latitude' => $stop->latitude
+            ];
+        }
+        $stops["distance"] = $path->distance;
+        $stops["time"] = $path->time;
+        $stops["price"] = $path->price;
+        return response([
+            'status' => true,
+            'message' => $stops
+        ]);
     }
 
     /**
