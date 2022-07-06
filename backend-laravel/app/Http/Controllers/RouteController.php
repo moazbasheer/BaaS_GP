@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Route;
+use App\Models\Path;
 use Validator;
 class RouteController extends Controller
 {
@@ -30,7 +31,19 @@ class RouteController extends Controller
     public function index()
     {
         $organization_id = Auth::user()->organization->id;
-        $routes = Route::where('organization_id', $organization_id)->get();
+        $all_routes = Route::where('organization_id', $organization_id)->get();
+        $routes = [];
+        foreach($all_routes as $route) {
+            $routes[] = [
+                'id' => $route->id,
+                'source_name' => $route->source,
+                'source_longitude' => $route->source_longitude,
+                'source_latitude' => $route->source_latitude,
+                'destination_name' => $route->destination,
+                'destination_longitude' => $route->destination_longitude,
+                'destination_latitude' => $route->destination_latitude
+            ];
+        }
         return response([
             'status' => true,
             'message' => $routes
@@ -77,8 +90,13 @@ class RouteController extends Controller
     public function store(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'source' => 'required',
-            'destination' => 'required'
+            'name' => 'required',
+            'source_name' => 'required',
+            'source_longitude' => 'required',
+            'source_latitude' => 'required',
+            'destination_name' => 'required',
+            'destination_longitude' => 'required',
+            'destination_latitude' => 'required',
         ]);
         $message = [];
         $message = UserController::format_message($message, $validator);
@@ -91,8 +109,13 @@ class RouteController extends Controller
         $organization_id = Auth::user()->organization->id;
         Route::create([
             'organization_id' => $organization_id,
-            'source' => $req->source,
-            'destination' => $req->destination
+            'name' => $req->name,
+            'source' => $req->source_name,
+            'source_longitude' => $req->source_longitude,
+            'source_latitude' => $req->source_latitude,
+            'destination' => $req->destination_name,
+            'destination_longitude' => $req->destination_longitude,
+            'destination_latitude' => $req->destination_latitude,
         ]);
         return response([
             'status' => true,
@@ -265,9 +288,10 @@ class RouteController extends Controller
                 ]
             ], 200);
         }
+        
         $route = Route::find($id);
-        $status = $route->delete();
-        if(!$status) {
+        
+        if(!$route) {
             return response([
                 'status' => false,
                 'message' => [
@@ -275,6 +299,8 @@ class RouteController extends Controller
                 ]
             ], 200);
         } else {
+            Path::where('route_id', $route->id)->delete();
+            $status = $route->delete();
             return response([
                 'status' => true,
                 'message' => [

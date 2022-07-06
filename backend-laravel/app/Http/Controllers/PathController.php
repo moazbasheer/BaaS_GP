@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\UserController;
 use App\Models\Stop;
+use App\Models\Route;
 use Http;
 class PathController extends Controller
 {
@@ -37,13 +38,15 @@ class PathController extends Controller
      */
     public function index($route_id)
     {
-        if($route_id == null) {
+        $sample_route = Route::where('id', $route_id)->first();
+        if(!$sample_route) {
             return response([
-                'status' => false,
-                'message' => ['id is not provided']
+                'status' => true,
+                'message' => ['this id is not valid']
             ], 200);
         }
         $all_paths = Path::where('route_id', $route_id)->get();
+        
         $paths = [];
         foreach($all_paths as $path) {
             $stops = ['path_name' => $path->name, 'stops' => []];
@@ -202,12 +205,25 @@ class PathController extends Controller
                 ]);
             }
         }
+        if(count($path_stops) < 2) {
+            return response([
+                'status' => true,
+                'message' => ['provide at least two stops']
+            ], 200);
+        }
         $str = "https://graphhopper.com/api/1/route?key=bd47e377-3534-45d4-95a1-e35b7a1ac81d";
         foreach($path_stops as $stop) {
             $str = $str . '&point=' . $stop["longitude"] . "," . $stop["latitude"];
         }
+        $res = Http::get($str);
+        if(!array_key_exists("paths", $res)) {
+            response([
+                'status' => true,
+                'message' => ['longitude or the latitude is not valid']
+            ], 200);
+        }
         
-        $path = Http::get($str)["paths"][0];
+        $path = $res["paths"][0];
         $distance = $path["distance"];
         $time = $path["time"];
         $price = 0.2 * $distance + 0.02 * $time + 15;

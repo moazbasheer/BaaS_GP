@@ -40,6 +40,38 @@
                 "summary": "charge the balance for client",
                 "description": "charge the balance for client",
                 "operationId": "charge the balance for client",
+                "parameters": [
+                    {
+                        "name": "card_number",
+                        "in": "path",
+                        "description": "card number (for credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_month",
+                        "in": "path",
+                        "description": "expiration month (for credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_year",
+                        "in": "path",
+                        "description": "expiration year (for credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "CVC",
+                        "in": "path",
+                        "description": "CVC (for credit)",
+                        "required": true
+                    },
+                    {
+                        "name": "amount",
+                        "in": "path",
+                        "description": "amount (for credit)",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -580,6 +612,12 @@
                         "in": "path",
                         "description": "CVC",
                         "required": true
+                    },
+                    {
+                        "name": "amount",
+                        "in": "path",
+                        "description": "amount",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -651,6 +689,38 @@
                 "summary": "join a trip for passengers",
                 "description": "join a trip for passengers",
                 "operationId": "join a trip for passengers",
+                "parameters": [
+                    {
+                        "name": "payment_method",
+                        "in": "path",
+                        "description": "payment method",
+                        "required": true
+                    },
+                    {
+                        "name": "card_number",
+                        "in": "path",
+                        "description": "card number",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_month",
+                        "in": "path",
+                        "description": "expiration month",
+                        "required": true
+                    },
+                    {
+                        "name": "exp_year",
+                        "in": "path",
+                        "description": "expiration year",
+                        "required": true
+                    },
+                    {
+                        "name": "CVC",
+                        "in": "path",
+                        "description": "CVC",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"

@@ -45,6 +45,36 @@ class ClientController extends Controller
      *      tags={"Clients"},
      *      summary="charge the balance for client",
      *      description="charge the balance for client",
+     *      @OA\Parameter(
+     *          name="card_number",
+     *          description="card number (for credit)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="exp_month",
+     *          description="expiration month (for credit)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="exp_year",
+     *          description="expiration year (for credit)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="CVC",
+     *          description="CVC (for credit)",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="amount",
+     *          description="amount (for credit)",
+     *          required=true,
+     *          in="path"
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -143,7 +173,7 @@ class ClientController extends Controller
      */
     public function get_all_trips() {
         $client = Auth::user()->client;
-        $all_trips = Trip::where('status', 1)->get();
+        $all_trips = Trip::where('status', 1)->where('public', 1)->get();
         $trips = [];
         foreach($all_trips as $trip) {
             $trip1 = [];
@@ -171,6 +201,16 @@ class ClientController extends Controller
             $trip1["path_time"] = $trip->path->time;
             $trip1["price"] = $trip->price / $trip->num_seats;
             $trip1["num_seats"] = $trip->num_seats;
+            $trip1["public"] = $trip->public;
+            $organization = $trip->organization;
+            $user = $organization->user;
+            $trip1["organization"] = [
+                'email' => $user->email,
+                'name' => $organization->name,
+                'phone_number' => $organization->phone_number,
+                'postal_code' => $organization->postal_code,
+                'address' => $organization->address
+            ];
             $bookings = Booking::where(['client_id' => $client->id, 'trip_id' => $trip->id])->get();
             if(count($bookings) != 0) {
                 $trip1["joined"] = true;
@@ -179,6 +219,10 @@ class ClientController extends Controller
             }
             $trips[] = $trip1;
         }
+        uasort($trips, function($a, $b) {
+            return $a["price"] > $b["price"];
+        });
+        $trips = array_values($trips);
         return response([
             'status' => true,
             'message' => $trips
@@ -232,6 +276,16 @@ class ClientController extends Controller
             $trip1["path_time"] = $trip->path->time;
             $trip1["price"] = $trip->price / $trip->num_seats;
             $trip1["num_seats"] = $trip->num_seats;
+            $trip1["public"] = $trip->public;
+            $organization = $trip->organization;
+            $user = $organization->user;
+            $trip1["organization"] = [
+                'email' => $user->email,
+                'name' => $organization->name,
+                'phone_number' => $organization->phone_number,
+                'postal_code' => $organization->postal_code,
+                'address' => $organization->address
+            ];
             $bookings = Booking::where(['client_id' => $client->id, 'trip_id' => $trip->id])->get();
             if(count($bookings) != 0) {
                 $trip1["joined"] = true;
@@ -240,6 +294,10 @@ class ClientController extends Controller
             }
             $trips[] = $trip1;
         }
+        uasort($trips, function($a, $b) {
+            return $a["price"] > $b["price"];
+        });
+        $trips = array_values($trips);
         return response([
             'status' => true,
             'message' => $trips

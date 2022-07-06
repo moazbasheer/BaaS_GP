@@ -70,6 +70,12 @@ class PassengerController extends Controller
      *          required=true,
      *          in="path"
      *      ),
+     *      @OA\Parameter(
+     *          name="amount",
+     *          description="amount",
+     *          required=true,
+     *          in="path"
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -197,6 +203,16 @@ class PassengerController extends Controller
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;
             $trip1["price"] = ceil($trip->price / $trip->num_seats);
+            $trip1["public"] = $trip->public;
+            $organization = $trip->organization;
+            $user = $organization->user;
+            $trip1["organization"] = [
+                'email' => $user->email,
+                'name' => $organization->name,
+                'phone_number' => $organization->phone_number,
+                'postal_code' => $organization->postal_code,
+                'address' => $organization->address
+            ];
             $bookings = Booking::where(['passenger_id' => $passenger->id, 'trip_id' => $trip->id])->get();
             if(count($bookings) != 0) {
                 $trip1["joined"] = true;
@@ -206,6 +222,10 @@ class PassengerController extends Controller
             $trip1["num_seats"] = $trip->num_seats;
             $trips[] = $trip1;
         }
+        uasort($trips, function($a, $b) {
+            return $a["price"] > $b["price"];
+        });
+        $trips = array_values($trips);
         return response([
             'status' => true,
             'message' => $trips
@@ -233,7 +253,7 @@ class PassengerController extends Controller
         $passenger = Auth::user()->passenger;
         $organization = $passenger->organization;
         $all_trips = Trip::where('organization_id', '!=', $organization->id) 
-            ->where('status', 1)->get();
+            ->where('status', 1)->where('public', 1)->get();
         $trips = [];
         foreach($all_trips as $trip) {
             $trip1 = [];
@@ -260,6 +280,16 @@ class PassengerController extends Controller
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;
             $trip1["price"] = ceil($trip->price / $trip->num_seats);
+            $trip1["public"] = $trip->public;
+            $organization = $trip->organization;
+            $user = $organization->user;
+            $trip1["organization"] = [
+                'email' => $user->email,
+                'name' => $organization->name,
+                'phone_number' => $organization->phone_number,
+                'postal_code' => $organization->postal_code,
+                'address' => $organization->address
+            ];
             $bookings = Booking::where(['passenger_id' => $passenger->id, 'trip_id' => $trip->id])->get();
             if(count($bookings) != 0) {
                 $trip1["joined"] = true;
@@ -269,6 +299,10 @@ class PassengerController extends Controller
             $trip1["num_seats"] = $trip->num_seats;
             $trips[] = $trip1;
         }
+        uasort($trips, function($a, $b) {
+            return $a["price"] > $b["price"];
+        });
+        $trips = array_values($trips);
         return response([
             'status' => true,
             'message' => $trips
@@ -325,6 +359,12 @@ class PassengerController extends Controller
     public function join_trip(Request $req) {
         $organization = Auth::user()->passenger->organization;
         $trip = Trip::find($req->id);
+        if($trip == null) {
+            return [
+                'status' => false,
+                'message' => ['trip is not found']
+            ];
+        }
         $trip_organization = $trip->organization;
         if($organization->id != $trip_organization->id) {
             $trip_id = $req->id;
@@ -484,6 +524,16 @@ class PassengerController extends Controller
             $trip1["path_time"] = $trip->path->time;
             $trip1["price"] = $trip->price / $trip->num_seats;
             $trip1["num_seats"] = $trip->num_seats;
+            $trip1["public"] = $trip->public;
+            $organization = $trip->organization;
+            $user = $organization->user;
+            $trip1["organization"] = [
+                'email' => $user->email,
+                'name' => $organization->name,
+                'phone_number' => $organization->phone_number,
+                'postal_code' => $organization->postal_code,
+                'address' => $organization->address
+            ];
             $bookings = Booking::where(['passenger_id' => $passenger->id, 'trip_id' => $trip->id])->get();
             if(count($bookings) != 0) {
                 $trip1["joined"] = true;
@@ -492,6 +542,10 @@ class PassengerController extends Controller
             }
             $trips[] = $trip1;
         }
+        uasort($trips, function($a, $b) {
+            return $a["price"] > $b["price"];
+        });
+        $trips = array_values($trips);
         return response([
             'status' => true,
             'message' => $trips

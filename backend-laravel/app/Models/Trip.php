@@ -18,7 +18,8 @@ class Trip extends Model
         'date',
         'time',
         'status',
-        'price'
+        'price',
+        'public'
     ];
     public function path() {
         return $this->belongsTo(Path::class);

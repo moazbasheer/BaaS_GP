@@ -10,7 +10,12 @@ class Route extends Model
     use HasFactory;
     public $fillable = [
         'organization_id',
+        'name',
         'source',
-        'destination'
+        'source_longitude',
+        'source_latitude',
+        'destination',
+        'destination_longitude',
+        'destination_latitude'
     ];
 }

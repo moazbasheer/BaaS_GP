@@ -48,6 +48,12 @@ class TripController extends Controller
      *          required=true,
      *          in="path"
      *      ),
+     *      @OA\Parameter(
+     *          name="public",
+     *          description="is the trip public 0 or 1",
+     *          required=true,
+     *          in="path"
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation"
@@ -66,7 +72,8 @@ class TripController extends Controller
             'repitition' => 'required|string', // one-time.
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
-            'num_seats' => 'required'
+            'num_seats' => 'required',
+            'public' => 'required|numeric'
         ]);
         $path = Path::where('name', $req->path_name)->first();
 
@@ -88,7 +95,8 @@ class TripController extends Controller
                 'time' => $req->time,
                 'status' => 0,
                 'price' => $path->price,
-                'num_seats' => $req->num_seats
+                'num_seats' => $req->num_seats,
+                'public' => $req->public
             ]);
             return response([
                 'status' => true,
@@ -151,8 +159,13 @@ class TripController extends Controller
             $trip1["path_time"] = $trip->path->time;
             $trip1["price"] = $trip->price;
             $trip1["num_seats"] = $trip->num_seats;
+            $trip1["public"] = $trip->public;
             $trips[] = $trip1;
         }
+        uasort($trips, function($a, $b) {
+            return $a["price"] > $b["price"];
+        });
+        $trips = array_values($trips);
         return response([
             'status' => true,
             'message' => $trips
@@ -209,6 +222,13 @@ class TripController extends Controller
      */
     public function pay_trip(Request $req) {
         $trip = Trip::find($req->id);
+        if($trip->organization_id != Auth::user()->organization->id
+        || is_null($trip)) {
+            return [
+                'status' => false,
+                'message' => ['id is not valid']
+            ];
+        }
         if($trip->status == 1) {
             return response([
                 'status' => false,
@@ -290,6 +310,8 @@ class TripController extends Controller
             } else {
                 $wallet->balance = $wallet->balance - $trip->price;
                 $wallet->save();
+                $trip->status = 1;
+                $trip->save();
                 return response([
                     'status' => true,
                     'message' => ['trip is paid succesfully, your balance now is ' . $wallet->balance]

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Route;
 use App\Models\Wallet;
+use App\Models\User;
+
 class Organization extends Model
 {
     use HasFactory;
@@ -23,5 +25,8 @@ class Organization extends Model
     }
     public function wallet() {
         return $this->hasOne(Wallet::class);
+    }
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }
