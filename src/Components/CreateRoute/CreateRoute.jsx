@@ -2,18 +2,16 @@ import { useState } from 'react';
 import CreateRouteMap from '../CreateRouteMap/CreateRouteMap'
 import routeService from '../../Services/routes'
 import Notification from '../Notification/Notification'
-import { useRef } from 'react';
-import { getCoordinates } from '../../Utility/map';
+import { pointToCoordinates } from '../../Utility/map';
 
 function CreateRoute() {
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
-  const [origin, setOrigin] = useState()
-  const [destination, setDestination] = useState();
+  const [endpoints, setEndpoints] = useState({})
 
   
   const createRoute = async () => {
-    if (!origin || !destination) {
+    if (!endpoints.origin || !endpoints.destination) {
       setMessage('Please specify an origin AND a destination.')
       return
     } 
@@ -22,16 +20,23 @@ function CreateRoute() {
       return
     }
 
-    const originCoords = getCoordinates(origin)
-    const destinationCoords = getCoordinates(destination)
+    const originCoords = pointToCoordinates(endpoints.origin)
+    const destinationCoords = pointToCoordinates(endpoints.destination)
     const route = {
       name,
-      origin: originCoords,
-      destination: destinationCoords
+      source_name: endpoints.origin.name,
+      source_latitude: originCoords[0],
+      source_longitude: originCoords[1],
+      destination_name: endpoints.destination.name,
+      destination_latitude: destinationCoords[0],
+      destination_longitude: destinationCoords[1]
     }
+    console.log(route)
+    
     const response = await routeService.create(route)
-    if (response.status === 201) {
+    if (response.status === 200) {
       setMessage('Route created successfully.')
+      console.log(response)
     }
   }
 
@@ -46,7 +51,7 @@ function CreateRoute() {
         <label>Route Name:</label> <input type="text" onChange={handleNameChange} />
       </div>
       <button onClick={createRoute}>Create Route</button>
-      <CreateRouteMap setOrigin={setOrigin} setDestination={setDestination} />
+      <CreateRouteMap setEndpoints={setEndpoints} />
     </>
   );
 }

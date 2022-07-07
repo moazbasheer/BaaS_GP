@@ -8,13 +8,14 @@ import { OSM } from "ol/source";
 import VectorSource from "ol/source/Vector";
 import { Stroke, Style } from "ol/style"
 import { useEffect, useState } from "react"
-import { setPointStyle, getCoordinates, coordinatesToPoint, stringToPolyline } from '../../Utility/map'
+import { setPointStyle, pointToCoordinates, coordinatesToPoint, stringToPolyline } from '../../Utility/map'
 import pathAPIService from '../../Services/graphhopper'
 import { Polyline } from "ol/format";
 import MapComponent from "../MapComponent/MapComponent";
+import PathInfo from "../PathInfo/PathInfo";
 
 let stops = []
-let origin, destination
+let origin, destination, pointType
 
 // layer for origin and destination
 const endpointsVecSource = new VectorSource()
@@ -39,7 +40,7 @@ const drawAction = new Draw({
   type: 'Point'
 })
 
-const snap = new Snap({
+const snapAction = new Snap({
   source: stopsVecSource
 })
 
@@ -60,34 +61,12 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     pathVecSource.clear()
   }
 
-  const getTimeString = () => {
-    const seconds = time / 1000
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds - hours * 3600) / 60)
-
-    const list = []
-    if (hours > 0) {
-      list.push(`${hours} hour(s)`)
-    }
-
-    if (minutes > 0) {
-      list.push(`${minutes} minute(s)`)
-    }
-
-    if (list.length > 0) {
-      return list.join(', ')
-    }
-    else {
-      return '<1 minute'
-    }
-  }
-
   const drawPath = async () => {
     let points = []
 
-    points.push(getCoordinates(origin))
-    stops.forEach(stop => points.push(getCoordinates(stop)))
-    points.push(getCoordinates(destination))
+    points.push(pointToCoordinates(origin))
+    stops.forEach(stop => points.push(pointToCoordinates(stop)))
+    points.push(pointToCoordinates(destination))
 
     const result = await pathAPIService.getPath(points)
     const pathFeature = stringToPolyline(result.paths[0].points)
@@ -101,29 +80,30 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     setNavigationResult(result)
   }
 
-  const handleStopDraw = event => {
-    const point = event.feature
-    point.type = 'stop'
+  const changePointType = type => {
+    pointType = type
 
+    // enabling/disabling drawing
+    drawAction.setActive(pointType !== 'none')
+  }
+
+  const handleDrawAction = event => {
+    const point = event.feature
+    point.type = pointType
+    
+    const input = window.prompt('Enter a name for the point')
+    point.name = input ? input : pointType
+    
     stops.push(point)
-    stops.forEach((stop, i) => stop.index = i + 1)
     setStops(stops)
 
     setPointStyle(point)
     drawPath()
   }
 
-  const getDistanceString = () => {
-    return (distance / 1000).toFixed(2) + ' km'
-  }
-
-  const setDrawing = value => {
-    drawAction.setActive(value)
-  }
-
   useEffect(() => {
-    drawAction.on('drawstart', handleStopDraw)
-    setDrawing(false)
+    drawAction.on('drawstart', handleDrawAction)
+    changePointType('none')
   }, [])
 
   useEffect(() => {
@@ -132,10 +112,12 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
       return
     }
 
-    origin = coordinatesToPoint(route.origin)
+    origin = coordinatesToPoint([route.source_latitude, route.source_longitude])
+    origin.name = route.source
     origin.type = 'origin'
 
-    destination = coordinatesToPoint(route.destination)
+    destination = coordinatesToPoint([route.destination_latitude, route.destination_longitude])
+    destination.name = route.destination
     destination.type = 'destination'
 
     const features = [origin, destination]
@@ -148,19 +130,16 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
   return (
     <>
       <div>
-        <button onClick={() => setDrawing(true)}>Add Stops</button>
-        <button onClick={() => setDrawing(false)}>None</button>
+        <button onClick={() => changePointType('stop')}>Add Stops</button>
+        <button onClick={() => changePointType('none')}>None</button>
       </div>
       <div>
         <button onClick={clearStops}>Clear All Stops</button>
       </div>
-      <div>
-        <p>Estimated Time: {time ? getTimeString() : '--'}</p>
-        <p>Distance: {distance ? getDistanceString() : '--'}</p>
-      </div>
+      <PathInfo time={time} distance={distance} />
       <MapComponent
         layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]}
-        interactions={[drawAction, snap]}
+        interactions={[drawAction, snapAction]}
       />
     </>
   );

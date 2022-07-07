@@ -1,20 +1,25 @@
-import axios from 'axios'
+import { privateRequst } from '../Components/axiosRequest'
 
-const baseUrl = `http://localhost:3002/routes`
+const baseUrl = `/organization/routes`
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl)
+  const response = await privateRequst.get(baseUrl)
   return response.data
 }
 
 const get = async id => {
-  const response = await axios.get(`${baseUrl}/${id}`)
+  const response = await privateRequst.get(`${baseUrl}/${id}`)
   return response.data
 }
 
 const create = async route => {
-  const response = await axios.post(baseUrl, route)
+  const response = await privateRequst.post(baseUrl, route)
   return response
 }
 
-export default { create, getAll, get }
+const deleteRoute = async id => {
+  const response = await privateRequst.delete(`${baseUrl}/${id}`)
+  return response
+}
+
+export default { create, getAll, get, deleteRoute }

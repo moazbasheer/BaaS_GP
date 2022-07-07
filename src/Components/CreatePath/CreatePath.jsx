@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import routeService from '../../Services/routes'
-import { getCoordinates } from "../../Utility/map";
+import { pointToCoordinates } from "../../Utility/map";
 import CreatePathMap from "../CreatePathMap/CreatePathMap"
 import Notification from "../Notification/Notification"
 import pathService from '../../Services/paths'
@@ -25,21 +25,43 @@ function CreatePath() {
       return
     }
 
-    const stopsCoords = stops.map(s => getCoordinates(s))
-    const path = navigationResult.paths[0]
+    let requestStops = stops.map(s => {
+      const coords = pointToCoordinates(s)
+      return {
+        name: s.name,
+        latitude: coords[0],
+        longitude: coords[1]
+      }
+    })
 
-    const request = {
-      routeId,
-      name,
-      stops: stopsCoords,
-      path: path.points,
-      time: path.time,
-      distance: path.distance
+    // add origin and destination to stops
+    console.log(route)
+    const origin = {
+      name: route.source,
+      latitude: route.source_latitude,
+      longitude: route.source_longitude
+    }
+    const destination = {
+      name: route.destination,
+      latitude: route.destination_latitude,
+      longitude: route.destination_longitude
     }
 
+    requestStops = [origin, ...requestStops, destination]
+
+    const request = {
+      route_id: routeId,
+      path: {
+        path_name: name,
+        stops: requestStops
+      }
+    }
+    console.log(request)
+
     const response = await pathService.create(request)
-    if (response.status === 201) {
+    if (response.status === 200) {
       setMessage('Path created successfully.')
+      console.log(response)
     }
   }
 
@@ -48,7 +70,7 @@ function CreatePath() {
   }
 
   useEffect(() => {
-    routeService.get(routeId).then(res => setRoute(res))
+    routeService.get(routeId).then(result => setRoute(result.message[0]))
   }, []);
 
   return (

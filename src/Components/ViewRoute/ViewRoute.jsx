@@ -15,7 +15,7 @@ function ViewRoute() {
   const [route, setRoute] = useState()
 
   useEffect(() => {
-    routeService.get(routeId).then(result => setRoute(result))
+    routeService.get(routeId).then(result => setRoute(result.message[0]))
   }, [])
 
   useEffect(() => {
@@ -23,10 +23,12 @@ function ViewRoute() {
       return
     }
 
-    origin = coordinatesToPoint(route.origin)
+    origin = coordinatesToPoint([route.source_latitude, route.source_longitude])
+    origin.name = route.source
     origin.type = 'origin'
 
-    destination = coordinatesToPoint(route.destination)
+    destination = coordinatesToPoint([route.destination_latitude, route.destination_longitude])
+    destination.name = route.destination
     destination.type = 'destination'
 
     const features = [origin, destination]

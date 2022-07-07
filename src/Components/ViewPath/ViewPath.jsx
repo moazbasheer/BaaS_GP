@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom"
 import MapComponent from "../MapComponent/MapComponent"
 import pathService from '../../Services/paths'
 import routeService from '../../Services/routes'
-import { coordinatesToPoint, setPointStyle, stringToPolyline } from "../../Utility/map"
+import { coordinatesToPoint, pointToCoordinates, setPointStyle, stringToPolyline } from "../../Utility/map"
 import VectorSource from "ol/source/Vector"
 import VectorLayer from "ol/layer/Vector"
 import { Stroke, Style } from "ol/style"
+import pathAPIService from '../../Services/graphhopper'
+import PathInfo from "../PathInfo/PathInfo"
 
 let stops = []
 let origin, destination
@@ -32,55 +34,66 @@ const pathVecLayer = new VectorLayer({
 function ViewPath() {
   const pathId = parseInt(useParams().id)
   const [path, setPath] = useState()
-  const [route, setRoute] = useState()
+  const [time, setTime] = useState()
+  const [distance, setDistance] = useState();
 
   useEffect(() => {
     pathService.get(pathId).then(result => {
-      setPath(result)
-      routeService.get(result.routeId).then(
-        r => setRoute(r)
-      )
+      setPath(result.message)
+      console.log(result.message)
     })
   }, [])
-
-  useEffect(() => {
-    if (!route) {
-      return
-    }
-
-    origin = coordinatesToPoint(route.origin)
-    origin.type = 'origin'
-
-    destination = coordinatesToPoint(route.destination)
-    destination.type = 'destination'
-
-    const features = [origin, destination]
-    features.forEach(p => setPointStyle(p))
-    endpointsVecSource.addFeatures(features)
-  }, [route])
 
   useEffect(() => {
     if (!path) {
       return
     }
 
-    stops = path.stops.map(s => {
-      const p = coordinatesToPoint(s)
-      p.type = 'stop'
-      return p
+    const originCoords = [path.stops[0].latitude, path.stops[0].longitude]
+    origin = coordinatesToPoint(originCoords)
+    origin.type = 'origin'
+    origin.name = path.stops[0].name
+
+    const n = path.stops.length - 1
+    const destinationCoords = [path.stops[n].latitude, path.stops[n].longitude]
+    destination = coordinatesToPoint(destinationCoords)
+    destination.type = 'destination'
+    destination.name = path.stops[n].name
+
+    const features = [origin, destination]
+    features.forEach(p => setPointStyle(p))
+    endpointsVecSource.addFeatures(features)
+  }, [path])
+
+  useEffect(() => {
+    if (!path) {
+      return
+    }
+
+    stops = path.stops.map(stop => {
+      const point = coordinatesToPoint([stop.latitude, stop.longitude])
+      point.type = 'stop'
+      point.name = stop.name
+      return point
     })
-    stops.forEach((s, i) => {
-      s.index = i + 1
-      setPointStyle(s)
-    })
+    stops.forEach(stop => setPointStyle(stop))
     stopsVecSource.addFeatures(stops)
 
-    const pathFeature = stringToPolyline(path.path)
-    pathVecSource.addFeature(pathFeature)
+    const pointsCoords = stops.map(stop => pointToCoordinates(stop))
+    pathAPIService.getPath(pointsCoords).then(result => {
+      console.log(result)
+      const pathFeature = stringToPolyline(result.paths[0].points)
+      pathVecSource.addFeature(pathFeature)
+      setTime(result.paths[0].time)
+      setDistance(result.paths[0].distance)
+    })
   }, [path]);
 
   return (
-    <MapComponent layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]} />
+    <>
+      <PathInfo time={time} distance={distance} />
+      <MapComponent layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]} />
+    </>
   )
 }
 

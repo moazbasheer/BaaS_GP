@@ -2,15 +2,14 @@ import 'ol/ol.css'
 import './CreateRouteMap.css'
 import { useEffect } from "react"
 import { Map, View } from 'ol'
-import { Draw } from 'ol/interaction'
+import { Draw, Select, Snap } from 'ol/interaction'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
 import { OSM, Vector as VectorSource } from 'ol/source'
-import { fromLonLat } from 'ol/proj'
-import { setPointStyle, getCoordinates } from '../../Utility/map'
+import { setPointStyle } from '../../Utility/map'
 import MapComponent from '../MapComponent/MapComponent'
 
-let pointType, origin, destination
-
+let pointType
+let endpoints = {}
 const pointsVecSource = new VectorSource();
 const pointsVecLayer = new VectorLayer({ source: pointsVecSource })
 
@@ -19,45 +18,68 @@ const drawAction = new Draw({
   type: 'Point'
 })
 
-const CreateRouteMap = ({ setOrigin, setDestination }) => {
-  const setEndpointsStates = () => {
-    setOrigin(origin)
-    setDestination(destination)
+const snapAction = new Snap({
+  source: pointsVecSource
+})
+
+const deleteAction = new Select({
+  layers: [pointsVecLayer]
+})
+
+const CreateRouteMap = ({ setEndpoints }) => {
+  const setEndpointsState = () => {
+    setEndpoints(endpoints)
   }
 
   const clearPoints = () => {
-    origin = null
-    destination = null
+    endpoints = {}
     pointsVecSource.clear()
-    setEndpointsStates()
+    setEndpointsState()
   }
 
-  const handlePointDraw = event => {
+  const handleDrawAction = event => {
     const point = event.feature
     point.type = pointType
     
-    if (pointType === 'origin') {
-      pointsVecSource.removeFeature(origin)
-      origin = point
-    }
-    else if (pointType === 'destination') {
-      pointsVecSource.removeFeature(destination)
-      destination = point
-    }
+    // remove previous instance of the origin/destination
+    pointsVecSource.removeFeature(endpoints[pointType])
+    endpoints[pointType] = point
     
+    const input = window.prompt('Enter a name for the point')
+    point.name = input ? input : pointType
+
     setPointStyle(point)
-    setEndpointsStates()
+    setEndpointsState()
   }
 
   const changePointType = type => {
     pointType = type
 
-    // enabling/disabling drawing
-    drawAction.setActive(pointType !== 'none')
+    drawAction.setActive(false)
+    deleteAction.setActive(false)
+
+    if (pointType === 'delete') {
+      deleteAction.setActive(true)
+    }
+    else {
+      deleteAction.getFeatures().clear()
+    }
+
+    if (pointType === 'origin' || pointType === 'destination') {
+      drawAction.setActive(true)
+    }
+  }
+
+  const handleDeleteAction = event => {
+    const feature = event.selected[0]
+
+    pointsVecSource.removeFeature(feature)
+    endpoints[feature.type] = null
   }
 
   useEffect(() => {
-    drawAction.on('drawstart', handlePointDraw)
+    drawAction.on('drawstart', handleDrawAction)
+    deleteAction.on('select', handleDeleteAction)
     changePointType('none')
   }, [])
 
@@ -66,12 +88,13 @@ const CreateRouteMap = ({ setOrigin, setDestination }) => {
       <div>
         <button onClick={() => changePointType('origin')}>Origin</button>
         <button onClick={() => changePointType('destination')}>Destination</button>
+        <button onClick={() => changePointType('delete')}>Delete Point</button>
         <button onClick={() => changePointType('none')}>None</button>
       </div>
       <div>
         <button onClick={clearPoints}>Clear All</button>
       </div>
-      <MapComponent layers={[pointsVecLayer]} interactions={[drawAction]} />
+      <MapComponent layers={[pointsVecLayer]} interactions={[drawAction, deleteAction, snapAction]} />
     </>
   )
 }

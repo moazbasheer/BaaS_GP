@@ -21,7 +21,7 @@ function MapComponent({layers, interactions}) {
   useEffect(() => {
     layers?.forEach(l => map.addLayer(l))
     interactions?.forEach(i => map.addInteraction(i))
-
+    
     map.setTarget('map')
 
     // deconstructor

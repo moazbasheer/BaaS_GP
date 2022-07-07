@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"
+import PathItem from "../PathItem/PathItem"
 
-function RouteItem({ route, paths }) {
+function RouteItem({ route, deleteRoute }) {
   return (
-    <li>
+    <div>
       {route.name}
       <Link to={`../create-path/${route.id}`}>
         <button>Create Path</button>
@@ -10,17 +11,8 @@ function RouteItem({ route, paths }) {
       <Link to={`../routes/${route.id}`}>
         <button>View</button>
       </Link>
-      <ul>
-        {paths.map(p =>
-          <li key={p.id}>
-            {p.name}
-            <Link to={`../paths/${p.id}`}>
-              <button>View</button>
-            </Link>
-          </li>)
-        }
-      </ul>
-    </li>
+      <button onClick={deleteRoute}>Delete</button>
+    </div>
   )
 }
 

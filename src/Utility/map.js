@@ -25,11 +25,6 @@ export const setPointStyle = point => {
           color: baseStyle.strokeColor,
           width: baseStyle.strokeWidth,
         })
-      }),
-      text: new Text({
-        text: 'Origin',
-        offsetY: baseStyle.textOffsetY,
-        font: baseStyle.textStyle
       })
     })
   }
@@ -44,11 +39,6 @@ export const setPointStyle = point => {
           color: baseStyle.strokeColor,
           width: baseStyle.strokeWidth,
         })
-      }),
-      text: new Text({
-        text: `Stop #${point.index}`,
-        offsetY: baseStyle.textOffsetY,
-        font: baseStyle.textStyle
       })
     })
   }
@@ -63,20 +53,22 @@ export const setPointStyle = point => {
           color: baseStyle.strokeColor,
           width: baseStyle.strokeWidth,
         })
-      }),
-      text: new Text({
-        text: 'Destination',
-        offsetY: baseStyle.textOffsetY,
-        font: baseStyle.textStyle
       })
     })
   }
+
+  
+  style.setText(new Text({
+    text: point.name,
+    offsetY: baseStyle.textOffsetY,
+    font: baseStyle.textStyle
+  }))
 
   point.setStyle(style)
 }
 
 // get coordinates of a feature (point) in the form of lat long
-export const getCoordinates = feature => {
+export const pointToCoordinates = feature => {
   const coords = toLonLat(feature.getGeometry().getCoordinates())
 
   // we want latitude first so we reverse the array

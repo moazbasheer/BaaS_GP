@@ -1,24 +1,6 @@
 {
   "paths": [
     {
-      "routeId": 1,
-      "name": "route1 path1",
-      "stops": [
-        [
-          30.009859651480753,
-          31.200542560601285
-        ],
-        [
-          30.009859651480753,
-          31.200542560601285
-        ]
-      ],
-      "path": "ctdvD_ek}DtDXzDbNN@HKmDqLgJy[rFSJDBBPD`AA`DkAGaWAaEpABt@pCFDFE@Y_DiLuAmE[yAwAmFUo@{AcE[g@kDyEq@{@]]oA}@{AcAqAiA]a@Wa@a@}@U_As@aHm@}IWmCQy@M{AbDF",
-      "time": 496308,
-      "distance": 3691.893,
-      "id": 1
-    },
-    {
       "routeId": 2,
       "name": "path1",
       "stops": [
@@ -91,6 +73,18 @@
         31.215319253302347
       ],
       "id": 3
+    },
+    {
+      "name": "test",
+      "origin": [
+        30.034997644962132,
+        31.204357927453213
+      ],
+      "destination": [
+        30.034606383747786,
+        31.209203815533378
+      ],
+      "id": 4
     }
   ]
 }

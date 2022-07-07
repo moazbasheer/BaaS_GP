@@ -8,11 +8,10 @@ const config = {
     "Authorization": `Bearer ${token}`
 }
 
-
-
 export const publicRequst = axios.create({ // for requests without tokens -Loggin Register-.
     baseURL: Base_URL,
-});
+})
+
 export const privateRequst = axios.create({
     baseURL: Base_URL,
     headers: config
