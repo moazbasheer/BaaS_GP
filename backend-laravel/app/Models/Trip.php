@@ -15,8 +15,7 @@ class Trip extends Model
         'path_id',
         'organization_id',
         'repitition',
-        'date',
-        'time',
+        'datetime',
         'status',
         'price',
         'public'

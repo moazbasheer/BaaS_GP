@@ -176,9 +176,25 @@ class PassengerController extends Controller
         $passenger = Auth::user()->passenger;
         $organization = $passenger->organization;
         $all_trips = Trip::where('organization_id', $organization->id) 
-            ->where('status', 1)->get();
+            ->where('status', 1)->where('datetime', '>', now())->get();
         $trips = [];
         foreach($all_trips as $trip) {
+            if($trip->num_user == $trip->num_seats) {
+                $bookings = Booking::where([
+                    'passenger_id' => $passenger->id,
+                    'trip_id' => $trip->id
+                ])->get();
+                if(count($bookings) == 0) {
+                    continue;
+                }
+            }
+            $complaints = Complaint::where([
+                'client_id' => $client->id,
+                'trip_id' => $trip->id
+            ])->get();
+            if(count($complaints) > 0) {
+                continue;
+            }
             $trip1 = [];
             $trip1["id"] = $trip->id;
             $trip1["path_name"] = $trip->path->name;
@@ -253,9 +269,26 @@ class PassengerController extends Controller
         $passenger = Auth::user()->passenger;
         $organization = $passenger->organization;
         $all_trips = Trip::where('organization_id', '!=', $organization->id) 
-            ->where('status', 1)->where('public', 1)->get();
+            ->where('status', 1)->where('public', 1)
+            ->where('datetime', '>', now())->get();
         $trips = [];
         foreach($all_trips as $trip) {
+            if($trip->num_user == $trip->num_seats) {
+                $bookings = Booking::where([
+                    'client_id' => $client->id,
+                    'trip_id' => $trip->id
+                ])->get();
+                if(count($bookings) == 0) {
+                    continue;
+                }
+            }
+            $complaints = Complaint::where([
+                'client_id' => $client->id,
+                'trip_id' => $trip->id
+            ])->get();
+            if(count($complaints) > 0) {
+                continue;
+            }
             $trip1 = [];
             $trip1["id"] = $trip->id;
             $trip1["path_name"] = $trip->path->name;
@@ -365,9 +398,31 @@ class PassengerController extends Controller
                 'message' => ['trip is not found']
             ];
         }
+        if($trip->datetime < now()) {
+            return response([
+                'status' => false,
+                'message' => ['trip is finished']
+            ]);
+        }
+        $trip_id = $req->id;
+        $trips = Trip::where('id', $trip_id)->get()->toArray();
+        if(count($trips) == 0) {
+            return response([
+                'status' => false,
+                'message' => ['id is not valid']
+            ], 200);
+        }
+        $passenger = Auth::user()->passenger;
+        $bookings = Booking::where(['passenger_id' => $passenger->id, 'trip_id' => $trip_id])->get()->toArray();
+        if(count($bookings) != 0) {
+            return response([
+                'status' => false,
+                'message' => ['this passenger has already joined this trip']
+            ], 200);
+        }
         $trip_organization = $trip->organization;
         if($organization->id != $trip_organization->id) {
-            $trip_id = $req->id;
+            
             $trip = Trip::where('id', $trip_id)->first();
             if($req->payment_method && $req->payment_method == "credit") {
                 $validator = Validator::make($req->all(), [
@@ -443,21 +498,7 @@ class PassengerController extends Controller
             }
         }
         $trip_id = $req->id;
-        $trips = Trip::where('id', $trip_id)->get()->toArray();
-        if(count($trips) == 0) {
-            return response([
-                'status' => false,
-                'message' => ['id is not valid']
-            ], 200);
-        }
-        $passenger = Auth::user()->passenger;
-        $bookings = Booking::where(['passenger_id' => $passenger->id, 'trip_id' => $trip_id])->get()->toArray();
-        if(count($bookings) != 0) {
-            return response([
-                'status' => false,
-                'message' => ['this passenger has already joined this trip']
-            ], 200);
-        }
+        
         $trip = Trip::where('id', $trip_id)->first();
         if($trip->num_users < $trip->num_seats) {
             $passenger->trips()->attach($trip_id);
@@ -499,6 +540,17 @@ class PassengerController extends Controller
         $all_trips = Auth::user()->passenger->trips;
         $trips = [];
         foreach($all_trips as $trip) {
+
+            if($trip->datetime < now()) {
+                continue;
+            }
+            $complaints = Complaint::where([
+                'client_id' => $client->id,
+                'trip_id' => $trip->id
+            ])->get();
+            if(count($complaints) > 0) {
+                continue;
+            }
             $trip1 = [];
             $trip1["id"] = $trip->id;
             $trip1["path_name"] = $trip->path->name;
@@ -573,6 +625,18 @@ class PassengerController extends Controller
     public function cancel_trip(Request $req) {
         $organization = Auth::user()->passenger->organization;
         $trip = Trip::find($req->id);
+        if($trip == null) {
+            return [
+                'status' => false,
+                'message' => ['trip is not found']
+            ];
+        }
+        if($trip->datetime < now()) {
+            return response([
+                'status' => false,
+                'message' => ['trip is finished']
+            ]);
+        }
         $trip_organization = $trip->organization;
         $trip_id = $req->id;
         $trips = Trip::where('id', $trip_id)->get()->toArray();
@@ -608,5 +672,84 @@ class PassengerController extends Controller
             'status' => true,
             'message' => ['the passenger cancelled the trip successfully']
         ], 200);
+    }
+
+    /**
+     * @OA\Post(
+     *      path="/api/passenger/complaints",
+     *      operationId="make a complaint for passenger",
+     *      tags={"Clients"},
+     *      summary="make a complaint for passenger",
+     *      description="make a complaint for passenger",
+     *      @OA\Parameter(
+     *          name="message",
+     *          description="message",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Parameter(
+     *          name="trip_id",
+     *          description="trip id",
+     *          required=true,
+     *          in="path"
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *      ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      security={
+     *          {"api_key_security_example": {}}
+     *      }
+     * )
+     *
+     */
+    public function make_complaint(Request $req) {
+        $validator = Validator::make($req->all(), [
+            'trip_id' => 'required|numeric',
+            'message' => 'required|string'
+        ]);
+        if($validator->fails()) {
+            $message = [];
+            $message = UserController::format_message($message, $validator);
+            return response([
+                'status' => false,
+                'message' => $message
+            ], 200);
+        }
+        $trip = Trip::find($req->trip_id);
+        if($trip->datetime < now()) {
+            return response([
+                'status' => false,
+                'message' => ['trip is finished']
+            ]);
+        }
+        $passenger_id = Auth::user()->passenger->id;
+        $bookings = Booking::where(['trip_id' => $req->trip_id, 
+        'passenger_id' => $passenger_id])->get();
+        if(count($bookings) == 0) {
+            return response([
+                'status' => false,
+                'message' => ['the passenger doesn\'t join the trip']
+            ]);
+        }
+        $complaints = Complaint::where(['trip_id' => $req->trip_id, 
+        'passenger_id' => $passenger_id])->get();
+        if(count($complaints) > 0) {
+            return response([
+                'status' => false,
+                'message' => ['you already have a complaint on this trip']
+            ]);
+        }
+        
+        $complaint = Complaint::create([
+            'passenger_id' => $passenger_id,
+            'trip_id' => $req->trip_id,
+            'message' => $req->message
+        ]);
+        return response([
+            'status' => true,
+            'message' => ['complaint is added successfully']
+        ]);
     }
 }

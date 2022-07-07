@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Stop;
 use App\Models\Route;
 use Http;
+use Auth;
 class PathController extends Controller
 {
     /**
@@ -62,6 +63,7 @@ class PathController extends Controller
                     'latitude' => $stop->latitude
                 ];
             }
+            $stops["route_id"] = $route_id;
             $stops["distance"] = $path->distance;
             $stops["time"] = $path->time;
             $stops["price"] = $path->price;
@@ -139,6 +141,13 @@ class PathController extends Controller
         }
         $message = [];
         $route_id = $req->route_id;
+        $route = Route::find($route_id);
+        if(!$route) {
+            return response([
+                'status' => false,
+                'message' => ['route id is not found']
+            ], 200);
+        } 
         if(!array_key_exists("stops", $req->path) || !count($req->path["stops"]) > 1) {
             $message []= "The path field should have stops field (non-empty arrays)";
         }
@@ -220,6 +229,7 @@ class PathController extends Controller
             $str = $str . '&point=' . $stop["longitude"] . "," . $stop["latitude"];
         }
         $res = Http::get($str);
+        $res = json_decode($res->getBody()->getContents(), true);
         if(!array_key_exists("paths", $res)) {
             response([
                 'status' => true,
@@ -235,9 +245,9 @@ class PathController extends Controller
         $path = Path::create([
             'route_id' => $route_id,
             'name' => $path_name,
-            'distance' => $distance,
-            'time' => $time,
-            'price' => $price
+            'distance' => ceil($distance),
+            'time' => ceil($time),
+            'price' => ceil($price)
         ]);
         foreach($path_stops as $stop) {
             $stop["path_id"] = $path->id;
@@ -250,10 +260,22 @@ class PathController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *      path="/api/organization/path/id/{id}",
+     *      operationId="get path by id",
+     *      tags={"Paths"},
+     *      summary="get path by id",
+     *      description="get path by id",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
      *
-     * @param  \App\Models\Path  $path
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -267,6 +289,7 @@ class PathController extends Controller
                 'latitude' => $stop->latitude
             ];
         }
+        $stops["route_id"] = $path->route->id;
         $stops["distance"] = $path->distance;
         $stops["time"] = $path->time;
         $stops["price"] = $path->price;
@@ -288,7 +311,7 @@ class PathController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      *      path="/api/organization/paths/{path_name}",
      *      operationId="update a path",
      *      tags={"Paths"},
@@ -316,6 +339,7 @@ class PathController extends Controller
     {
         $validator = Validator::make($req->all(),[
             'stops' => 'required',
+            'name' => 'required'
         ]);
         $stops = $req->stops;
         $message = [];
@@ -354,16 +378,16 @@ class PathController extends Controller
         $time = $path["time"];
         $price = 0.2 * $distance + 0.02 * $time + 15;
 
-        $path_name = $req->path_name;
-        $path = Path::where('name', $path_name)->first();
+        $path_id = $req->path_id;
+        $path = Path::where('id', $path_id)->first();
         $route_id = $path->route_id;
         $path->delete();
         $path = Path::create([
             'route_id' => $route_id,
-            'name' => $path_name,
-            'distance' => $distance,
-            'time' => $time,
-            'price' => $price
+            'name' => $req->name,
+            'distance' => ceil($distance),
+            'time' => ceil($time),
+            'price' => ceil($price)
         ]);
         foreach($req->stops as $stop) {
             $stop["path_id"] = $path->id;
@@ -376,7 +400,7 @@ class PathController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Delete(
      *      path="/api/organization/paths/{path_id}",
      *      operationId="delete a path",
      *      tags={"Paths"},
@@ -394,9 +418,9 @@ class PathController extends Controller
      *
      * Returns a route's paths object.
      */
-    public function destroy($path_name)
+    public function destroy($path_id)
     {
-        $path = Path::where('name', $path_name)->first();
+        $path = Path::where('id', $path_id)->first();
         if(!$path) {
             return response([
                 'status' => false,
@@ -407,6 +431,40 @@ class PathController extends Controller
         return response([
             'status' => true,
             'message' => ['path is deleted successfully']
+        ], 200);
+    }
+
+    public function get_all_paths() {
+        $organization_id = Auth::user()->organization->id;
+        $all_routes = Route::where('organization_id', $organization_id)->get();
+        $routes = [];
+        $paths = [];
+        foreach($all_routes as $route) {
+            $all_paths = Path::where('route_id', $route->id)->get();
+            foreach($all_paths as $path) {
+                $stops = [
+                    'id' => $path->id,
+                    'path_name' => $path->name,
+                    'stops' => []
+                ];
+                $all_stops = Stop::where('path_id', $path->id)->get();
+                foreach($all_stops as $stop) {
+                    $stops['stops'][] = [
+                        'name' => $stop->name,
+                        'langitude' => $stop->longitude,
+                        'latitude' => $stop->latitude
+                    ];
+                }
+                $stops["route_id"] = $route->id;
+                $stops["distance"] = $path->distance;
+                $stops["time"] = $path->time;
+                $stops["price"] = $path->price;
+                $paths []= $stops;
+            }
+        }
+        return response([
+            'status' => true,
+            'message' => $paths
         ], 200);
     }
 }

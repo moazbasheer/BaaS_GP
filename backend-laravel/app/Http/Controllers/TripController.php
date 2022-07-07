@@ -19,8 +19,8 @@ class TripController extends Controller
      *      summary="create a trip",
      *      description="create a trip",
      *      @OA\Parameter(
-     *          name="path_name",
-     *          description="path name",
+     *          name="path_id",
+     *          description="path id",
      *          required=true,
      *          in="path"
      *      ),
@@ -68,15 +68,14 @@ class TripController extends Controller
      */
     public function create_trip(Request $req) {
         $validator = Validator::make($req->all(),[
-            'path_name' => 'required|string',
+            'path_id' => 'required|numeric',
             'repitition' => 'required|string', // one-time.
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
-            'num_seats' => 'required',
+            'num_seats' => 'required|numeric',
             'public' => 'required|numeric'
         ]);
-        $path = Path::where('name', $req->path_name)->first();
-
+        
         if($validator->fails()) {
             $message = [];
             $message = UserController::format_message($message, $validator);
@@ -85,14 +84,28 @@ class TripController extends Controller
                 'message' => $message
             ], 200);
         }
+        if($req->num_seats <= 0) {
+            return response([
+                'status' => false,
+                'message' => ['number of seats must be more then zero']
+            ], 200);
+        }
+        $datetime = new DateTime($req->date . ' ' . $req->time);
+        if(now() > $datetime) {
+            return response([
+                'status' => false,
+                'message' => ['this time is not valid']
+            ]);
+        }
+        $path = Path::where('id', $req->path_id)->first();
+
         $organization = Auth::user()->organization;
         if($req->repitition == "one-time") {
             Trip::create([
                 'path_id' => $path->id,
                 'organization_id' => $organization->id,
                 'repitition' => $req->repitition,
-                'date' => $req->date,
-                'time' => $req->time,
+                'datetime' => $datetime,
                 'status' => 0,
                 'price' => $path->price,
                 'num_seats' => $req->num_seats,
@@ -131,7 +144,8 @@ class TripController extends Controller
      */
     public function get_all_trips(Request $req) {
         $organization = Auth::user()->organization;
-        $all_trips = Trip::where('organization_id', $organization->id)->get();
+        $all_trips = Trip::where('organization_id', $organization->id)
+        ->where('datetime', '>', now())->get();
         $trips = [];
         foreach($all_trips as $trip) {
             $trip1 = [];
@@ -222,6 +236,18 @@ class TripController extends Controller
      */
     public function pay_trip(Request $req) {
         $trip = Trip::find($req->id);
+        if($trip == null) {
+            return [
+                'status' => false,
+                'message' => ['trip is not found']
+            ];
+        }
+        if($trip->datetime < now()) {
+            return response([
+                'status' => false,
+                'message' => ['this trip is finished']
+            ]);
+        }
         if($trip->organization_id != Auth::user()->organization->id
         || is_null($trip)) {
             return [
@@ -347,6 +373,18 @@ class TripController extends Controller
     public function get_users_in_trip(Request $req) {
         $trip_id = $req->id;
         $trip = Trip::find($trip_id);
+        if($trip == null) {
+            return [
+                'status' => false,
+                'message' => ['trip is not found']
+            ];
+        }
+        if($trip->datetime < now()) {
+            return response([
+                'status' => false,
+                'message' => ['this trip is finished']
+            ]);
+        }
         $all_clients = $trip->clients;
         $clients = [];
         foreach($all_clients as $client) {

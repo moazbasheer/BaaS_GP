@@ -211,6 +211,43 @@
                 ]
             }
         },
+        "/api/client/complaints": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "make a complaint for client",
+                "description": "make a complaint for client",
+                "operationId": "make a complaint for client",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "in": "path",
+                        "description": "message",
+                        "required": true
+                    },
+                    {
+                        "name": "trip_id",
+                        "in": "path",
+                        "description": "trip id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/organization/drivers": {
             "post": {
                 "tags": [
@@ -782,6 +819,43 @@
                 ]
             }
         },
+        "/api/passenger/complaints": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "make a complaint for passenger",
+                "description": "make a complaint for passenger",
+                "operationId": "make a complaint for passenger",
+                "parameters": [
+                    {
+                        "name": "message",
+                        "in": "path",
+                        "description": "message",
+                        "required": true
+                    },
+                    {
+                        "name": "trip_id",
+                        "in": "path",
+                        "description": "trip id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/organization/paths/{route_id}": {
             "get": {
                 "tags": [
@@ -850,8 +924,31 @@
                 ]
             }
         },
+        "/api/organization/path/id/{id}": {
+            "get": {
+                "tags": [
+                    "Paths"
+                ],
+                "summary": "get path by id",
+                "description": "get path by id",
+                "operationId": "get path by id",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
         "/api/organization/paths/{path_name}": {
-            "post": {
+            "put": {
                 "tags": [
                     "Paths"
                 ],
@@ -882,7 +979,7 @@
             }
         },
         "/api/organization/paths/{path_id}": {
-            "post": {
+            "delete": {
                 "tags": [
                     "Paths"
                 ],
@@ -1136,9 +1233,9 @@
                 "operationId": "create a trip",
                 "parameters": [
                     {
-                        "name": "path_name",
+                        "name": "path_id",
                         "in": "path",
-                        "description": "path name",
+                        "description": "path id",
                         "required": true
                     },
                     {

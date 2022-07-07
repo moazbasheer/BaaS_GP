@@ -43,10 +43,11 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::delete('/passengers/{id}', [OrganizationController::class, 'remove_passenger']);
 
         Route::get('/paths/{route_id}', [PathController::class, 'index']);
-        Route::get('/path/{id}', [PathController::class, 'show']);
+        Route::get('/paths/id/{id}', [PathController::class, 'show']);
         Route::apiResource('paths', PathController::class)->only(['store']);
-        Route::delete('paths/{path_name}', [PathController::class, 'destroy']);
-        Route::put('paths/{path_name}', [PathController::class, 'update']);
+        Route::delete('paths/{path_id}', [PathController::class, 'destroy']);
+        Route::put('paths/{path_id}', [PathController::class, 'update']);
+        Route::get('/paths', [PathController::class, 'get_all_paths']);
         
         Route::post('/trips', [TripController::class, 'create_trip']);
         Route::get('/trips', [TripController::class, 'get_all_trips']);
@@ -66,6 +67,8 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::get('/trips/joined', [ClientController::class, 'get_joined_trips']);
         Route::post('/trips/{id}', [ClientController::class, 'join_trip']);
         Route::post('/trips/cancel/{id}', [ClientController::class, 'cancel_trip']);
+
+        Route::post('/complaints', [ClientController::class, 'make_complaint']);
     });
     Route::group(['prefix' => 'passenger', 'middleware' => 'role:passenger'], function() {
         
@@ -77,6 +80,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::post('trips/{id}', [PassengerController::class, 'join_trip']);
         Route::get('/trips/joined', [PassengerController::class, 'get_joined_trips']);
         Route::post('/trips/cancel/{id}', [PassengerController::class, 'cancel_trip']);
+        Route::post('/complaints', [PassengerController::class, 'make_complaint']);
     });
     Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
         Route::post('/drivers', [DriverController::class, 'create_driver']);
