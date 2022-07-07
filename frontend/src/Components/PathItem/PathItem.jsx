@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function PathItem({ path, deletePath }) {
   return (
@@ -9,7 +9,7 @@ function PathItem({ path, deletePath }) {
       </Link>
       <button onClick={deletePath}>Delete</button>
     </div>
-  )
+  );
 }
 
 export default PathItem;
