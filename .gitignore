@@ -24,6 +24,6 @@ yarn-error.log*
 
 *copy*
 
-.env
-/rest_requests
 db.json
+.env
+/rest_requests/
