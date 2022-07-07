@@ -23,7 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 *copy*
-
 db.json
 .env
 rest_requests/

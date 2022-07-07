@@ -1,19 +1,21 @@
-import { Feature } from "ol"
-import { Polyline } from "ol/format"
-import { Point } from "ol/geom"
-import { fromLonLat, toLonLat } from "ol/proj"
-import { Circle, Fill, Stroke, Style, Text } from "ol/style"
+import { Feature } from 'ol';
+import { Polyline } from 'ol/format';
+import { Point } from 'ol/geom';
+import { fromLonLat, toLonLat } from 'ol/proj';
+import {
+  Circle, Fill, Stroke, Style, Text,
+} from 'ol/style';
 
-export const setPointStyle = point => {
+export const setPointStyle = (point) => {
   const baseStyle = {
     radius: 7,
     strokeColor: '#000',
     strokeWidth: 3,
     textOffsetY: 16,
-    textStyle: 'bold 16px sans-serif'
-  }
+    textStyle: 'bold 16px sans-serif',
+  };
 
-  let style
+  let style;
   if (point.type === 'origin') {
     style = new Style({
       image: new Circle({
@@ -24,11 +26,10 @@ export const setPointStyle = point => {
         stroke: new Stroke({
           color: baseStyle.strokeColor,
           width: baseStyle.strokeWidth,
-        })
-      })
-    })
-  }
-  else if (point.type === 'stop') {
+        }),
+      }),
+    });
+  } else if (point.type === 'stop') {
     style = new Style({
       image: new Circle({
         radius: baseStyle.radius,
@@ -38,11 +39,10 @@ export const setPointStyle = point => {
         stroke: new Stroke({
           color: baseStyle.strokeColor,
           width: baseStyle.strokeWidth,
-        })
-      })
-    })
-  }
-  else if (point.type === 'destination') {
+        }),
+      }),
+    });
+  } else if (point.type === 'destination') {
     style = new Style({
       image: new Circle({
         radius: baseStyle.radius,
@@ -52,44 +52,43 @@ export const setPointStyle = point => {
         stroke: new Stroke({
           color: baseStyle.strokeColor,
           width: baseStyle.strokeWidth,
-        })
-      })
-    })
+        }),
+      }),
+    });
   }
 
-  
   style.setText(new Text({
     text: point.name,
     offsetY: baseStyle.textOffsetY,
-    font: baseStyle.textStyle
-  }))
+    font: baseStyle.textStyle,
+  }));
 
-  point.setStyle(style)
-}
+  point.setStyle(style);
+};
 
 // get coordinates of a feature (point) in the form of lat long
-export const pointToCoordinates = feature => {
-  const coords = toLonLat(feature.getGeometry().getCoordinates())
+export const pointToCoordinates = (feature) => {
+  const coords = toLonLat(feature.getGeometry().getCoordinates());
 
   // we want latitude first so we reverse the array
-  return coords.reverse()
-}
+  return coords.reverse();
+};
 
 // convert coordinates of form lat long to a point on map
-export const coordinatesToPoint = coordinates => (
+export const coordinatesToPoint = (coordinates) => (
   new Feature(
     new Point(
-      fromLonLat(coordinates.reverse())
-    )
+      fromLonLat(coordinates.reverse()),
+    ),
   )
-)
+);
 
 // compressed string to polyline feature
-export const stringToPolyline = string => (
+export const stringToPolyline = (string) => (
   new Feature(
     new Polyline({}).readGeometry(string, {
       dataProjection: 'EPSG:4326',
       featureProjection: 'EPSG:3857',
-    })
+    }),
   )
-)
+);

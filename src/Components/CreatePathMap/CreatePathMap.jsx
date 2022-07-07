@@ -1,130 +1,133 @@
-import { Feature, Map, View } from "ol";
-import { Point } from "ol/geom";
-import { Draw, Snap } from "ol/interaction";
-import TileLayer from "ol/layer/Tile";
-import VectorLayer from "ol/layer/Vector";
-import { fromLonLat } from "ol/proj";
-import { OSM } from "ol/source";
-import VectorSource from "ol/source/Vector";
-import { Stroke, Style } from "ol/style"
-import { useEffect, useState } from "react"
-import { setPointStyle, pointToCoordinates, coordinatesToPoint, stringToPolyline } from '../../Utility/map'
-import pathAPIService from '../../Services/graphhopper'
-import { Polyline } from "ol/format";
-import MapComponent from "../MapComponent/MapComponent";
-import PathInfo from "../PathInfo/PathInfo";
+import { Feature, Map, View } from 'ol';
+import { Point } from 'ol/geom';
+import { Draw, Snap } from 'ol/interaction';
+import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import { fromLonLat } from 'ol/proj';
+import { OSM } from 'ol/source';
+import VectorSource from 'ol/source/Vector';
+import { Stroke, Style } from 'ol/style';
+import { useEffect, useState } from 'react';
+import { Polyline } from 'ol/format';
+import {
+  setPointStyle, pointToCoordinates, coordinatesToPoint, stringToPolyline,
+} from '../../Utility/map';
+import pathAPIService from '../../Services/graphhopper';
+import MapComponent from '../MapComponent/MapComponent';
+import PathInfo from '../PathInfo/PathInfo';
 
-let stops = []
-let origin, destination, pointType
+let stops = [];
+let origin; let destination; let
+  pointType;
 
 // layer for origin and destination
-const endpointsVecSource = new VectorSource()
-const endpointsVecLayer = new VectorLayer({ source: endpointsVecSource })
+const endpointsVecSource = new VectorSource();
+const endpointsVecLayer = new VectorLayer({ source: endpointsVecSource });
 
-const stopsVecSource = new VectorSource()
-const stopsVecLayer = new VectorLayer({ source: stopsVecSource })
+const stopsVecSource = new VectorSource();
+const stopsVecLayer = new VectorLayer({ source: stopsVecSource });
 
-const pathVecSource = new VectorSource()
+const pathVecSource = new VectorSource();
 const pathVecLayer = new VectorLayer({
   source: pathVecSource,
   style: new Style({
     stroke: new Stroke({
       color: '#00688bBB',
-      width: 7
-    })
-  })
-})
+      width: 7,
+    }),
+  }),
+});
 
 const drawAction = new Draw({
   source: stopsVecSource,
-  type: 'Point'
-})
+  type: 'Point',
+});
 
 const snapAction = new Snap({
-  source: stopsVecSource
-})
+  source: stopsVecSource,
+});
 
 function CreatePathMap({ route, setNavigationResult, setStops }) {
-  const [time, setTime] = useState()
-  const [distance, setDistance] = useState()
+  const [time, setTime] = useState();
+  const [distance, setDistance] = useState();
 
   const clearStops = () => {
-    stops = []
-    stopsVecSource.clear()
-    drawPath()
-    setStops(stops)
-  }
+    stops = [];
+    stopsVecSource.clear();
+    drawPath();
+    setStops(stops);
+  };
 
   const clearPath = () => {
-    setTime(null)
-    setDistance(null)
-    pathVecSource.clear()
-  }
+    setTime(null);
+    setDistance(null);
+    pathVecSource.clear();
+  };
 
   const drawPath = async () => {
-    let points = []
+    const points = [];
 
-    points.push(pointToCoordinates(origin))
-    stops.forEach(stop => points.push(pointToCoordinates(stop)))
-    points.push(pointToCoordinates(destination))
+    points.push(pointToCoordinates(origin));
+    stops.forEach((stop) => points.push(pointToCoordinates(stop)));
+    points.push(pointToCoordinates(destination));
 
-    const result = await pathAPIService.getPath(points)
-    const pathFeature = stringToPolyline(result.paths[0].points)
+    const result = await pathAPIService.getPath(points);
+    const pathFeature = stringToPolyline(result.paths[0].points);
 
     // delete previous path if any
-    clearPath()
-    pathVecSource.addFeature(pathFeature)
-    setTime(result.paths[0].time)
-    setDistance(result.paths[0].distance)
+    clearPath();
+    pathVecSource.addFeature(pathFeature);
+    setTime(result.paths[0].time);
+    setDistance(result.paths[0].distance);
 
-    setNavigationResult(result)
-  }
+    setNavigationResult(result);
+  };
 
-  const changePointType = type => {
-    pointType = type
+  const changePointType = (type) => {
+    pointType = type;
 
     // enabling/disabling drawing
-    drawAction.setActive(pointType !== 'none')
-  }
+    drawAction.setActive(pointType !== 'none');
+  };
 
-  const handleDrawAction = event => {
-    const point = event.feature
-    point.type = pointType
-    
-    const input = window.prompt('Enter a name for the point')
-    point.name = input ? input : pointType
-    
-    stops.push(point)
-    setStops(stops)
+  const handleDrawAction = (event) => {
+    const point = event.feature;
+    point.type = pointType;
 
-    setPointStyle(point)
-    drawPath()
-  }
+    const input = window.prompt('Enter a name for the point');
+    point.name = input || pointType;
+
+    stops.push(point);
+    setStops(stops);
+
+    setPointStyle(point);
+    drawPath();
+  };
 
   useEffect(() => {
-    drawAction.on('drawstart', handleDrawAction)
-    changePointType('none')
-  }, [])
+    drawAction.on('drawstart', handleDrawAction);
+    changePointType('none');
+  }, []);
 
   useEffect(() => {
     // add origin and destination
     if (!route) {
-      return
+      return;
     }
 
-    origin = coordinatesToPoint([route.source_latitude, route.source_longitude])
-    origin.name = route.source
-    origin.type = 'origin'
+    origin = coordinatesToPoint([route.source_latitude, route.source_longitude]);
+    origin.name = route.source;
+    origin.type = 'origin';
 
-    destination = coordinatesToPoint([route.destination_latitude, route.destination_longitude])
-    destination.name = route.destination
-    destination.type = 'destination'
+    destination = coordinatesToPoint([route.destination_latitude, route.destination_longitude]);
+    destination.name = route.destination;
+    destination.type = 'destination';
 
-    const features = [origin, destination]
-    features.forEach(p => setPointStyle(p))
-    endpointsVecSource.addFeatures(features)
+    const features = [origin, destination];
+    features.forEach((p) => setPointStyle(p));
+    endpointsVecSource.addFeatures(features);
 
-    drawPath()
+    drawPath();
   }, [route]);
 
   return (
@@ -145,4 +148,4 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
   );
 }
 
-export default CreatePathMap
+export default CreatePathMap;
