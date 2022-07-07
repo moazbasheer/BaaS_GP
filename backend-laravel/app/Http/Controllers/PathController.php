@@ -285,7 +285,7 @@ class PathController extends Controller
         foreach($all_stops as $stop) {
             $stops['stops'][] = [
                 'name' => $stop->name,
-                'langitude' => $stop->longitude,
+                'longitude' => $stop->longitude,
                 'latitude' => $stop->latitude
             ];
         }
