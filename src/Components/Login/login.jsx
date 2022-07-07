@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import background from "../../imges/backImg.jpg"
 import { publicRequst } from '../axiosRequest';
@@ -9,12 +9,12 @@ function Login() {
   const [organization, setOrganization] = useState({ emailorusername: "", password: "" });
   const [isFetching, setisFetching] = useState(false);
   const [errors, setErrors] = useState([]);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   function handleForm(e) {// takes the input from the login form and save it in the organization object 
     let tempOrg = { ...organization };
     tempOrg[e.target.name] = e.target.value;
     setOrganization(tempOrg);
-    console.log(organization);
+  
   }
 
   function formValidation() {// to validate the input before sending it to the server.
@@ -40,9 +40,9 @@ function Login() {
         if (response.status) {
           let storedOrg = { info: response.user, token: response.token }
           localStorage.setItem("organization", JSON.stringify(storedOrg));
-          navigate("/home",{ replace: true });
-        }else {
-          setErrors([...errors,response.message] );
+          navigate("/home", { replace: true });
+        } else {
+          setErrors([...errors, response.message]);
         }
         console.log(response);
         setisFetching(false);
@@ -93,7 +93,7 @@ function Login() {
                 }
 
               </button>
-
+              <div className='text-end '> you can create one from   <NavLink to="/register" style={{ color: "green", textDecoration: "underline" }}>here </NavLink></div>
             </form>
           </div>
         </div>

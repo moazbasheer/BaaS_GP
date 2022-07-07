@@ -1,12 +1,11 @@
+
 import './App.css';
-import {
-  Navigate, Route, Routes, useNavigate,
-} from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import Login from './Components/Login/login';
 import Register from './Components/Register/Register';
 import Home from './Components/Home/Home';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import NotFound from './Components/Not Found/NotFound';
+import { useEffect, useState } from 'react';
 import RoutingGuard from './Components/RoutingGuard/RoutingGuard';
 import Statistics from './Components/Statistics/Statistics';
 import Employees from './Components/Employees/Employees';
