@@ -26,4 +26,4 @@ yarn-error.log*
 
 db.json
 .env
-/rest_requests/
+rest_requests/
