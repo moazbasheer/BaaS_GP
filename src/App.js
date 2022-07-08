@@ -38,21 +38,20 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         <Route
-          path="/home"
+          path="/"
           element={(
             <RoutingGuard logOut={logout} Component={Home} />
         )}
         >
           <Route path="statistics" element={<Statistics />} />
           <Route path="passengers" element={<Employees />} />
-          <Route path="routes" element={<OrgRoutes />} />
+          <Route path="routes/create" element={<CreateRoute />} />
           <Route path="routes/:id" element={<ViewRoute />} />
+          <Route path="routes" element={<OrgRoutes />} />
+          <Route path="paths/create/:id" element={<CreatePath />} />
           <Route path="paths/:id" element={<ViewPath />} />
-          <Route path="create-route" element={<CreateRoute />} />
-          <Route path="create-path/:id" element={<CreatePath />} />
-          <Route path="create-trip/:id" element={<CreateTrip />} />
+          <Route path="trip/create/:id" element={<CreateTrip />} />
         </Route>
-        <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <div className="App bg-success">

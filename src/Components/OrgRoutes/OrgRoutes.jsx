@@ -43,7 +43,7 @@ function OrgRoutes() {
   return (
     <>
       <div>
-        <Link to="../create-route">
+        <Link to="../routes/create">
           <button className="btn btn-success mx-2">
             Create New Route
           </button>

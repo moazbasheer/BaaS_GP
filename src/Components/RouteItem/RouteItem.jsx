@@ -5,7 +5,7 @@ function RouteItem({ route, deleteRoute }) {
   return (
     <div>
       {route.name}
-      <Link to={`../create-path/${route.id}`}>
+      <Link to={`../paths/create/${route.id}`}>
         <button>Create Path</button>
       </Link>
       <Link to={`../routes/${route.id}`}>
