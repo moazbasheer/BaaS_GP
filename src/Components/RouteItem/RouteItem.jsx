@@ -8,7 +8,7 @@ function RouteItem({ route, deleteRoute }) {
       <Link to={`../paths/create/${route.id}`}>
         <button>Create Path</button>
       </Link>
-      <Link to={`../routes/${route.id}`}>
+      <Link to={`${route.id}`}>
         <button>View</button>
       </Link>
       <button onClick={deleteRoute}>Delete</button>

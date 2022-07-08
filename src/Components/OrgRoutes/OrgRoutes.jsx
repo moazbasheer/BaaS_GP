@@ -38,13 +38,13 @@ function OrgRoutes() {
         {paths.filter((path) => parseInt(path.route_id) === route.id).map((path) => getPathItem(path))}
       </ul>
     </li>
-  );
+  )
 
   return (
     <>
       <div>
-        <Link to="../routes/create">
-          <button className="btn btn-success mx-2">
+        <Link to="create">
+          <button>
             Create New Route
           </button>
         </Link>
