@@ -28,23 +28,23 @@ function EditEmpLayer({ setShowAddEmp, showAddEmp, openAlert ,setTrickReload ,em
                         <form>
                             <div className="mb-3">
                                 <label htmlFor="name" className="form-label">Full name</label>
-                                <input type="text" className="form-control" value={emp[0].name} onChange={handleEmployee} name="name" />
+                                <input type="text" className="form-control" value={emp?.name} onChange={handleEmployee} name="name" />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="email" className="form-label">Email address</label>
-                                <input type="email" className="form-control" value={emp.email} onChange={handleEmployee} name="email" />
+                                <input type="email" className="form-control" value={emp?.email} onChange={handleEmployee} name="email" />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="password" className="form-label">Password</label>
-                                <input type="password" className="form-control" value={emp.password} onChange={handleEmployee} name="password" />
+                                <input type="password" className="form-control" value={emp?.password} onChange={handleEmployee} name="password" />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="phone" className="form-label">Phone number</label>
-                                <input type="number" className="form-control" value={emp.phone} onChange={handleEmployee} name="phone" />
+                                <input type="number" className="form-control" value={emp?.phone} onChange={handleEmployee} name="phone" />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="address" className="form-label">Address</label>
-                                <input type="text" className="form-control" value={emp.address} onChange={handleEmployee} name="address" />
+                                <input type="text" className="form-control" value={emp?.address} onChange={handleEmployee} name="address" />
                             </div>
                             <button type='button' onClick={editEmployee} className='btn btn-warning m-2'>Update Employee</button>
                             <button type='button' onClick={() => setShowAddEmp(false)} className='btn btn-danger m-2'>Cancel</button>
