@@ -17,6 +17,7 @@ function Passengers() {
   const [showEditEmp, setShowEditEmp] = useState(false);
   const [showBulkLayer, setBulkLayer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [editEmpIndex, setEditEmpIndex] = useState(0);
   
   useEffect(() => {
 
@@ -64,7 +65,7 @@ function Passengers() {
     const isChecked = e.target.checked;
     if (isChecked){
       try {
-        const {data}= await privateRequst.get(`organization/passengers/activate/${id}`);
+        const {data}= await privateRequst.put(`organization/passengers/activate/${id}`);
         console.log(data);
       } catch (error) {
        
@@ -72,11 +73,15 @@ function Passengers() {
       }
     }
       else{
-        const {data}= await privateRequst.get(`organization/passengers/deactivate/${id}`);
+        const {data}= await privateRequst.put(`organization/passengers/deactivate/${id}`);
         console.log(data);
         console.log(e.target.checked + " bye"+id);
       }
 
+  }
+  const handleEditEvent = (id)=>{
+    setEditEmpIndex(id);
+    setShowEditEmp(true);
   }
 
   return (
@@ -110,7 +115,7 @@ function Passengers() {
                 <td> {passenger.phone} </td>
                 <td> {passenger.address}   </td>
                 <td> <Switch onChange={(e)=> handleActivation(e,passenger.id)} defaultChecked /> </td>
-                <td>   <EditIcon onClick={()=>setShowEditEmp(true)} className={` ${style.cursorPointer} ${style.editActionIcon}  `} /> </td>
+                <td>   <EditIcon onClick={()=>handleEditEvent(passenger.id)} className={` ${style.cursorPointer} ${style.editActionIcon}  `} /> </td>
                 <td>   <DeleteIcon onClick={() => deleteEmploye(passenger.id, setTrickReload)} className={` ${style.cursorPointer} ${style.deleteActionIcon} `} /> </td>
 
 
@@ -128,7 +133,7 @@ function Passengers() {
       </Snackbar>
 
       <AddEmpLayer showAddEmp={showAddEmp} openAlert={openAlert} setShowAddEmp={setShowAddEmp} setTrickReload={setTrickReload} ></AddEmpLayer>
-      <EditEmpLayer  showAddEmp={showEditEmp} emp={passengers} openAlert={openAlert} setShowAddEmp={setShowEditEmp} setTrickReload={setTrickReload} ></EditEmpLayer>
+      <EditEmpLayer  showAddEmp={showEditEmp} emp={passengers[editEmpIndex]?passengers[editEmpIndex]:null} openAlert={openAlert} setShowAddEmp={setShowEditEmp} setTrickReload={setTrickReload} ></EditEmpLayer>
       <AddBulkLayer showBulkLayer={showBulkLayer} setBulkLayer={setBulkLayer} openAlert={openAlert} setTrickReload={setTrickReload} ></AddBulkLayer>
 
 
