@@ -1,34 +1,24 @@
+import { Duration } from 'luxon'
+
 function PathInfo(props) {
   const getTimeString = time => {
-    const seconds = time / 1000
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds - hours * 3600) / 60)
-  
-    const list = []
-    if (hours > 0) {
-      list.push(`${hours} hour(s)`)
-    }
-  
-    if (minutes > 0) {
-      list.push(`${minutes} minute(s)`)
-    }
-  
-    if (list.length > 0) {
-      return list.join(', ')
+    if (time < 60000) {
+      return '<1 minute.'
     }
     else {
-      return '<1 minute'
+      const d = Duration.fromMillis(time).shiftTo('hours', 'minutes', 'seconds').toObject()
+
+      const hourPart = d.hours === 0 ? '' : `${d.hours} hour(s), `
+      const minutePart = `${d.minutes} minute(s).`
+
+      return hourPart + minutePart
     }
-  }
-  
-  const getDistanceString = distance => {
-    return (distance / 1000).toFixed(2) + ' km'
   }
 
   return (
     <div>
       <p>Estimated Time: {props.time ? getTimeString(props.time) : '--'}</p>
-      <p>Distance: {props.distance ? getDistanceString(props.distance) : '--'}</p>
+      <p>Distance: {props.distance ? `${(props.distance / 1000).toFixed(2)} km` : '--'}</p>
     </div>
   );
 }
