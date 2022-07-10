@@ -16,10 +16,12 @@ function Trips() {
 
   const getTripItem = trip => (
     <li key={trip.id}>
-      <TripItem key={trip.id} deleteTrip={() => deleteTrip(trip.id)} />
+      <TripItem trip={trip} deleteTrip={() => deleteTrip(trip.id)} />
     </li>
   )
 
+
+  console.log(trips)
   return (
     <>
       <div>

@@ -8,7 +8,6 @@ import tripService from "../../Services/trips"
 function CreateTrip() {
   // const [form, setForm] = useState({
   //   pathId: '',
-  //   name: '',
   //   date: '',
   //   time: '',
   //   capacity: '',
@@ -16,13 +15,11 @@ function CreateTrip() {
   // })
   const [form, setForm] = useState({
     pathId: "20",
-    name: "my_trip_with_moaz",
     date: "2022-07-20",
     time: "17:05",
     capacity: "23",
     public: true
-  }
-  )
+  })
   const [paths, setPaths] = useState([])
   const [currentPath, setCurrentPath] = useState()
   const [messages, setMessages] = useState([])
@@ -43,11 +40,6 @@ function CreateTrip() {
     const schema = Joi.object({
       pathId: Joi.number().messages({
         'number.base': 'You must select a path.'
-      }),
-      name: Joi.string().min(3).max(30).messages({
-        'string.empty': 'Trip name cannot be empty.',
-        'string.min': 'Trip name must be at least 3 characters long.',
-        'string.max': 'Trip name must be at most 30 characters long.'
       }),
       date: Joi.string().messages({
         'string.empty': 'You must select a date for the trip.'
@@ -83,7 +75,6 @@ function CreateTrip() {
     } else {
       const data = {
         path_id: form.pathId,
-        name: form.name,
         repitition: 'one-time',
         date: form.date,
         time: form.time,
@@ -91,8 +82,13 @@ function CreateTrip() {
         public: +form.public
       }
       console.log(data)
-      tripService.create(data).then(response => console.log(response))
-      // setMessages(['Trip created successfully!'])
+      tripService.create(data).then(
+        response => {
+          if (response.status === 200) {
+            setMessages(['Trip created successfully.'])
+          }
+        }
+      )
     }
   }
 
@@ -129,10 +125,6 @@ function CreateTrip() {
               path => <option key={path.id} value={path.id}>{path.path_name}</option>
             )}
           </select>
-        </div>
-        <div>
-          <label htmlFor="name">Trip Name </label>
-          <input type="text" name="name" id="name" value={form.name} onChange={handleChange} />
         </div>
         <div>
           <label htmlFor="date">Date </label>
