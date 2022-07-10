@@ -1,0 +1,24 @@
+.popUpLayer{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+background: rgba(0, 0, 0,0.5);
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, /* to remove the arrows from the input of type number */
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] { /* to remove the arrows from the input of type number */
+  -moz-appearance: textfield;
+}
+
+.chargeBtn{
+    background-color:#26b16d !important
+}

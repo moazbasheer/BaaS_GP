@@ -9,7 +9,14 @@
 }
 
 
-
+.logoutBtn{
+    font-family: 'Oswald', sans-serif;
+    background-color: #0dcaf0 !important;
+    border-color: #0dcaf0 !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    margin-top: 0px;
+}
  
 /*.sideNav a{
     background-color: blue;
