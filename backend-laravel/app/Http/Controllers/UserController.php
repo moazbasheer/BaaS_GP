@@ -155,7 +155,7 @@ class UserController extends Controller
             $validator = Validator::make($req->all(), [
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'username' => 'required',
+                'username' => 'required|unique:clients,username',
                 'phone_number' => 'required|min:11'
             ]);
             if($is_failed || $validator->fails()) {
@@ -300,7 +300,7 @@ class UserController extends Controller
                 $temp1 = Passenger::where('user_id', $temp->id)->first();
                 if($temp1->activated == 0) {
                     return response([
-                        'status' => true,
+                        'status' => false,
                         'message' => ['user is deactivated, please contact the organization']
                     ], 200);
                 }

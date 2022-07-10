@@ -53,6 +53,8 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
         Route::get('/trips', [TripController::class, 'get_all_trips']);
         Route::post('/trips/pay/{id}', [TripController::class, 'pay_trip']);
         Route::get('/trips/users/{id}', [TripController::class, 'get_users_in_trip']);
+        Route::get('/trips/{id}', [TripController::class, 'show']);
+        Route::delete('/trips/{id}', [TripController::class, 'destroy']);
         
         Route::get('wallet', [OrganizationController::class, 'check_balance']);
         Route::post('wallet/charge', [OrganizationController::class, 'charge_balance']);

@@ -90,7 +90,7 @@ class TripController extends Controller
                 'message' => ['number of seats must be more then zero']
             ], 200);
         }
-        $datetime = new DateTime($req->date . ' ' . $req->time);
+        $datetime = new \DateTime($req->date . ' ' . $req->time);
         if(now() > $datetime) {
             return response([
                 'status' => false,
@@ -418,6 +418,86 @@ class TripController extends Controller
                 'clients' => $clients,
                 'passengers' => $passengers
             ]
+        ];
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/organization/trips/{id}",
+     *      operationId="get trip by id",
+     *      tags={"Trips"},
+     *      summary="get trip by id",
+     *      description="get trip by id",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
+     *
+     */
+    public function show($id) {
+        $trip = Trip::find($id);
+        if($trip == null) {
+            return [
+                'status' => false,
+                'message' => ['trip is not found']
+            ];
+        }
+        if($trip->datetime < now()) {
+            return response([
+                'status' => false,
+                'message' => ['this trip is finished']
+            ]);
+        }
+        $trip = [
+            'path_id' => $trip->path_id,
+            'repitition' => $trip->repitition,
+            'status' => $trip->status,
+            'price' => $trip->price,
+            'num_seats' => $trip->num_seats,
+            'public' => $trip->public,
+            'datetime' => $trip->datetime
+        ];
+        return [
+            'status' => true,
+            'message' => $trip
+        ];
+    }
+
+    /**
+     * @OA\Delete(
+     *      path="/api/organization/trips/{id}",
+     *      operationId="delete trip by id",
+     *      tags={"Trips"},
+     *      summary="delete trip by id",
+     *      description="delete trip by id",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
+     *
+     */
+    public function destroy($id) {
+        $trip = Trip::find($id);
+        if($trip == null) {
+            return [
+                'status' => false,
+                'message' => ['trip is not found']
+            ];
+        }
+        $trip->delete();
+        return [
+            'status' => true,
+            'message' => ['trip is deleted successfully']
         ];
     }
 }

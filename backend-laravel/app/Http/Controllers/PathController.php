@@ -261,7 +261,7 @@ class PathController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/organization/path/id/{id}",
+     *      path="/api/organization/paths/id/{id}",
      *      operationId="get path by id",
      *      tags={"Paths"},
      *      summary="get path by id",
@@ -433,7 +433,25 @@ class PathController extends Controller
             'message' => ['path is deleted successfully']
         ], 200);
     }
-
+    /**
+     * @OA\Get(
+     *      path="/api/organization/paths",
+     *      operationId="get all paths",
+     *      tags={"Paths"},
+     *      summary="get all paths",
+     *      description="get all paths",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     *       security={
+     *           {"api_key_security_example": {}}
+     *       }
+     *     )
+     *
+     * Returns a route's paths object.
+     */
     public function get_all_paths() {
         $organization_id = Auth::user()->organization->id;
         $all_routes = Route::where('organization_id', $organization_id)->get();

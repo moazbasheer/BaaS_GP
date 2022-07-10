@@ -305,7 +305,9 @@ class ClientController extends Controller
             $trip1["status"] = $trip->status;
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;
-            $trip1["price"] = $trip->price / $trip->num_seats;
+            $client = Auth::user()->client;
+            $booking = Booking::where(['client_id' => $client->id, 'trip_id' => $trip->id])->first();
+            $trip1["price"] = $booking->price;
             $trip1["num_seats"] = $trip->num_seats;
             $trip1["public"] = $trip->public;
             $organization = $trip->organization;
@@ -384,6 +386,18 @@ class ClientController extends Controller
      * Returns all passengers data.
      */
     public function join_trip(Request $req) {
+        $validator = Validator::make($req->all(), [
+            'distance' => 'required|numeric|min:0',
+            'time' => 'required|numeric|min:0',
+        ]);
+        if($validator->fails()) {
+            $message = [];
+            $message = UserController::format_message($message, $validator);
+            return response([
+                'status' => false,
+                'message' => $message
+            ], 200);
+        }
         $trip_id = $req->id;
         $trip = Trip::where('id', $trip_id)->first();
         if($trip == null) {
@@ -436,7 +450,7 @@ class ClientController extends Controller
             $token = $result['id'];
             try{
                 $status = Stripe\Charge::create([
-                    "amount" => ceil($trip->price / $trip->num_seats + 10) * 100,
+                    "amount" => ceil((0.2 * $req->time + 0.02 * $req->distance + 15) / $trip->num_seats) * 100,
                     "currency" => "egp",
                     "card" => $token,
                     "description" => "Trip " . $trip->id . " payment" 
@@ -454,13 +468,13 @@ class ClientController extends Controller
             ], 200);
         } elseif($req->payment_method == "wallet") {
             $wallet = Auth::user()->client->wallet;
-            if(ceil($trip->price / $trip->num_seats) > $wallet->balance) {
+            if(ceil((0.2 * $req->time + 0.02 * $req->distance + 15) / $trip->num_seats) > $wallet->balance) {
                 return [
                     'status' => false,
                     'message' => ['balance of the wallet isn\'t enough']
                 ];
             } else {
-                $wallet->balance -= ceil($trip->price / $trip->num_seats);
+                $wallet->balance -= ceil((0.2 * $req->time + 0.02 * $req->distance + 15) / $trip->num_seats);
                 $wallet->save();
             }
         } else {
@@ -491,6 +505,11 @@ class ClientController extends Controller
             $client->trips()->attach($trip_id);
             $trip->num_users += 1;
             $trip->save();
+            $booking = Booking::where(['client_id' => $client->id, 'trip_id' => $trip_id])->first();
+            $booking->distance = $req->distance;
+            $booking->time = $req->time;
+            $booking->price = ceil((0.2 * $req->time + 0.02 * $req->distance + 15) / $trip->num_seats);
+            $booking->save();
             return response([
                 'status' => true,
                 'message' => ['the client joined the trip successfully']
@@ -555,10 +574,12 @@ class ClientController extends Controller
         
         $trip = Trip::where('id', $trip_id)->first();
         $wallet = $client->wallet;
-        $wallet->balance += ceil($trip->price / $trip->num_seats);
+        $booking = Booking::where(['client_id' => $client->id, 'trip_id' => $trip_id])->first();
+        $wallet->balance += $booking->price;
         $wallet->save();
         $client->trips()->detach($trip_id);
         $client->save();
+
         $trip->num_users -= 1;
         $trip->save();
         return response([

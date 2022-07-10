@@ -736,25 +736,37 @@
                     {
                         "name": "card_number",
                         "in": "path",
-                        "description": "card number",
+                        "description": "card number (for credit)",
                         "required": true
                     },
                     {
                         "name": "exp_month",
                         "in": "path",
-                        "description": "expiration month",
+                        "description": "expiration month (for credit)",
                         "required": true
                     },
                     {
                         "name": "exp_year",
                         "in": "path",
-                        "description": "expiration year",
+                        "description": "expiration year (for credit)",
                         "required": true
                     },
                     {
-                        "name": "CVC",
+                        "name": "CVC (for credit)",
                         "in": "path",
                         "description": "CVC",
+                        "required": true
+                    },
+                    {
+                        "name": "distance",
+                        "in": "path",
+                        "description": "distance",
+                        "required": true
+                    },
+                    {
+                        "name": "time",
+                        "in": "path",
+                        "description": "time",
                         "required": true
                     }
                 ],
@@ -888,6 +900,27 @@
             }
         },
         "/api/organization/paths": {
+            "get": {
+                "tags": [
+                    "Paths"
+                ],
+                "summary": "get all paths",
+                "description": "get all paths",
+                "operationId": "get all paths",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Paths"
@@ -924,7 +957,7 @@
                 ]
             }
         },
-        "/api/organization/path/id/{id}": {
+        "/api/organization/paths/id/{id}": {
             "get": {
                 "tags": [
                     "Paths"
@@ -1347,6 +1380,50 @@
                 "summary": "get users in a trip",
                 "description": "get users in a trip",
                 "operationId": "get users in a trip",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            }
+        },
+        "/api/organization/trips/{id}": {
+            "get": {
+                "tags": [
+                    "Trips"
+                ],
+                "summary": "get trip by id",
+                "description": "get trip by id",
+                "operationId": "get trip by id",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "api_key_security_example": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Trips"
+                ],
+                "summary": "delete trip by id",
+                "description": "delete trip by id",
+                "operationId": "delete trip by id",
                 "responses": {
                     "200": {
                         "description": "successful operation"
