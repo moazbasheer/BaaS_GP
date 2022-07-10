@@ -32,8 +32,9 @@ const pathVecLayer = new VectorLayer({
 });
 
 function ViewPathMap({ path }) {
-  const [time, setTime] = useState();
-  const [distance, setDistance] = useState();
+  const [time, setTime] = useState()
+  const [distance, setDistance] = useState()
+  const [focusGeometry, setFocusGeometry] = useState();
 
   useEffect(() => {
     if (!path) {
@@ -86,13 +87,14 @@ function ViewPathMap({ path }) {
       pathVecSource.addFeature(pathFeature)
       setTime(result.paths[0].time)
       setDistance(result.paths[0].distance)
+      setFocusGeometry(pathFeature.getGeometry())
     });
   }, [path]);
 
   return (
     <>
       <PathInfo time={time} distance={distance} />
-      <MapComponent layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]} />
+      <MapComponent layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]} focusGeometry={focusGeometry} />
     </>
   );
 }

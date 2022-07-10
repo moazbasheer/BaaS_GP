@@ -75,7 +75,7 @@ function CreatePath() {
 
   return (
     <>
-      <Notification message={message} setMessage={setMessage} />
+      <Notification>{message}</Notification>
       <div>
         <label>Path Name:</label> <input type="text" onChange={handleNameChange} />
       </div>

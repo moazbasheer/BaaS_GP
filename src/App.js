@@ -16,6 +16,7 @@ import ViewRoute from './Components/ViewRoute/ViewRoute';
 import ViewPath from './Components/ViewPath/ViewPath';
 import CreateTrip from './Components/CreateTrip/CreateTrip';
 import Trips from './Components/Trips/Trips';
+import ViewTrip from './Components/ViewTrip/ViewTrip';
 
 function App() {
   const [loggedOrg, setLoggedOrg] = useState({});
@@ -51,6 +52,7 @@ function App() {
           <Route path="paths/create/:id" element={<CreatePath />} />
           <Route path="paths/:id" element={<ViewPath />} />
           <Route path="trips/create" element={<CreateTrip />} />
+          <Route path="trips/:id" element={<ViewTrip />} />
           <Route path="trips" element={<Trips />} />
         </Route>
         <Route path="*" element={<NotFound />} />

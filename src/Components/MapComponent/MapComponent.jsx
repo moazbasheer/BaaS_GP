@@ -17,11 +17,11 @@ let map = new Map({
   }),
 })
 
-function MapComponent({layers, interactions}) {
+function MapComponent({layers, interactions, focusGeometry}) {
   useEffect(() => {
     layers?.forEach(l => map.addLayer(l))
     interactions?.forEach(i => map.addInteraction(i))
-    
+
     map.setTarget('map')
 
     // deconstructor
@@ -34,6 +34,12 @@ function MapComponent({layers, interactions}) {
       map.setTarget(undefined)
     }
   }, [])
+
+  useEffect(() => {
+    if (focusGeometry) {
+      map.getView().fit(focusGeometry)
+    }
+  }, [focusGeometry])
 
   return (
     <div id='map' className='map'></div>
