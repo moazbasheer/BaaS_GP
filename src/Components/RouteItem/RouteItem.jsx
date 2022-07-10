@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import PathItem from "../PathItem/PathItem"
 
 function RouteItem({ route, deleteRoute }) {
   return (
