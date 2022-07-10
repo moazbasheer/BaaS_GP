@@ -1,4 +1,3 @@
-
 import './App.css';
 import Login from './Components/Login/login';
 import Register from './Components/Register/Register';
@@ -15,7 +14,6 @@ import CreatePath from './Components/CreatePath/CreatePath';
 import ViewRoute from './Components/ViewRoute/ViewRoute';
 import ViewPath from './Components/ViewPath/ViewPath';
 import CreateTrip from './Components/CreateTrip/CreateTrip';
-import Trips from './Components/Trips/Trips';
 
 function App() {
   const [loggedOrg, setLoggedOrg] = useState({});
@@ -52,7 +50,6 @@ function App() {
           <Route path="paths/create/:id" element={<CreatePath />} />
           <Route path="paths/:id" element={<ViewPath />} />
           <Route path="trips/create" element={<CreateTrip />} />
-          <Route path="trips" element={<Trips />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
