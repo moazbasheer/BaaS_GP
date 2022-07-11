@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link , useOutletContext} from "react-router-dom"
 import TripItem from "../TripItem/TripItem"
 import tripService from '../../Services/trips'
-
+import {  } from "react-router-dom";
 function Trips() {
-  const [trips, setTrips] = useState([])
-
+  const [trips, setTrips] = useState([]);
+  const [wallet, setWallet] = useOutletContext();
+  console.log("wallet in trips is "+wallet);
   useEffect(() => {
     tripService.getAll().then((result) => setTrips(result.message));
   }, []);

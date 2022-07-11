@@ -17,11 +17,16 @@ const create = async (trip) => {
   return response;
 };
 
+const payTrip = async (id) => {
+  const response = await privateRequst.post(`${baseUrl}/pay/${id}` ,{payment_method:"wallet"});
+  return response;
+};
+
 const deleteTrip = async (id) => {
   const response = await privateRequst.delete(`${baseUrl}/${id}`);
   return response;
 };
 
 export default {
-  create, getAll, get, deleteTrip,
+  create, getAll, get, deleteTrip,payTrip
 };

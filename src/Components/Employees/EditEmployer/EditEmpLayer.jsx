@@ -6,7 +6,7 @@ import style from "./AddEmpLayer.module.css";
 function EditEmpLayer({ setShowAddEmp, showAddEmp, openAlert ,setTrickReload ,emp}) {
     const [employee, setEmployee] = useState({ name: "", email: "", phone: "", password: "", address: "" });
     const [addEmployerErrors, setAddEmployerErrors] = useState([]);
-
+    
     function handleEmployee(e) {
         const temp = { ...employee };
         temp[e.target.name] = e.target.value;

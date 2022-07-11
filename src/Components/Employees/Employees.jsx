@@ -25,7 +25,7 @@ function Passengers() {
       setIsLoading(true);
       privateRequst.get('organization/passengers').then((response) => {
         const employess = response.data.message
-        // console.log(response.data.message);
+        console.log(response.data.message);
         setPassengers(employess);
         // console.log(employess);
         setIsLoading(false);
@@ -61,11 +61,12 @@ function Passengers() {
 
     setSuccessAlert(false);
   }
-  const handleActivation = async(e,id) => {
+  const handleActivation = async(e,id,index) => {
     const isChecked = e.target.checked;
     if (isChecked){
       try {
         const {data}= await privateRequst.put(`organization/passengers/activate/${id}`);
+        passengers[index].activated=true;
         console.log(data);
       } catch (error) {
        
@@ -75,6 +76,7 @@ function Passengers() {
       else{
         const {data}= await privateRequst.put(`organization/passengers/deactivate/${id}`);
         console.log(data);
+        passengers.get(index).activated=false;  
         console.log(e.target.checked + " bye"+id);
       }
 
@@ -114,7 +116,7 @@ function Passengers() {
                 <td> {passenger.email} </td>
                 <td> {passenger.phone} </td>
                 <td> {passenger.address}   </td>
-                <td> <Switch onChange={(e)=> handleActivation(e,passenger.id)} defaultChecked /> </td>
+                <td> <Switch onChange={(e)=> handleActivation(e,passenger.id,index)} defaultChecked={passenger.activated} value={passenger.activated} /> </td>
                 <td>   <EditIcon onClick={()=>handleEditEvent(passenger.id)} className={` ${style.cursorPointer} ${style.editActionIcon}  `} /> </td>
                 <td>   <DeleteIcon onClick={() => deleteEmploye(passenger.id, setTrickReload)} className={` ${style.cursorPointer} ${style.deleteActionIcon} `} /> </td>
 
