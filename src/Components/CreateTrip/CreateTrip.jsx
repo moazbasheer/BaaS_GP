@@ -4,6 +4,7 @@ import ViewPathMap from "../ViewPathMap/ViewPathMap"
 import Joi from 'joi'
 import Notification from "../Notification/Notification"
 import tripService from "../../Services/trips"
+import { useOutletContext } from "react-router-dom"
 
 function CreateTrip() {
   // const [form, setForm] = useState({
@@ -23,7 +24,8 @@ function CreateTrip() {
   const [paths, setPaths] = useState([])
   const [currentPath, setCurrentPath] = useState()
   const [messages, setMessages] = useState([])
-
+  const [wallet, setWallet] = useOutletContext();
+  console.log("wallet in create trips is " + wallet);
   useEffect(() => {
     pathService.getAll().then((result) => setPaths(result.message))
   }, [])
@@ -32,7 +34,9 @@ function CreateTrip() {
     if (form.pathId) {
       pathService.get(form.pathId).then((result) => {
         setCurrentPath(result.message);
+        console.log("path info is : " + result.message.price);
       });
+
     }
   }, [form.pathId]);
 
@@ -73,22 +77,38 @@ function CreateTrip() {
     if (validation.error) {
       setMessages(validation.error.details.map(d => d.message))
     } else {
-      const data = {
-        path_id: form.pathId,
-        repitition: 'one-time',
-        date: form.date,
-        time: form.time,
-        num_seats: form.capacity,
-        public: +form.public
-      }
-      console.log(data)
-      tripService.create(data).then(
-        response => {
-          if (response.status === 200) {
-            setMessages(['Trip created successfully.'])
-          }
+      if (currentPath.price > wallet) {
+setMessages(['Your balance is not enough for creating more trips, charge your wallet and try again']);
+      } else {
+        const data = {
+          path_id: form.pathId,
+          repitition: 'one-time',
+          date: form.date,
+          time: form.time,
+          num_seats: form.capacity,
+          public: +form.public
         }
-      )
+        console.log(data)
+        tripService.create(data).then(
+          response => {
+            console.log("create trip response is : " + response.data);
+            if (response.status === 200) {
+              const { id }= response.data.trip;
+              tripService.payTrip(id).then( (res)=>{
+                console.log("response for payment : " +res );
+                if(res.data.status==true){ 
+                    setMessages(['Trip created successfully.']);
+                    setWallet( (prev)=>prev-currentPath.price );
+                  }
+                else setMessages(['error in paying for the trip']);
+              } ).catch( (err)=> console.log("error in paying for trip with id "+id +"\n"+err) );
+              console.log(id);
+
+            }
+          }
+        )
+
+      }
     }
   }
 
