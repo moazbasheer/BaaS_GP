@@ -101,7 +101,7 @@ class TripController extends Controller
 
         $organization = Auth::user()->organization;
         if($req->repitition == "one-time") {
-            Trip::create([
+            $trip = Trip::create([
                 'path_id' => $path->id,
                 'organization_id' => $organization->id,
                 'repitition' => $req->repitition,
@@ -113,7 +113,7 @@ class TripController extends Controller
             ]);
             return response([
                 'status' => true,
-                'message' => ['trip is added successfully']
+                'message' => ['trip is added successfully, trip id is: ' . $trip->id]
             ], 200);
         } else {
 
