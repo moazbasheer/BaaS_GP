@@ -19,6 +19,7 @@ function PathInfo(props) {
     <div>
       <p>Estimated Time: {props.time ? getTimeString(props.time) : '--'}</p>
       <p>Distance: {props.distance ? `${(props.distance / 1000).toFixed(2)} km` : '--'}</p>
+      <p>Price: {props.distance ? `${props.price} EGP` : '--'}</p>
     </div>
   );
 }

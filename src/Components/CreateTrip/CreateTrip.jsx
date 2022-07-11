@@ -109,7 +109,7 @@ function CreateTrip() {
 
   return (
     <>
-      {currentPath ? <ViewPathMap path={currentPath} /> : null}
+      {currentPath && <ViewPathMap path={currentPath} />}
       <form onSubmit={handleSubmit}>
         <div>
           <select name="pathId" id="path" value={form.pathId} onChange={handleChange}>

@@ -34,6 +34,7 @@ const pathVecLayer = new VectorLayer({
 function ViewPathMap({ path }) {
   const [time, setTime] = useState()
   const [distance, setDistance] = useState()
+  const [price, setPrice] = useState()
   const [focusGeometry, setFocusGeometry] = useState();
 
   useEffect(() => {
@@ -65,6 +66,8 @@ function ViewPathMap({ path }) {
       return;
     }
 
+    setPrice(path.price)
+
     // add stops other than origin and destination
     stopsVecSource.clear()
     
@@ -82,7 +85,6 @@ function ViewPathMap({ path }) {
     pathVecSource.clear()
 
     const pointsCoords = path.stops.map(stop => [stop.latitude, stop.longitude])
-    console.log(pointsCoords)
     pathAPIService.getPath(pointsCoords).then((result) => {
       const pathFeature = stringToPolyline(result.paths[0].points)
       pathVecSource.addFeature(pathFeature)
@@ -94,8 +96,8 @@ function ViewPathMap({ path }) {
 
   return (
     <>
-      <PathInfo time={time} distance={distance} />
       <MapComponent layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]} focusGeometry={focusGeometry} />
+      <PathInfo time={time} distance={distance} price={price} />
     </>
   );
 }
