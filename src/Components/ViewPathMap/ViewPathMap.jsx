@@ -82,6 +82,7 @@ function ViewPathMap({ path }) {
     pathVecSource.clear()
 
     const pointsCoords = path.stops.map(stop => [stop.latitude, stop.longitude])
+    console.log(pointsCoords)
     pathAPIService.getPath(pointsCoords).then((result) => {
       const pathFeature = stringToPolyline(result.paths[0].points)
       pathVecSource.addFeature(pathFeature)

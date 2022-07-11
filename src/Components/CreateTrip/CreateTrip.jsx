@@ -6,18 +6,11 @@ import Notification from "../Notification/Notification"
 import tripService from "../../Services/trips"
 
 function CreateTrip() {
-  // const [form, setForm] = useState({
-  //   pathId: '',
-  //   date: '',
-  //   time: '',
-  //   capacity: '',
-  //   public: true
-  // })
   const [form, setForm] = useState({
-    pathId: "20",
-    date: "2022-07-20",
-    time: "17:05",
-    capacity: "23",
+    pathId: '',
+    date: '',
+    time: '',
+    capacity: '',
     public: true
   })
   const [paths, setPaths] = useState([])

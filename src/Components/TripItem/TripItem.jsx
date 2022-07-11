@@ -6,13 +6,13 @@ function TripItem({ trip, deleteTrip }) {
 
   return (
     <div>
-      <div>Trip for path: {trip.path_name}</div>
       <div>{DateTime.fromISO(date).toLocaleString(DateTime.DATE_FULL)}</div>
       <div>{DateTime.fromISO(time).toLocaleString(DateTime.TIME_SIMPLE)}</div>
       <div>Capacity: {trip.num_seats}</div>
+      <div>Price: {trip.price} EGP</div>
       <div>{trip.public ? 'Public' : 'Private'}</div>
-      <Link to={`${trip.id}`}>
-        <button>View</button>
+      <Link to={`../paths/${trip.path_id}`}>
+        <button>View Path</button>
       </Link>
       <button onClick={deleteTrip}>Delete</button>
     </div>

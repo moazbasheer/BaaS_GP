@@ -39,6 +39,8 @@ function OrgRoutes() {
       </ul>
     </li>
   )
+  
+  console.log(paths)
 
   return (
     <>
