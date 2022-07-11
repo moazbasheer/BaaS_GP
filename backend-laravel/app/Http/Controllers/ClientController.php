@@ -212,8 +212,7 @@ class ClientController extends Controller
                 $trip1["stops"][] = $stop1;
             }
             $trip1["repitition"] = $trip->repitition;
-            $trip1["date"] = $trip->date;
-            $trip1["time"] = $trip->time;
+            $trip1["datetime"] = $trip->datetime;
             $trip1["status"] = $trip->status;
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;
@@ -300,8 +299,7 @@ class ClientController extends Controller
                 $trip1["stops"][] = $stop1;
             }
             $trip1["repitition"] = $trip->repitition;
-            $trip1["date"] = $trip->date;
-            $trip1["time"] = $trip->time;
+            $trip1["datetime"] = $trip->datetime;
             $trip1["status"] = $trip->status;
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;
@@ -450,7 +448,7 @@ class ClientController extends Controller
             $token = $result['id'];
             try{
                 $status = Stripe\Charge::create([
-                    "amount" => ceil((0.2 * $req->time + 0.02 * $req->distance + 15) / $trip->num_seats) * 100,
+                    "amount" => ceil((0.02 * $req->distance + $req->time / 3000 + 15) / $trip->num_seats) * 100,
                     "currency" => "egp",
                     "card" => $token,
                     "description" => "Trip " . $trip->id . " payment" 
@@ -468,13 +466,13 @@ class ClientController extends Controller
             ], 200);
         } elseif($req->payment_method == "wallet") {
             $wallet = Auth::user()->client->wallet;
-            if(ceil((0.2 * $req->time + 0.02 * $req->distance + 15) / $trip->num_seats) > $wallet->balance) {
+            if(ceil((0.02 * $req->distance + $req->time / 3000 + 15) / $trip->num_seats) > $wallet->balance) {
                 return [
                     'status' => false,
                     'message' => ['balance of the wallet isn\'t enough']
                 ];
             } else {
-                $wallet->balance -= ceil((0.2 * $req->time + 0.02 * $req->distance + 15) / $trip->num_seats);
+                $wallet->balance -= ceil((0.02 * $req->distance + $req->time / 3000 + 15) / $trip->num_seats);
                 $wallet->save();
             }
         } else {
@@ -508,7 +506,7 @@ class ClientController extends Controller
             $booking = Booking::where(['client_id' => $client->id, 'trip_id' => $trip_id])->first();
             $booking->distance = $req->distance;
             $booking->time = $req->time;
-            $booking->price = ceil((0.2 * $req->time + 0.02 * $req->distance + 15) / $trip->num_seats);
+            $booking->price = ceil((0.02 * $req->distance + $req->time / 3000 + 15) / $trip->num_seats);
             $booking->save();
             return response([
                 'status' => true,

@@ -395,9 +395,9 @@ class OrganizationController extends Controller
             'exp_month' => 'required|size:2',
             'exp_year' => 'required|size:4',
             'CVC' => 'required|size:3',
-            'amount' => 'required'
+            'amount' => 'required|numeric'
         ]);
-        if(gettype($req->amount) != "integer" || $req->amount < 1) {
+        if($req->amount < 1) {
             return [
                 'status' => false,
                 'message' => ['amount must be a positive integer']

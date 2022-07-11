@@ -72,7 +72,7 @@ class TripController extends Controller
             'repitition' => 'required|string', // one-time.
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
-            'num_seats' => 'required|numeric',
+            'num_seats' => 'required|numeric|min:1|max:100',
             'public' => 'required|numeric'
         ]);
         
@@ -150,27 +150,10 @@ class TripController extends Controller
         foreach($all_trips as $trip) {
             $trip1 = [];
             $trip1["id"] = $trip->id;
-            $trip1["path_name"] = $trip->path->name;
-            $trip1["route"] = [
-                'source' => $trip->path->route->source,
-                'destination' => $trip->path->route->destination
-            ];
-            $all_stops = $trip->path->stops->toArray();
-            $trip1["stops"] = [];
-            foreach($all_stops as $stop) {
-                $stop1 = [
-                    'name' => $stop["name"],
-                    'longitude' => $stop["longitude"],
-                    'latitude' => $stop["latitude"]
-                ];
-                $trip1["stops"][] = $stop1;
-            }
+            $trip1["path_id"] = $trip->path->id;
             $trip1["repitition"] = $trip->repitition;
-            $trip1["date"] = $trip->date;
-            $trip1["time"] = $trip->time;
+            $trip1["datetime"] = $trip->datetime;
             $trip1["status"] = $trip->status;
-            $trip1["path_distance"] = $trip->path->distance;
-            $trip1["path_time"] = $trip->path->time;
             $trip1["price"] = $trip->price;
             $trip1["num_seats"] = $trip->num_seats;
             $trip1["public"] = $trip->public;

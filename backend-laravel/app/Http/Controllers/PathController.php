@@ -240,7 +240,7 @@ class PathController extends Controller
         $path = $res["paths"][0];
         $distance = $path["distance"];
         $time = $path["time"];
-        $price = 0.2 * $distance + 0.02 * $time + 15;
+        $price = 0.02 * $distance + $time / 3000 + 15;
         
         $path = Path::create([
             'route_id' => $route_id,

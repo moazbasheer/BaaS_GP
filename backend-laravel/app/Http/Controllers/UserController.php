@@ -264,14 +264,14 @@ class UserController extends Controller
         }
         $user1 = User::where('email', $req->emailorusername)->first();
         $user2 = null;
-        if($req->role_name == "client") {
-            $user2 = Client::where('username', $req->emailorusername)->first();
-            if($user2) {
-                $user2 = User::find($user2->user_id);
-            } else {
-                $user2 = null;
-            }
+    
+        $user2 = Client::where('username', $req->emailorusername)->first();
+        if($user2) {
+            $user2 = User::find($user2->user_id);
+        } else {
+            $user2 = null;
         }
+        
         $temp = $user1??$user2; //
         $user = null;
         if($temp) {
@@ -287,6 +287,7 @@ class UserController extends Controller
                 $user["last_name"] = $temp1->last_name;
                 $user["username"] = $temp1->username;
                 $user["phone_number"] = $temp1->phone_number;
+                
             } elseif($temp->role_name == 'organization') {
                 $temp1 = Organization::where('user_id', $temp->id)->first();
                 $user["name"] = $temp1->name;
