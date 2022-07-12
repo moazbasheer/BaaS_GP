@@ -96,7 +96,7 @@ class ClientController extends Controller
             'CVC' => 'required|size:3',
             'amount' => 'required'
         ]);
-        if(gettype($req->amount) != "integer" || $req->amount < 1) {
+        if($req->amount < 1) {
             return [
                 'status' => false,
                 'message' => ['amount must be a positive integer']

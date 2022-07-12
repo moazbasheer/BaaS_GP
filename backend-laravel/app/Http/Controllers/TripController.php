@@ -113,7 +113,10 @@ class TripController extends Controller
             ]);
             return response([
                 'status' => true,
-                'message' => ['trip is added successfully, trip id is: ' . $trip->id]
+                'message' => ['trip is added successfully'],
+                "trip" => [
+                    'id' => $trip->id
+                ]
             ], 200);
         } else {
 

@@ -9,6 +9,7 @@ use App\Models\Trip;
 use App\Models\Booking;
 use Validator;
 use Stripe;
+use App\Models\Complaint;
 
 class PassengerController extends Controller
 {
@@ -95,7 +96,7 @@ class PassengerController extends Controller
             'CVC' => 'required|size:3',
             'amount' => 'required'
         ]);
-        if(gettype($req->amount) != "integer" || $req->amount < 1) {
+        if($req->amount < 1) {
             return [
                 'status' => false,
                 'message' => ['amount must be a positive integer']
@@ -155,7 +156,7 @@ class PassengerController extends Controller
     }
     
     /**
-     * @OA\Post(
+     * @OA\Get(
      *      path="/api/passenger/trips/inside",
      *      operationId="get the trips inside the organization",
      *      tags={"Passengers"},
@@ -189,7 +190,7 @@ class PassengerController extends Controller
                 }
             }
             $complaints = Complaint::where([
-                'client_id' => $client->id,
+                'passenger_id' => $passenger->id,
                 'trip_id' => $trip->id
             ])->get();
             if(count($complaints) > 0) {
@@ -247,7 +248,7 @@ class PassengerController extends Controller
         ]);
     }
     /**
-     * @OA\Post(
+     * @OA\Get(
      *      path="/api/passenger/trips/outside",
      *      operationId="get the trips outside the organization",
      *      tags={"Passengers"},
