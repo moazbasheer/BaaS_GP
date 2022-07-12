@@ -6,11 +6,16 @@ import { coordinatesToPoint, setPointStyle } from "../../Utility/map"
 import VectorSource from "ol/source/Vector"
 import VectorLayer from "ol/layer/Vector"
 
-let origin, destination
+let origin, destination, extent
 const pointsVecSource = new VectorSource()
-const pointsVecLayer = new VectorLayer({ source: pointsVecSource })
+const pointsVecLayer = new VectorLayer({
+  source: pointsVecSource,
+  style: setPointStyle
+})
 
 function ViewRouteMap({ route }) {
+  const [focusExtent, setFocusExtent] = useState()
+
   useEffect(() => {
     if (!route) {
       return
@@ -26,12 +31,13 @@ function ViewRouteMap({ route }) {
     destination.type = 'destination'
 
     const features = [origin, destination]
-    features.forEach(p => setPointStyle(p))
     pointsVecSource.addFeatures(features)
+
+    setFocusExtent(pointsVecSource.getExtent())
   }, [route]);
 
   return (
-    <MapComponent layers={[pointsVecLayer]} />
+    <MapComponent layers={[pointsVecLayer]} focusExtent={focusExtent} />
   )
 }
 

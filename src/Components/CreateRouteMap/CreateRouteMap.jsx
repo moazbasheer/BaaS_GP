@@ -11,7 +11,10 @@ import MapComponent from '../MapComponent/MapComponent'
 let pointType
 let endpoints = {}
 const pointsVecSource = new VectorSource();
-const pointsVecLayer = new VectorLayer({ source: pointsVecSource })
+const pointsVecLayer = new VectorLayer({
+  source: pointsVecSource,
+  style: setPointStyle
+})
 
 const drawAction = new Draw({
   source: pointsVecSource,
@@ -48,7 +51,6 @@ const CreateRouteMap = ({ setEndpoints }) => {
     const input = window.prompt('Enter a name for the point')
     point.name = input ? input : pointType
 
-    setPointStyle(point)
     setEndpointsState()
   }
 

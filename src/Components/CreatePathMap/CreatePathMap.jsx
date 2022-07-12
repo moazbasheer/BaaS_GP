@@ -10,7 +10,7 @@ import { Stroke, Style } from 'ol/style';
 import { useEffect, useState } from 'react';
 import { Polyline } from 'ol/format';
 import {
-  setPointStyle, pointToCoordinates, coordinatesToPoint, stringToPolyline,
+  setPointStyle, pointToCoordinates, coordinatesToPoint, stringToPolyline, setPathStyle,
 } from '../../Utility/map';
 import pathAPIService from '../../Services/graphhopper';
 import MapComponent from '../MapComponent/MapComponent';
@@ -22,20 +22,21 @@ let origin; let destination; let
 
 // layer for origin and destination
 const endpointsVecSource = new VectorSource();
-const endpointsVecLayer = new VectorLayer({ source: endpointsVecSource });
+const endpointsVecLayer = new VectorLayer({
+  source: endpointsVecSource,
+  style: setPointStyle
+});
 
 const stopsVecSource = new VectorSource();
-const stopsVecLayer = new VectorLayer({ source: stopsVecSource });
+const stopsVecLayer = new VectorLayer({
+  source: stopsVecSource,
+  style: setPointStyle
+});
 
 const pathVecSource = new VectorSource();
 const pathVecLayer = new VectorLayer({
   source: pathVecSource,
-  style: new Style({
-    stroke: new Stroke({
-      color: '#00688bBB',
-      width: 7,
-    }),
-  }),
+  style: setPathStyle,
 });
 
 const drawAction = new Draw({
@@ -71,8 +72,8 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     stops.forEach((stop) => points.push(pointToCoordinates(stop)));
     points.push(pointToCoordinates(destination));
 
-    const result = await pathAPIService.getPath(points);
-    const pathFeature = stringToPolyline(result.paths[0].points);
+    const result = await pathAPIService.getPath(points)
+    const pathFeature = stringToPolyline(result.paths[0].points)
 
     // delete previous path if any
     clearPath();
@@ -100,7 +101,6 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     stops.push(point);
     setStops(stops);
 
-    setPointStyle(point);
     drawPath();
   };
 

@@ -4,6 +4,7 @@ import VectorLayer from 'ol/layer/Vector';
 import { Stroke, Style } from 'ol/style';
 import MapComponent from '../MapComponent/MapComponent';
 import {
+  setPathStyle,
   coordinatesToPoint, pointToCoordinates, setPointStyle, stringToPolyline,
 } from '../../Utility/map';
 import pathAPIService from '../../Services/graphhopper';
@@ -15,27 +16,29 @@ let origin; let
 
 // layer for origin and destination
 const endpointsVecSource = new VectorSource();
-const endpointsVecLayer = new VectorLayer({ source: endpointsVecSource });
+const endpointsVecLayer = new VectorLayer({
+  source: endpointsVecSource,
+  style: setPointStyle
+});
 
 const stopsVecSource = new VectorSource();
-const stopsVecLayer = new VectorLayer({ source: stopsVecSource });
+const stopsVecLayer = new VectorLayer({
+    source: stopsVecSource,
+    style: setPointStyle
+  });
 
 const pathVecSource = new VectorSource();
 const pathVecLayer = new VectorLayer({
   source: pathVecSource,
-  style: new Style({
-    stroke: new Stroke({
-      color: '#00688bBB',
-      width: 7,
-    }),
-  }),
-});
+  style: setPathStyle
+})
 
 function ViewPathMap({ path }) {
   const [time, setTime] = useState()
   const [distance, setDistance] = useState()
   const [price, setPrice] = useState()
-  const [focusGeometry, setFocusGeometry] = useState();
+  const [pathStops, setPathStops] = useState()
+  const [focusExtent, setFocusExtent] = useState();
 
   useEffect(() => {
     if (!path) {
@@ -57,7 +60,6 @@ function ViewPathMap({ path }) {
     destination.name = path.stops[n].name;
 
     const features = [origin, destination];
-    features.forEach((p) => setPointStyle(p));
     endpointsVecSource.addFeatures(features);
   }, [path]);
 
@@ -67,6 +69,7 @@ function ViewPathMap({ path }) {
     }
 
     setPrice(path.price)
+    setPathStops(path.stops)
 
     // add stops other than origin and destination
     stopsVecSource.clear()
@@ -78,26 +81,27 @@ function ViewPathMap({ path }) {
       point.name = stop.name;
       return point;
     })
-    stops.forEach((stop) => setPointStyle(stop));
     stopsVecSource.addFeatures(stops);
 
     // draw path polyline
     pathVecSource.clear()
 
+    console.log(path)
     const pointsCoords = path.stops.map(stop => [stop.latitude, stop.longitude])
     pathAPIService.getPath(pointsCoords).then((result) => {
       const pathFeature = stringToPolyline(result.paths[0].points)
       pathVecSource.addFeature(pathFeature)
+
       setTime(result.paths[0].time)
       setDistance(result.paths[0].distance)
-      setFocusGeometry(pathFeature.getGeometry())
+      setFocusExtent(pathVecSource.getExtent())
     });
   }, [path]);
 
   return (
     <>
-      <MapComponent layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]} focusGeometry={focusGeometry} />
-      <PathInfo time={time} distance={distance} price={price} />
+      <PathInfo time={time} distance={distance} price={price} stops={pathStops} />
+      <MapComponent layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]} focusExtent={focusExtent} />
     </>
   );
 }

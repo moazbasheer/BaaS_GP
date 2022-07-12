@@ -17,9 +17,15 @@ function PathInfo(props) {
 
   return (
     <div>
-      <p>Estimated Time: {props.time ? getTimeString(props.time) : '--'}</p>
-      <p>Distance: {props.distance ? `${(props.distance / 1000).toFixed(2)} km` : '--'}</p>
-      <p>Price: {props.distance ? `${props.price} EGP` : '--'}</p>
+      <div>Estimated Time: {props.time ? getTimeString(props.time) : '--'}</div>
+      <div>Distance: {props.distance ? `${(props.distance / 1000).toFixed(2)} km` : '--'}</div>
+      <div>Price: {props.distance ? `${props.price} EGP` : '--'}</div>
+      <div>
+        <div>Stops</div>
+        {props.stops?.map((stop, i) => (
+          <div key={i}>{stop.name}</div>
+        ))}
+      </div>
     </div>
   );
 }

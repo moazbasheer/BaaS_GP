@@ -17,7 +17,7 @@ let map = new Map({
   }),
 })
 
-function MapComponent({layers, interactions, focusGeometry}) {
+function MapComponent({layers, interactions, focusExtent}) {
   useEffect(() => {
     layers?.forEach(l => map.addLayer(l))
     interactions?.forEach(i => map.addInteraction(i))
@@ -36,10 +36,13 @@ function MapComponent({layers, interactions, focusGeometry}) {
   }, [])
 
   useEffect(() => {
-    if (focusGeometry) {
-      map.getView().fit(focusGeometry)
+    if (focusExtent) {
+      map.getView().fit(focusExtent, map.getSize())
+
+      const currentZoom = map.getView().getZoom()
+      map.getView().setZoom(currentZoom * 0.99) // zoom out a little bit
     }
-  }, [focusGeometry])
+  }, [focusExtent])
 
   return (
     <div id='map' className='map'></div>
