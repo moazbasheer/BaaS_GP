@@ -1,12 +1,11 @@
 import './App.css';
 import Login from './Components/Login/login';
 import Register from './Components/Register/Register';
-import Home from './Components/Home/Home';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import NotFound from './Components/Not Found/NotFound';
 import { useEffect, useState } from 'react';
+import MainInterface from './Components/MainInterface/MainInterface';
 import RoutingGuard from './Components/RoutingGuard/RoutingGuard';
-import Statistics from './Components/Statistics/Statistics';
 import Employees from './Components/Employees/Employees';
 import OrgRoutes from './Components/OrgRoutes/OrgRoutes';
 import CreateRoute from './Components/CreateRoute/CreateRoute';
@@ -15,6 +14,7 @@ import ViewRoute from './Components/ViewRoute/ViewRoute';
 import ViewPath from './Components/ViewPath/ViewPath';
 import CreateTrip from './Components/CreateTrip/CreateTrip';
 import Trips from './Components/Trips/Trips';
+import Home from './Components/Home/Home';
 
 function App() {
   const [loggedOrg, setLoggedOrg] = useState({});
@@ -36,13 +36,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/"
-          element={(
-            <RoutingGuard logOut={logout} Component={Home} />
-        )}
-        >
-          <Route path="statistics" element={<Statistics />} />
+        <Route path="/" element={(<RoutingGuard logOut={logout} Component={MainInterface} />)}>
+          <Route path="home" element={<Home />} />
           <Route path="passengers" element={<Employees />} />
           <Route path="routes/create" element={<CreateRoute />} />
           <Route path="routes/:id" element={<ViewRoute />} />
