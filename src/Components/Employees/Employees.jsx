@@ -10,6 +10,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Switch from '@mui/material/Switch';
 import EditEmpLayer from './EditEmployer/EditEmpLayer';
 import PageTitle from '../PageTitle/PageTitle';
+import AddIcon from '@mui/icons-material/Add';
+
 function Passengers() {
   const [successAlert, setSuccessAlert] = useState(false)
   const [passengers, setPassengers] = useState([ /* this data should be feteched from the database*/]);
@@ -90,6 +92,8 @@ function Passengers() {
   return (
     <>
       <PageTitle title={'Passengers'} />
+      <button className={`btn btn-outline-primary mx-2`} onClick={() => setShowAddEmp(true)}><AddIcon /> Add Employee</button>
+      <button className='btn btn-primary mx-2' onClick={() => setBulkLayer(true)}><AddIcon /> Add Bulk</button>
       {isLoading ? <div className='w-100 my-5'>  <LinearProgress /> </div> :
         <table className={`table  table-striped table-responsive table-hover border border-1 m-auto p-0   ${style.table}`}>
           <thead className={` m-auto  `}>
@@ -128,12 +132,6 @@ function Passengers() {
       <AddEmpLayer showAddEmp={showAddEmp} openAlert={openAlert} setShowAddEmp={setShowAddEmp} setTrickReload={setTrickReload} ></AddEmpLayer>
       <EditEmpLayer showAddEmp={showEditEmp} emp={passengers[editEmpIndex] ? passengers[editEmpIndex] : null} openAlert={openAlert} setShowAddEmp={setShowEditEmp} setTrickReload={setTrickReload} ></EditEmpLayer>
       <AddBulkLayer showBulkLayer={showBulkLayer} setBulkLayer={setBulkLayer} openAlert={openAlert} setTrickReload={setTrickReload} ></AddBulkLayer>
-      <div className="d-flex justify-content-center mt-3">
-        <div className={`  `}>
-          <button className={`btn btn-outline-primary mx-2`} onClick={() => setShowAddEmp(true)} >Add Employee</button>
-          <button className='btn btn-primary mx-2' onClick={() => setBulkLayer(true)}>Add Bulk</button>
-        </div>
-      </div>
     </>
   )
 }

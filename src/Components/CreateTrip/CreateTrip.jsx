@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 import pathService from '../../Services/paths'
 import ViewPathMap from "../ViewPathMap/ViewPathMap"
 import Joi from 'joi'
-import Notification from "../Notification/Notification"
 import tripService from "../../Services/trips"
 import { useOutletContext } from "react-router-dom"
 import PageTitle from "../PageTitle/PageTitle"
+import { Alert } from "@mui/material"
 
 function CreateTrip() {
   const [form, setForm] = useState({
@@ -67,10 +67,16 @@ function CreateTrip() {
     })
 
     if (validation.error) {
-      setMessages(validation.error.details.map(d => d.message))
+      setMessages(validation.error.details.map(d => ({
+        content: d.message,
+        type: 'error'
+      })))
     } else {
       if (currentPath.price > wallet) {
-        setMessages(['Your balance is not enough for creating more trips, charge your wallet and try again']);
+        setMessages([{
+          content: 'Your balance is not enough for creating more trips, charge your wallet and try again',
+          type: 'error'
+        }]);
       } else {
         const data = {
           path_id: form.pathId,
@@ -89,10 +95,10 @@ function CreateTrip() {
               tripService.payTrip(id).then((res) => {
                 console.log("response for payment : " + res);
                 if (res.data.status == true) {
-                  setMessages(['Trip created successfully.']);
+                  setMessages([{content: 'Trip created successfully.', type: 'success'}]);
                   setWallet((prev) => prev - currentPath.price);
                 }
-                else setMessages(['error in paying for the trip']);
+                else setMessages([{content: 'Error in trip payment.', type: 'error'}]);
               }).catch((err) => console.log("error in paying for trip with id " + id + "\n" + err));
               console.log(id);
 
@@ -110,10 +116,6 @@ function CreateTrip() {
 
   const handleCheckbox = event => {
     setForm({ ...form, [event.target.name]: event.target.checked })
-  }
-
-  const handleRepetition = event => {
-    setForm({ ...form, repeat: { ...form.repeat, [event.target.name]: event.target.checked } })
   }
 
   // return today date in format yyyy-mm-dd as a string
@@ -157,7 +159,7 @@ function CreateTrip() {
         </div>
         <button className="btn btn-primary w-100" type="submit">Create Trip</button>
       </form>
-      {messages.map((message, i) => <Notification key={i}>{message}</Notification>)}
+      {messages.map((message, i) => <Alert key={i} severity={message.type}>{message.content}</Alert>)}
     </>
   )
 }

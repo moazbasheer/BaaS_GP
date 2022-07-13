@@ -1,3 +1,4 @@
+import { Alert } from '@mui/material';
 import Joi from 'joi';
 import React, { useState } from 'react'
 import { NavLink as Link, useNavigate } from 'react-router-dom';
@@ -42,7 +43,7 @@ function Login() {
           localStorage.setItem("organization", JSON.stringify(storedOrg));
           navigate("/home", { replace: true });
         } else {
-          setErrors([...errors, response.message]);
+          setErrors([...errors, {message: response.message}]);
         }
         console.log(response);
         setisFetching(false);
@@ -80,7 +81,7 @@ function Login() {
               </div>
 
               <div className="validationErrors">
-                {errors.map((err, index) => <div key={index} className='alert-danger  my-2 p-2'> {err.message} </div>)}
+                {errors.map((err, index) => <Alert key={index} className='my-2 p-2' severity='error'>{err.message}</Alert>)}
               </div>
               <button onClick={submitForm} className='btn btn-primary mt-3 fs-3 fw-bolder text-white mb-3' disabled={isFetching}>
                 {

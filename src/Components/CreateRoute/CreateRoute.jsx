@@ -1,23 +1,32 @@
 import { useState } from 'react';
 import CreateRouteMap from '../CreateRouteMap/CreateRouteMap'
 import routeService from '../../Services/routes'
-import Notification from '../Notification/Notification'
 import { pointToCoordinates } from '../../Utility/map';
 import PageTitle from '../PageTitle/PageTitle';
+import { Alert } from '@mui/material';
 
 function CreateRoute() {
   const [name, setName] = useState('')
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState()
   const [endpoints, setEndpoints] = useState({})
 
-  
   const createRoute = async () => {
     if (!endpoints.origin || !endpoints.destination) {
-      setMessage('Please specify an origin AND a destination.')
+      setMessage(
+        {
+          content: 'Please specify an origin AND a destination.',
+          type: 'error'
+        }
+      )
       return
-    } 
+    }
     if (!name) {
-      setMessage('Please enter a name for the route.')
+      setMessage(
+        {
+          content: 'Please enter a name for the route.',
+          type: 'error'
+        }
+      )
       return
     }
 
@@ -33,11 +42,15 @@ function CreateRoute() {
       destination_longitude: destinationCoords[1]
     }
     console.log(route)
-    
+
     const response = await routeService.create(route)
     if (response.status === 200) {
-      setMessage('Route created successfully.')
-      console.log(response)
+      setMessage(
+        {
+          content: 'Route created successfully.',
+          type: 'success'
+        }
+      )
     }
   }
 
@@ -47,8 +60,10 @@ function CreateRoute() {
 
   return (
     <>
-      <PageTitle title={'Create a New Route'}/>
-      <Notification>{message}</Notification>
+      <PageTitle title={'Create a New Route'} />
+      <div className='my-1'>
+        {message && <Alert severity={message.type}>{message.content}</Alert>}
+      </div>
       <div className='d-flex justify-content-between align-items-end mb-3'>
         <div className='d-flex gap-1 align-items-center'>
           <div><label className='form-label fw-bold'>Route Name:</label></div>

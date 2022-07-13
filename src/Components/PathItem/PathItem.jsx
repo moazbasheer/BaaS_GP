@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 function PathItem({ path, deletePath }) {
   return (
@@ -10,7 +11,7 @@ function PathItem({ path, deletePath }) {
         <Link className="text-center fst-italic mx-2" to={`../paths/${path.id}`}>
           View Path
         </Link>
-        <button className='btn btn-danger' onClick={deletePath}>Delete</button>
+        <button className='btn btn-danger' onClick={deletePath}><DeleteOutlineOutlinedIcon />Delete</button>
       </div>
     </div>
   );

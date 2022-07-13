@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import routeService from '../../Services/routes'
 import { pointToCoordinates } from "../../Utility/map";
 import CreatePathMap from "../CreatePathMap/CreatePathMap"
-import Notification from "../Notification/Notification"
 import pathService from '../../Services/paths'
 import PageTitle from "../PageTitle/PageTitle";
+import { Alert } from "@mui/material";
 
 function CreatePath() {
   const routeId = parseInt(useParams().id)
@@ -18,11 +18,11 @@ function CreatePath() {
 
   const createPath = async () => {
     if (!navigationResult) {
-      setMessage('Please construct a path first.')
+      setMessage({content: 'Please construct a path first.', type: 'error'})
       return
     }
     if(!name) {
-      setMessage('Please enter a name for the path.')
+      setMessage({content: 'Please enter a name for the path.', type: 'error'})
       return
     }
 
@@ -77,7 +77,7 @@ function CreatePath() {
   return (
     <>
       {route && <PageTitle title={`Create a Path for '${route.name}' Route`}/>}
-      <Notification>{message}</Notification>
+      <Alert severity={message.type}>{message.content}</Alert>
       <div className='d-flex justify-content-between align-items-end mb-3'>
         <div className='d-flex gap-1 align-items-center'>
           <div><label className='form-label fw-bold'>Path Name:</label></div>

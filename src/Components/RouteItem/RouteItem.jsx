@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { getCoordinatesAddress } from "../../Utility/misc"
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import RouteIcon from '@mui/icons-material/Route';
 
 function RouteItem({ route, deleteRoute }) {
   const [origin, setOrigin] = useState()
@@ -19,7 +21,9 @@ function RouteItem({ route, deleteRoute }) {
     <>
       <div className="d-flex justify-content-between align-items-center">
         <div className="fs-5">
-          <div>{route.name}</div>
+          <div>
+            <RouteIcon /> {route.name}
+          </div>
         </div>
         <div>
           <div><span className="fw-bold">From:</span> {origin}</div>
@@ -32,7 +36,7 @@ function RouteItem({ route, deleteRoute }) {
           <Link to={`../paths/create/${route.id}`}>
             <button className="btn btn-primary mx-2">Create a New Path</button>
           </Link>
-          <button className="btn btn-danger" onClick={deleteRoute}>Delete</button>
+          <button className="btn btn-danger" onClick={deleteRoute}><DeleteOutlineOutlinedIcon /> Delete</button>
         </div>
       </div>
     </>

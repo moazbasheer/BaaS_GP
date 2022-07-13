@@ -7,6 +7,8 @@ import { privateRequst } from '../axiosRequest';
 // import { useNavigate } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout';
 import Charge from './Charge/Charge';
+import PaidIcon from '@mui/icons-material/Paid';
+import PersonIcon from '@mui/icons-material/Person';
 // email test@test.com password : testtest
 
 function MainInterface({ logOut }) {
@@ -61,7 +63,7 @@ function MainInterface({ logOut }) {
           <div className='fs-5'>Hello, <span className='fw-bold text-black'>{orgName}</span>!</div>
           <div>
             <div><span className="fw-bold">Balance: </span>{wallet.toLocaleString()} EGP</div>
-            <button className='btn btn-success fw-bold w-100' onClick={() => { setShowLayer(true) }}>Recharge</button>
+            <button className='btn btn-success fw-bold w-100' onClick={() => { setShowLayer(true) }}><PaidIcon /> Recharge</button>
           </div>
         </div>
         <div className="container-fluid">
