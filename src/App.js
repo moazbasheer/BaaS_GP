@@ -35,7 +35,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
         <Route path="/" element={(<RoutingGuard logOut={logout} Component={MainInterface} />)}>
           <Route path="home" element={<Home />} />
           <Route path="passengers" element={<Employees />} />
@@ -49,11 +48,6 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <div className="App bg-success">
-
-        {/* <Register></Register> */}
-        {/* </Login> */}
-      </div>
     </>
   );
 }

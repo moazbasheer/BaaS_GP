@@ -3,12 +3,23 @@ import { Link , useOutletContext} from "react-router-dom"
 import TripItem from "../TripItem/TripItem"
 import tripService from '../../Services/trips'
 import {  } from "react-router-dom";
+import PageTitle from "../PageTitle/PageTitle";
 function Trips() {
   const [trips, setTrips] = useState([]);
-  const [wallet, setWallet] = useOutletContext();
-  console.log("wallet in trips is "+wallet);
+
   useEffect(() => {
-    tripService.getAll().then((result) => setTrips(result.message));
+    tripService.getAll().then(
+      (result) => {
+        const sortedTrips = result.message
+
+        // sort chronologically
+        sortedTrips.sort((a, b) => (
+          new Date(b.datetime) - new Date(a.datetime)
+        )).reverse()
+
+        setTrips(sortedTrips)
+      }
+    );
   }, []);
 
   const deleteTrip = id => {
@@ -16,24 +27,23 @@ function Trips() {
   };
 
   const getTripItem = trip => (
-    <li key={trip.id}>
+    <li className='list-group-item list-group-item-action' key={trip.id}>
       <TripItem trip={trip} deleteTrip={() => deleteTrip(trip.id)} />
     </li>
   )
 
-
   console.log(trips)
   return (
     <>
-      <div>
+      <PageTitle title={'Trips'} />
+      <div className="mb-3">
         <Link to="create">
-          <button>
-            Create New Trip
+          <button className="btn btn-outline-primary">
+            Create a New Trip
           </button>
         </Link>
       </div>
-      <h2>Trips</h2>
-      <ul>
+      <ul className='list-group'>
         {trips.map(trip => getTripItem(trip))}
       </ul>
     </>

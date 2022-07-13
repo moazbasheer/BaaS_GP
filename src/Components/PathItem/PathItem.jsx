@@ -2,12 +2,16 @@ import { Link } from 'react-router-dom';
 
 function PathItem({ path, deletePath }) {
   return (
-    <div>
-      {path.path_name}
-      <Link to={`../paths/${path.id}`}>
-        <button>View</button>
-      </Link>
-      <button onClick={deletePath}>Delete</button>
+    <div className='d-flex justify-content-between align-items-center'>
+      <div>
+        {path.path_name}
+      </div>
+      <div>
+        <Link className="text-center fst-italic mx-2" to={`../paths/${path.id}`}>
+          View Path
+        </Link>
+        <button className='btn btn-danger' onClick={deletePath}>Delete</button>
+      </div>
     </div>
   );
 }

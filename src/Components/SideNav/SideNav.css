@@ -1,0 +1,14 @@
+.navlink {
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.25s ease;
+}
+
+.active {
+    background-color: #00000070;
+}
+
+.inactive:hover{
+    background-color: #00000050;
+}

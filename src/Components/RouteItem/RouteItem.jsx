@@ -16,18 +16,26 @@ function RouteItem({ route, deleteRoute }) {
   }, []);
 
   return (
-    <div>
-      <div>{route.name}</div>
-      <div>Origin: {origin}</div>
-      <div>Destination: {destination}</div>
-      <Link to={`../paths/create/${route.id}`}>
-        <button>Create Path</button>
-      </Link>
-      <Link to={`${route.id}`}>
-        <button>View</button>
-      </Link>
-      <button onClick={deleteRoute}>Delete</button>
-    </div>
+    <>
+      <div className="d-flex justify-content-between align-items-center">
+        <div className="fs-5">
+          <div>{route.name}</div>
+        </div>
+        <div>
+          <div><span className="fw-bold">From:</span> {origin}</div>
+          <div><span className="fw-bold">To:</span> {destination}</div>
+        </div>
+        <div>
+          <Link className="text-center fs-5 fst-italic" to={`${route.id}`}>
+            View Route
+          </Link>
+          <Link to={`../paths/create/${route.id}`}>
+            <button className="btn btn-primary mx-2">Create a New Path</button>
+          </Link>
+          <button className="btn btn-danger" onClick={deleteRoute}>Delete</button>
+        </div>
+      </div>
+    </>
   )
 }
 

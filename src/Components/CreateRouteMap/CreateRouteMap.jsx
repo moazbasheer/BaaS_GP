@@ -87,16 +87,20 @@ const CreateRouteMap = ({ setEndpoints }) => {
 
   return (
     <>
-      <div>
-        <button onClick={() => changePointType('origin')}>Origin</button>
-        <button onClick={() => changePointType('destination')}>Destination</button>
-        <button onClick={() => changePointType('delete')}>Delete Point</button>
-        <button onClick={() => changePointType('none')}>None</button>
-      </div>
-      <div>
-        <button onClick={clearPoints}>Clear All</button>
-      </div>
       <MapComponent layers={[pointsVecLayer]} interactions={[drawAction, deleteAction, snapAction]} />
+      <div className='d-flex justify-content-between'>
+        <div>
+          <div className=''>
+            <button onClick={() => changePointType('origin')} className='btn btn-outline-success'>Origin</button>
+            <button onClick={() => changePointType('destination')} className='btn btn-outline-danger'>Destination</button>
+          </div>
+          <button onClick={() => changePointType('none')} className='btn btn-outline-secondary w-100'>None</button>
+        </div>
+        <div>
+          <button onClick={() => changePointType('delete')} className='btn btn-danger h-100 mx-1'>Delete a Point</button>
+          <button className='btn btn-danger h-100' onClick={clearPoints}>Clear All</button>
+        </div>
+      </div>
     </>
   )
 }

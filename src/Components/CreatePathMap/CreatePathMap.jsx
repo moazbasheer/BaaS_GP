@@ -132,18 +132,20 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
 
   return (
     <>
-      <div>
-        <button onClick={() => changePointType('stop')}>Add Stops</button>
-        <button onClick={() => changePointType('none')}>None</button>
-      </div>
-      <div>
-        <button onClick={clearStops}>Clear All Stops</button>
-      </div>
-      <PathInfo time={time} distance={distance} />
       <MapComponent
         layers={[pathVecLayer, stopsVecLayer, endpointsVecLayer]}
         interactions={[drawAction, snapAction]}
       />
+      <PathInfo time={time} distance={distance} />
+      <div className='d-flex justify-content-between mt-3'>
+        <div>
+          <button onClick={() => changePointType('stop')} className='btn btn-outline-primary'>Add Stop</button>
+          <button onClick={() => changePointType('none')} className='btn btn-outline-secondary'>None</button>
+        </div>
+        <div>
+          <button className='btn btn-danger h-100' onClick={clearStops}>Clear All</button>
+        </div>
+      </div>
     </>
   );
 }

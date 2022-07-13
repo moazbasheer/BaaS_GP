@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ViewPathMap from "../ViewPathMap/ViewPathMap"
 import pathService from '../../Services/paths';
+import PageTitle from "../PageTitle/PageTitle";
 
 function ViewPath() {
   const pathId = parseInt(useParams().id)
@@ -15,6 +16,7 @@ function ViewPath() {
 
   return (
     <>
+      {path && <PageTitle title={`Viewing '${path.path_name}' Map.`} />}
       <ViewPathMap path={path}/>
     </>
   );

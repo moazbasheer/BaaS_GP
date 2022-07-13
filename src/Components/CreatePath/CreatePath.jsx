@@ -5,6 +5,7 @@ import { pointToCoordinates } from "../../Utility/map";
 import CreatePathMap from "../CreatePathMap/CreatePathMap"
 import Notification from "../Notification/Notification"
 import pathService from '../../Services/paths'
+import PageTitle from "../PageTitle/PageTitle";
 
 function CreatePath() {
   const routeId = parseInt(useParams().id)
@@ -75,11 +76,15 @@ function CreatePath() {
 
   return (
     <>
+      {route && <PageTitle title={`Create a Path for '${route.name}' Route`}/>}
       <Notification>{message}</Notification>
-      <div>
-        <label>Path Name:</label> <input type="text" onChange={handleNameChange} />
+      <div className='d-flex justify-content-between align-items-end mb-3'>
+        <div className='d-flex gap-1 align-items-center'>
+          <div><label className='form-label fw-bold'>Path Name:</label></div>
+          <div><input type="text" placeholder='Path Name' onChange={handleNameChange} className='form-control' /></div>
+        </div>
+        <div><button onClick={createPath} className='btn btn-primary'>Create Path</button></div>
       </div>
-      <button onClick={createPath}>Create Path</button>
       <CreatePathMap route={route} setNavigationResult={setNavigationResult} setStops={setStops} />
     </>
   );

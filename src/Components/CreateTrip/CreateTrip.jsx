@@ -5,6 +5,7 @@ import Joi from 'joi'
 import Notification from "../Notification/Notification"
 import tripService from "../../Services/trips"
 import { useOutletContext } from "react-router-dom"
+import PageTitle from "../PageTitle/PageTitle"
 
 function CreateTrip() {
   const [form, setForm] = useState({
@@ -69,7 +70,7 @@ function CreateTrip() {
       setMessages(validation.error.details.map(d => d.message))
     } else {
       if (currentPath.price > wallet) {
-setMessages(['Your balance is not enough for creating more trips, charge your wallet and try again']);
+        setMessages(['Your balance is not enough for creating more trips, charge your wallet and try again']);
       } else {
         const data = {
           path_id: form.pathId,
@@ -84,15 +85,15 @@ setMessages(['Your balance is not enough for creating more trips, charge your wa
           response => {
             console.log("create trip response is : " + response.data);
             if (response.status === 200) {
-              const { id }= response.data.trip;
-              tripService.payTrip(id).then( (res)=>{
-                console.log("response for payment : " +res );
-                if(res.data.status==true){ 
-                    setMessages(['Trip created successfully.']);
-                    setWallet( (prev)=>prev-currentPath.price );
-                  }
+              const { id } = response.data.trip;
+              tripService.payTrip(id).then((res) => {
+                console.log("response for payment : " + res);
+                if (res.data.status == true) {
+                  setMessages(['Trip created successfully.']);
+                  setWallet((prev) => prev - currentPath.price);
+                }
                 else setMessages(['error in paying for the trip']);
-              } ).catch( (err)=> console.log("error in paying for trip with id "+id +"\n"+err) );
+              }).catch((err) => console.log("error in paying for trip with id " + id + "\n" + err));
               console.log(id);
 
             }
@@ -127,64 +128,34 @@ setMessages(['Your balance is not enough for creating more trips, charge your wa
 
   return (
     <>
-      {currentPath && <ViewPathMap path={currentPath} />}
-      <form onSubmit={handleSubmit}>
+      <PageTitle title={'Create a New Trip'}/>
+      <form className="" onSubmit={handleSubmit}>
         <div>
-          <select name="pathId" id="path" value={form.pathId} onChange={handleChange}>
+          <select className="form-select" name="pathId" id="path" value={form.pathId} onChange={handleChange}>
             <option value="" disabled>Select your path</option>
             {paths.map(
               path => <option key={path.id} value={path.id}>{path.path_name}</option>
             )}
           </select>
+          {currentPath && <div className="my-3"><ViewPathMap path={currentPath} /></div>}
         </div>
         <div>
-          <label htmlFor="date">Date </label>
-          <input type="date" name="date" id="date" value={form.date} onChange={handleChange} min={getTodayDate()} />
+          <label htmlFor="date" className='form-label'>Date </label>
+          <input className="form-control" type="date" name="date" id="date" value={form.date} onChange={handleChange} min={getTodayDate()} />
         </div>
         <div>
-          <label htmlFor="time">Time </label>
-          <input type="time" name="time" id="time" value={form.time} onChange={handleChange} />
-        </div>
-        {/* <div>
-          Repetition
-          <div>
-            <label htmlFor="sat">Sat</label>
-            <input type="checkbox" name="sat" id="sat" checked={form.repeat.sat} onChange={handleRepetition} />
-          </div>
-          <div>
-            <label htmlFor="sun">Sun</label>
-            <input type="checkbox" name="sun" id="sun" checked={form.repeat.sun} onChange={handleRepetition} />
-          </div>
-          <div>
-            <label htmlFor="mon">Mon</label>
-            <input type="checkbox" name="mon" id="mon" checked={form.repeat.mon} onChange={handleRepetition} />
-          </div>
-          <div>
-            <label htmlFor="tue">Tue</label>
-            <input type="checkbox" name="tue" id="tue" checked={form.repeat.tue} onChange={handleRepetition} />
-          </div>
-          <div>
-            <label htmlFor="wed">Wed</label>
-            <input type="checkbox" name="wed" id="wed" checked={form.repeat.wed} onChange={handleRepetition} />
-          </div>
-          <div>
-            <label htmlFor="thu">Thu</label>
-            <input type="checkbox" name="thu" id="thu" checked={form.repeat.thu} onChange={handleRepetition} />
-          </div>
-          <div>
-            <label htmlFor="fri">Fri</label>
-            <input type="checkbox" name="fri" id="fri" checked={form.repeat.fri} onChange={handleRepetition} />
-          </div>
-        </div> */}
-        <div>
-          <label htmlFor="capacity">Capacity </label>
-          <input type="number" name="capacity" id="capacity" value={form.capacity} onChange={handleChange} />
+          <label htmlFor="time" className='form-label'>Time </label>
+          <input className="form-control" type="time" name="time" id="time" value={form.time} onChange={handleChange} />
         </div>
         <div>
-          <label htmlFor="public">Public </label>
-          <input type="checkbox" name="public" id="public" checked={form.public} onChange={handleCheckbox} />
+          <label htmlFor="capacity" className='form-label'>Capacity </label>
+          <input className="form-control" type="number" name="capacity" id="capacity" placeholder="Must be between 10 - 100" value={form.capacity} onChange={handleChange} />
         </div>
-        <button type="submit">Create Trip</button>
+        <div>
+          <label htmlFor="public" className='form-check-label me-2'>Public </label>
+          <input className="form-check-input" type="checkbox" name="public" id="public" checked={form.public} onChange={handleCheckbox} />
+        </div>
+        <button className="btn btn-primary w-100" type="submit">Create Trip</button>
       </form>
       {messages.map((message, i) => <Notification key={i}>{message}</Notification>)}
     </>

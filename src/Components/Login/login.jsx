@@ -1,10 +1,10 @@
 import Joi from 'joi';
 import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
-
+import { NavLink as Link, useNavigate } from 'react-router-dom';
 import background from "../../imges/backImg.jpg"
 import { publicRequst } from '../axiosRequest';
 import style from "./login.module.css"
+
 function Login() {
   const [organization, setOrganization] = useState({ emailorusername: "", password: "" });
   const [isFetching, setisFetching] = useState(false);
@@ -58,17 +58,17 @@ function Login() {
     <div style={{
       backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center",
       backgroundAttachment: "fixed", backgroundOrigin: "content-box"
-    }} className={` bg-warning position-absolute top-0 bottom-0 start-0 end-0`} >
+    }} className={` bg-primary position-absolute top-0 bottom-0 start-0 end-0`} >
       <div className="container vh-100 vw-100">
         <div className='row w-100 h-100 justify-content-between m-auto  d-flex justify-content-center align-items-center rightContainer'>
 
-          <div className='col-md-5 text-center busColor p-4' >
+          <div className='col-md-5 text-center p-4 bg-primary bg-opacity-75 text-white' >
             <h1 className={`${style.leftHeader} my-3 `}>BaaS  </h1>
             <h3 className='fw-bold my-5 '>Smarter transportation for your people </h3>
             <h4>  Replace the inefficiencies plaguing your transportation. </h4>
           </div>
-          <div className={`col-md-5  text-start ${style.loginForm} bg-white  bg-opacity-50 fw-bold`}  >
-            <h2 className='text-md-center'> SIGN IN </h2>
+          <div className={`col-md-5  text-start border border-primary border-5 bg-white fw-bold bg-opacity-75 p-3`}  >
+            <h2 className='text-md-center fw-bold'> SIGN IN </h2>
             <form className='m-lg-4 m-md-2 m-0'>
               <div className="form-group text-start ">
                 <label htmlFor="email" className=' ' >Email address</label>
@@ -79,21 +79,20 @@ function Login() {
                 <input type="password" name='password' onChange={handleForm} className="form-control" placeholder="Password" />
               </div>
 
-              <div className="validationErrors  ">
+              <div className="validationErrors">
                 {errors.map((err, index) => <div key={index} className='alert-danger  my-2 p-2'> {err.message} </div>)}
               </div>
-              <button onClick={submitForm} className='btn btn-outline-warning  mt-3 fs-3 fw-bolder text-white' disabled={isFetching}>
+              <button onClick={submitForm} className='btn btn-primary mt-3 fs-3 fw-bolder text-white mb-3' disabled={isFetching}>
                 {
                   isFetching ?
-                    <div className="spinner-border text-warning" role="status">
+                    <div className="spinner-border text-primary" role="status">
                       <span className="visually-hidden">Loading...</span>
                     </div>
                     :
-                    "LOGIN"
+                    "Login"
                 }
-
               </button>
-              <div className='text-end '> you can create one from   <NavLink to="/register" style={{ color: "green", textDecoration: "underline" }}>here </NavLink></div>
+              <div className='text-end '>New user? you can create an account <Link to="/register">here </Link></div>
             </form>
           </div>
         </div>

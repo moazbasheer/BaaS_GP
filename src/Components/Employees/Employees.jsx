@@ -9,6 +9,7 @@ import style from "./Employees.module.css";
 import LinearProgress from '@mui/material/LinearProgress';
 import Switch from '@mui/material/Switch';
 import EditEmpLayer from './EditEmployer/EditEmpLayer';
+import PageTitle from '../PageTitle/PageTitle';
 function Passengers() {
   const [successAlert, setSuccessAlert] = useState(false)
   const [passengers, setPassengers] = useState([ /* this data should be feteched from the database*/]);
@@ -18,7 +19,7 @@ function Passengers() {
   const [showBulkLayer, setBulkLayer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [editEmpIndex, setEditEmpIndex] = useState(0);
-  
+
   useEffect(() => {
 
     try {
@@ -61,43 +62,36 @@ function Passengers() {
 
     setSuccessAlert(false);
   }
-  const handleActivation = async(e,id,index) => {
+  const handleActivation = async (e, id, index) => {
     const isChecked = e.target.checked;
-    if (isChecked){
+    if (isChecked) {
       try {
-        const {data}= await privateRequst.put(`organization/passengers/activate/${id}`);
-        passengers[index].activated=true;
+        const { data } = await privateRequst.put(`organization/passengers/activate/${id}`);
+        passengers[index].activated = true;
         console.log(data);
       } catch (error) {
-       
-        console.log("error in deActivation"+error);
+
+        console.log("error in deActivation" + error);
       }
     }
-      else{
-        const {data}= await privateRequst.put(`organization/passengers/deactivate/${id}`);
-        console.log(data);
-        passengers.get(index).activated=false;  
-        console.log(e.target.checked + " bye"+id);
-      }
+    else {
+      const { data } = await privateRequst.put(`organization/passengers/deactivate/${id}`);
+      console.log(data);
+      passengers.get(index).activated = false;
+      console.log(e.target.checked + " bye" + id);
+    }
 
   }
-  const handleEditEvent = (id)=>{
+  const handleEditEvent = (id) => {
     setEditEmpIndex(id);
     setShowEditEmp(true);
   }
 
   return (
     <>
-      <div className='d-flex align-items-center justify-content-between'>
-        <h1 className='' >Passengers</h1  >
-        <div className={`  `}>
-          <button className={`btn btn-success mx-2   `} onClick={() => setShowAddEmp(true)} >Add Employee</button>
-          <button className='btn btn-light mx-2' onClick={() => setBulkLayer(true)}>Add Bulk</button>
-        </div>
-      </div>
+      <PageTitle title={'Passengers'} />
       {isLoading ? <div className='w-100 my-5'>  <LinearProgress /> </div> :
-        <table className={`table  table-striped table-responsive  table-dark table-hover border border-1 m-auto p-0   ${style.table}`}>
-
+        <table className={`table  table-striped table-responsive table-hover border border-1 m-auto p-0   ${style.table}`}>
           <thead className={` m-auto  `}>
             <tr className='border border-1 border-white'>
               <th className='' scope="col">#</th>
@@ -116,11 +110,9 @@ function Passengers() {
                 <td> {passenger.email} </td>
                 <td> {passenger.phone} </td>
                 <td> {passenger.address}   </td>
-                <td> <Switch onChange={(e)=> handleActivation(e,passenger.id,index)} defaultChecked={passenger.activated} value={passenger.activated} /> </td>
-                <td>   <EditIcon onClick={()=>handleEditEvent(passenger.id)} className={` ${style.cursorPointer} ${style.editActionIcon}  `} /> </td>
+                <td> <Switch onChange={(e) => handleActivation(e, passenger.id, index)} defaultChecked={passenger.activated} value={passenger.activated} /> </td>
+                <td>   <EditIcon onClick={() => handleEditEvent(passenger.id)} className={` ${style.cursorPointer} ${style.editActionIcon}  `} /> </td>
                 <td>   <DeleteIcon onClick={() => deleteEmploye(passenger.id, setTrickReload)} className={` ${style.cursorPointer} ${style.deleteActionIcon} `} /> </td>
-
-
               </tr>
             })}
           </tbody>
@@ -130,15 +122,18 @@ function Passengers() {
       {/* to confirm for the org that the employer is added */}
       <Snackbar open={successAlert} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          Empoyer Added  Auccessfully!
+          Empoyer Added  Successfully!
         </Alert>
       </Snackbar>
-
       <AddEmpLayer showAddEmp={showAddEmp} openAlert={openAlert} setShowAddEmp={setShowAddEmp} setTrickReload={setTrickReload} ></AddEmpLayer>
-      <EditEmpLayer  showAddEmp={showEditEmp} emp={passengers[editEmpIndex]?passengers[editEmpIndex]:null} openAlert={openAlert} setShowAddEmp={setShowEditEmp} setTrickReload={setTrickReload} ></EditEmpLayer>
+      <EditEmpLayer showAddEmp={showEditEmp} emp={passengers[editEmpIndex] ? passengers[editEmpIndex] : null} openAlert={openAlert} setShowAddEmp={setShowEditEmp} setTrickReload={setTrickReload} ></EditEmpLayer>
       <AddBulkLayer showBulkLayer={showBulkLayer} setBulkLayer={setBulkLayer} openAlert={openAlert} setTrickReload={setTrickReload} ></AddBulkLayer>
-
-
+      <div className="d-flex justify-content-center mt-3">
+        <div className={`  `}>
+          <button className={`btn btn-outline-primary mx-2`} onClick={() => setShowAddEmp(true)} >Add Employee</button>
+          <button className='btn btn-primary mx-2' onClick={() => setBulkLayer(true)}>Add Bulk</button>
+        </div>
+      </div>
     </>
   )
 }

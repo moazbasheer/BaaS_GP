@@ -3,6 +3,7 @@ import CreateRouteMap from '../CreateRouteMap/CreateRouteMap'
 import routeService from '../../Services/routes'
 import Notification from '../Notification/Notification'
 import { pointToCoordinates } from '../../Utility/map';
+import PageTitle from '../PageTitle/PageTitle';
 
 function CreateRoute() {
   const [name, setName] = useState('')
@@ -46,11 +47,15 @@ function CreateRoute() {
 
   return (
     <>
+      <PageTitle title={'Create a New Route'}/>
       <Notification>{message}</Notification>
-      <div>
-        <label>Route Name:</label> <input type="text" onChange={handleNameChange} />
+      <div className='d-flex justify-content-between align-items-end mb-3'>
+        <div className='d-flex gap-1 align-items-center'>
+          <div><label className='form-label fw-bold'>Route Name:</label></div>
+          <div><input type="text" placeholder='Route Name' onChange={handleNameChange} className='form-control' /></div>
+        </div>
+        <div><button onClick={createRoute} className='btn btn-primary'>Create Route</button></div>
       </div>
-      <button onClick={createRoute}>Create Route</button>
       <CreateRouteMap setEndpoints={setEndpoints} />
     </>
   );

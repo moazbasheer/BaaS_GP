@@ -16,16 +16,10 @@ function PathInfo(props) {
   }
 
   return (
-    <div>
-      <div>Estimated Time: {props.time ? getTimeString(props.time) : '--'}</div>
-      <div>Distance: {props.distance ? `${(props.distance / 1000).toFixed(2)} km` : '--'}</div>
-      <div>Price: {props.distance ? `${props.price} EGP` : '--'}</div>
-      <div>
-        <div>Stops</div>
-        {props.stops?.map((stop, i) => (
-          <div key={i}>{stop.name}</div>
-        ))}
-      </div>
+    <div className='d-flex justify-content-between bg-primary text-white p-3 fs-5'>
+      <div><span className="fw-bold">Estimated Time:</span> {props.time ? getTimeString(props.time) : '--'}</div>
+      <div><span className="fw-bold">Distance:</span> {props.distance ? `${(props.distance / 1000).toFixed(2)} km.` : '--'}</div>
+      {props.price && <div><span className="fw-bold">Price:</span> {`${props.price} EGP.`}</div>}
     </div>
   );
 }

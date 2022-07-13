@@ -77,13 +77,13 @@ function Register(props) {
             <div className="container w-100 h-100">
                 <div className='row w-100 vh-100 justify-content-between  m-auto  d-flex justify-content-center align-items-center rightContainer'>
 
-                    <div className='col-md-5 text-center  busColor p-4' >
+                    <div className='col-md-5 text-center p-4 text-white bg-primary bg-opacity-75' >
                         <h1 className={`${style.leftHeader} my-3 `}>BaaS  </h1>
                         <h3 className='fw-bold my-5 '>Smarter transportation for your people </h3>
                         <h4>  Replace the inefficiencies plaguing your transportation. </h4>
                     </div>
-                    <div className={`col-md-5    text-start ${style.registerForm} bg-white  bg-opacity-50 fw-bold`}  >
-                        <h2 className='text-md-center'> Create An Account </h2>
+                    <div className={`col-md-5 text-start ${style.registerForm} bg-white  bg-opacity-75 fw-bold border border-primary border-5`}  >
+                        <h2 className='text-md-center fw-bold'> Create An Account </h2>
                         <form className='m-lg-4 m-md-2 m-0'>
                             <div className="form-group text-start  ">
                                 <label htmlFor="name" className=' ' >Name</label>
@@ -112,7 +112,7 @@ function Register(props) {
                             <div className="validationErrors  ">
                                 {formValidationErrors.map((err, index) => <div key={index} className='alert-danger  my-2 p-2'> {err.message} </div>)}
                             </div>
-                            <button type='submit' disabled={isFetching} onClick={submitForm} className='btn btn-outline-warning  mt-3 fs-3 fw-bolder text-white'>
+                            <button type='submit' disabled={isFetching} onClick={submitForm} className='btn btn-primary  mt-3 fs-3 fw-bolder text-white'>
                                 {
                                     isFetching ?
                                         <div className="spinner-border text-warning" role="status">

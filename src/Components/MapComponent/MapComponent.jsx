@@ -45,7 +45,7 @@ function MapComponent({layers, interactions, focusExtent}) {
   }, [focusExtent])
 
   return (
-    <div id='map' className='map'></div>
+    <div id='map' className='map border border-2 border-primary'></div>
   );
 }
 
