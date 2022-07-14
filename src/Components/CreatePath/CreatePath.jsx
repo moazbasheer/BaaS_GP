@@ -77,7 +77,7 @@ function CreatePath() {
   return (
     <>
       {route && <PageTitle title={`Create a Path for '${route.name}' Route`}/>}
-      <Alert severity={message.type}>{message.content}</Alert>
+      {message && <Alert severity={message.type}>{message.content}</Alert>}
       <div className='d-flex justify-content-between align-items-end mb-3'>
         <div className='d-flex gap-1 align-items-center'>
           <div><label className='form-label fw-bold'>Path Name:</label></div>
