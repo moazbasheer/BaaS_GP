@@ -72,10 +72,10 @@ function Register(props) {
   return (
     <div style={{
       backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center",
-      backgroundOrigin: "content-box"
-    }} className={`min-vh-100`} >
+      backgroundOrigin: "content-box" ,backgroundAttachment:"fixed"
+    }} className={`  position-absolute top-0 bottom-0 start-0 end-0`} >
       <div className="container vh-100 vw-100">
-        <div className='row    m-auto  d-flex justify-content-between align-items-center '>
+        <div className='row  w-100 h-100  m-auto  d-flex justify-content-between align-items-center '>
 
           <div className='col-md-5 text-center p-4 text-white bg-primary bg-opacity-75' >
             <h1 className={`${style.leftHeader} my-3 `}>BaaS  </h1>

@@ -114,7 +114,7 @@ function Passengers() {
                 <td> {passenger.email} </td>
                 <td> {passenger.phone} </td>
                 <td> {passenger.address}   </td>
-                <td> <Switch onChange={(e) => handleActivation(e, passenger.id, index)} defaultChecked={passenger.activated} value={passenger.activated} /> </td>
+                <td> <Switch onChange={(e) => handleActivation(e, passenger.id, index)} defaultChecked={!!passenger.activated}  /* !! converts to boolean */  /> </td> 
                 <td>   <EditIcon onClick={() => handleEditEvent(passenger.id)} className={` ${style.cursorPointer} ${style.editActionIcon}  `} /> </td>
                 <td>   <DeleteIcon onClick={() => deleteEmploye(passenger.id, setTrickReload)} className={` ${style.cursorPointer} ${style.deleteActionIcon} `} /> </td>
               </tr>
