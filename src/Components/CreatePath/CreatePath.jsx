@@ -61,7 +61,7 @@ function CreatePath() {
 
     const response = await pathService.create(request)
     if (response.status === 200) {
-      setMessage('Path created successfully.')
+      setMessage({content: 'Path created successfully.', type: 'success'})
       console.log(response)
     }
   }

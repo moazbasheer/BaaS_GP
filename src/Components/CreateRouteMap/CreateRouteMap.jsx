@@ -1,6 +1,6 @@
 import 'ol/ol.css'
 import './CreateRouteMap.css'
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Map, View } from 'ol'
 import { Draw, Select, Snap } from 'ol/interaction'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
@@ -30,6 +30,8 @@ const deleteAction = new Select({
 })
 
 const CreateRouteMap = ({ setEndpoints }) => {
+  const [deleteMode, setDeleteMode] = useState();
+
   const setEndpointsState = () => {
     setEndpoints(endpoints)
   }
@@ -70,6 +72,8 @@ const CreateRouteMap = ({ setEndpoints }) => {
     if (pointType === 'origin' || pointType === 'destination') {
       drawAction.setActive(true)
     }
+
+    setDeleteMode(deleteAction.getActive())
   }
 
   const handleDeleteAction = event => {
@@ -83,6 +87,12 @@ const CreateRouteMap = ({ setEndpoints }) => {
     drawAction.on('drawstart', handleDrawAction)
     deleteAction.on('select', handleDeleteAction)
     changePointType('none')
+
+    // deconstructor
+    return () => {
+      drawAction.un('drawstart', handleDrawAction)
+      deleteAction.un('select', handleDeleteAction)
+    }
   }, [])
 
   return (
@@ -97,7 +107,7 @@ const CreateRouteMap = ({ setEndpoints }) => {
           <button onClick={() => changePointType('none')} className='btn btn-outline-secondary w-100'>None</button>
         </div>
         <div>
-          <button onClick={() => changePointType('delete')} className='btn btn-danger h-100 mx-1'>Delete a Point</button>
+          <button onClick={() => changePointType('delete')} className={`btn btn-danger h-100 mx-1 ${deleteMode && 'bg-white text-danger'}`}>Delete a Point</button>
           <button className='btn btn-danger h-100' onClick={clearPoints}>Clear All</button>
         </div>
       </div>

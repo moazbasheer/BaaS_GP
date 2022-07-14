@@ -71,7 +71,7 @@ function Charge({ setShowlayer, showLayer, openAlert, wallet, setWallet }) {
                 <input type="text" className="form-control" onChange={handleFormValues} name="card_number" />
               </div>
               <div className="mb-3">
-                <label htmlFor="exp_month" className="form-label">Exporation Month</label>
+                <label htmlFor="exp_month" className="form-label">Expiration Month</label>
                 <input type="number" className="form-control" onChange={handleFormValues} name="exp_month" />
               </div>
               <div className="mb-3">

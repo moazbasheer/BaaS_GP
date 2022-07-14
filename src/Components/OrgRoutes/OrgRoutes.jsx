@@ -42,8 +42,6 @@ function OrgRoutes() {
     </li>
   )
 
-  console.log(paths)
-
   return (
     <>
       <PageTitle title={'Routes'} />

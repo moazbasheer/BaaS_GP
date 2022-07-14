@@ -32,6 +32,7 @@ function MapComponent({layers, interactions, focusExtent}) {
       })
       interactions?.forEach(i => map.removeInteraction(i))
       map.setTarget(undefined)
+      console.log('deconstructor', map.getInteractions())
     }
   }, [])
 

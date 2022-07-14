@@ -8,6 +8,10 @@
     flex: 1 0 auto; /* (grow:1 , shrink:0 , basis:auto) to make the row takes the rest of the height of the homa page  */
 }
 
+.logo {
+    width: 74px;
+    height: 74px;
+}
 
 .logoutBtn{
     font-family: 'Oswald', sans-serif;

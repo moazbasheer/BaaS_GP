@@ -10,7 +10,7 @@ import {
 import pathAPIService from '../../Services/graphhopper';
 import PathInfo from '../PathInfo/PathInfo';
 
-let stops = []
+let stops
 let origin; let
   destination
 

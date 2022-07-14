@@ -141,6 +141,7 @@ function CreateTrip() {
           </select>
           {currentPath && <div className="my-3"><ViewPathMap path={currentPath} /></div>}
         </div>
+        {messages.map((message, i) => <Alert key={i} severity={message.type}>{message.content}</Alert>)}
         <div>
           <label htmlFor="date" className='form-label'>Date </label>
           <input className="form-control" type="date" name="date" id="date" value={form.date} onChange={handleChange} min={getTodayDate()} />
@@ -159,7 +160,6 @@ function CreateTrip() {
         </div>
         <button className="btn btn-primary w-100" type="submit">Create Trip</button>
       </form>
-      {messages.map((message, i) => <Alert key={i} severity={message.type}>{message.content}</Alert>)}
     </>
   )
 }

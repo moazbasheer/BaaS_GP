@@ -41,7 +41,6 @@ function CreateRoute() {
       destination_latitude: destinationCoords[0],
       destination_longitude: destinationCoords[1]
     }
-    console.log(route)
 
     const response = await routeService.create(route)
     if (response.status === 200) {

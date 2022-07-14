@@ -104,33 +104,34 @@ export const setPathStyle = (polyline) => {
     })
   ]
 
-  const maxLength = 50
-  polyline.getGeometry().forEachSegment((start, end) => {
-    let dx = end[0] - start[0]
-    let dy = end[1] - start[1]
-    const length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
+  // arrows
+  // const maxLength = 50
+  // polyline.getGeometry().forEachSegment((start, end) => {
+  //   let dx = end[0] - start[0]
+  //   let dy = end[1] - start[1]
+  //   const length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
     
-    // don't guiding arrows if segment length is longer than max length
-    if (length > maxLength) {
-      return
-    }
+  //   // don't guiding arrows if segment length is longer than max length
+  //   if (length > maxLength) {
+  //     return
+  //   }
     
-    let rotation = Math.atan2(dy, dx)
-    const arrowShape = new RegularShape({
-      fill: new Fill({ color: '#002447' }),
-      points: 3,
-      radius: 9,
-      rotation: -rotation,
-      angle: Math.PI / 2
-    })
+  //   let rotation = Math.atan2(dy, dx)
+  //   const arrowShape = new RegularShape({
+  //     fill: new Fill({ color: '#002447' }),
+  //     points: 3,
+  //     radius: 9,
+  //     rotation: -rotation,
+  //     angle: Math.PI / 2
+  //   })
 
-    const arrowStyle = new Style({
-      geometry: new Point(start),
-      image: arrowShape
-    })
+  //   const arrowStyle = new Style({
+  //     geometry: new Point(start),
+  //     image: arrowShape
+  //   })
 
-    styles.push(arrowStyle)
-  })
+  //   styles.push(arrowStyle)
+  // })
 
   return styles
 }

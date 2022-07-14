@@ -8,7 +8,7 @@ import { privateRequst } from '../axiosRequest';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Charge from './Charge/Charge';
 import PaidIcon from '@mui/icons-material/Paid';
-import PersonIcon from '@mui/icons-material/Person';
+import logo from "../../imges/logo.png"
 // email test@test.com password : testtest
 
 function MainInterface({ logOut }) {
@@ -56,7 +56,10 @@ function MainInterface({ logOut }) {
     <>
       <div className={`d-flex flex-column ${style.mainHome}`}>
         <div className='d-flex justify-content-between bg-primary border border-1 border-dark'>
-          <h1 className='fw-bold text-white ms-5'>BaaS</h1>
+          <div className='d-flex align-items-center'>
+            <img className={`${style.logo} mx-3`} src={logo} alt="" />
+            <h1 className='fw-bold text-white ms-3'>BaaS</h1>
+          </div>
           <button className={`btn btn-primary text-end text-white ${style.logoutBtn}`} onClick={logOut}><LogoutIcon className='text-white' /> Log out</button>
         </div>
         <div className='d-flex justify-content-between align-items-center px-1 p-1'>
