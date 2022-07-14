@@ -24,6 +24,7 @@ function App() {
     localStorage.removeItem('organization');
     setLoggedOrg(null);
     navigate('/login');
+    navigate(0);
   }
 
   useEffect(() => {
