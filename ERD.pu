@@ -1,52 +1,51 @@
 @startuml erd
 entity Users {
   id: bigint [PK]
-  name : text
   email : text
+  password: text
+  role_name: text
 }
 entity Passengers {
   id: bigint [PK]
-  user_id: bigint [FK]
   organization_id: bigint [FK]
-  phone_number: text
-  booking_ids: text
+  name: text
+  phone: text
+  address: text
+  activated: boolean
 }
+entity Clients {
+  id: bigint [PK]
+  user_id: bigint [FK]
+  first_name: text  
+  last_name: text 
+  username: text
+  phone_number: text
 
+}
 entity Organizations {
   id: bigint [PK]
   user_id: bigint [FK]
+  name: text
+  phone_number: text
+  postal_code: text
+  address: text 
 }
 
-entity Drivers {
-  id: bigint [PK]
-  user_id: bigint [FK]
-  national_id: text
-  driving_license: image
-  driver_img: image
-}
-entity Admin {
-  id: bigint [PK]
-  user_id: bigint [FK]
-}
-entity Excuses {
-  id: bigint [PK]
-  driver_id: bigint [FK]
-  title: text
-  body: text
-  status: boolean
-}
 entity Routes {
   id: bigint [PK]
   organiztion_id: bigint [FK]
-  source: text
-  destination: text
-
+  source_name: text
+  source_longitude: double
+  source_latitude: double
+  destination_name: text
+  destination_longitude: double
+  destination_latitude: double
 }
 entity Paths {
   id: bigint [PK]
   route_id: bigint [FK]
-  start_time: datetime
-  end_time: datetime
+  name: text
+  price: double
 }
 entity Stops {
   id: bigint [PK]
@@ -55,63 +54,62 @@ entity Stops {
   longtitude: double
   latitude: double
 }
-entity Bus {
-  id: int [PK]
-  driver_id: bigint [FK]
-  trip_id: bigint [FK]
-  passengers_number: int
-  vehicle_license: image
-  numberOfSeats:int
-}
 entity Bookings {
   id: bigint [PK]
   passenger_id: bigint [FK]
+  client_id: bigint [FK]
   trip_id: bigint [FK]
-  status : boolean
-  requestTime:datetime
+  
 }
-
+entity Wallet {
+  id: bigint [PK]
+  organization_id: bigint [FK]
+  client_id: bigint [FK]
+  passenger_id: bigint [FK]
+  balance: double
+}
 entity Trips {
   id: bigint [PK]
   path_id: bigint [FK]
-  date: datetime
-  Appearance : boolean
-  TripSeats:int
+  organization_id: bigint [FK]
+  datetime: datetime
+  public : boolean
+  num_seats: integer
+  num_users: integer
 }
 entity Complaints {
   id: bigint [PK]
-  user_id: bigint [FK]
-  title: text
-  body: text
+  passenger_id: bigint [FK]
+  client_id: bigint [FK]
+  message: text
 }
 entity Payment_details {
   id: bigint [PK]
-  booking_id: bigint [FK]
+  trip_id: bigint [FK]
   amount: double
   currency: text
   date: datetime
-  method: text
-  status: boolean
 }
 Users ||--|| Passengers
-Users ||--|| Drivers
 Users ||--|| Organizations
-Users ||--|| Admin
+Users ||--|| Clients
+Passengers ||---o{ Complaints
+Clients ||---o{ Complaints
 
-Users ||---o{ Complaints
 Organizations ||--o{ Passengers
 Organizations ||--o{ Routes
-Drivers ||--o{ Excuses
-Bookings ||--|{ Payment_details
+Organizations ||--o{ Trips
+Organizations ||--|| Wallet
+Passengers ||--|| Wallet
+Clients ||--|| Wallet
+Trips ||--o| Payment_details
 
 Routes ||--|{ Paths
 Paths ||--|{ Stops
 Paths ||--o{ Trips
-Trips ||--|| Bus
-Drivers ||--|| Bus
-
-Passengers ||--|{ Bookings
-Trips ||--|{ Bookings
+Passengers ||--o{ Bookings
+Clients ||--o{ Bookings
+Trips ||--o{ Bookings
 
 
 @enduml
