@@ -40,8 +40,9 @@ function Login() {
         response = response.data;
         if (response.status) {
           let storedOrg = { info: response.user, token: response.token }
-          localStorage.setItem("organization", JSON.stringify(storedOrg));
-          navigate("/home", { replace: true });
+          localStorage.setItem("organization", JSON.stringify(storedOrg))
+          navigate("/home", {replace: true})
+          navigate(0)
         } else {
           setErrors([...errors, {message: response.message}]);
         }
