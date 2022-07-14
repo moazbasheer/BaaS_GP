@@ -485,7 +485,7 @@ class ClientController extends Controller
         if(count($bookings) != 0) {
             return response([
                 'status' => false,
-                'message' => ['this client has already joined this trip']
+                'message' => ['you has already joined this trip']
             ], 200);
         }
         $trip = Trip::where('id', $trip_id)->first();
@@ -498,7 +498,7 @@ class ClientController extends Controller
             $booking->save();
             return response([
                 'status' => true,
-                'message' => ['the client joined the trip successfully']
+                'message' => ['you joined the trip successfully']
             ], 200);
         } else {
             
@@ -554,7 +554,7 @@ class ClientController extends Controller
         if(count($bookings) == 0) {
             return response([
                 'status' => false,
-                'message' => ['this client hasn\'t joined this trip']
+                'message' => ['you hasn\'t joined this trip']
             ], 200);
         }
         
@@ -570,7 +570,7 @@ class ClientController extends Controller
         $trip->save();
         return response([
             'status' => true,
-            'message' => ['the client cancelled the trip successfully']
+            'message' => ['you cancelled the trip successfully']
         ], 200);
     }
     /**
@@ -635,7 +635,7 @@ class ClientController extends Controller
         if(count($bookings) == 0) {
             return response([
                 'status' => false,
-                'message' => ['the client doesn\'t join the trip']
+                'message' => ['you doesn\'t join the trip']
             ]);
         }
         $complaints = Complaint::where(['trip_id' => $req->trip_id, 
