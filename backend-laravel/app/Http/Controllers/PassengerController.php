@@ -218,7 +218,6 @@ class PassengerController extends Controller
             $trip1["status"] = $trip->status;
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;
-            $trip1["price"] = ceil($trip->price / $trip->num_seats);
             $trip1["public"] = $trip->public;
             $organization = $trip->organization;
             $user = $organization->user;
@@ -238,9 +237,6 @@ class PassengerController extends Controller
             $trip1["num_seats"] = $trip->num_seats;
             $trips[] = $trip1;
         }
-        uasort($trips, function($a, $b) {
-            return $a["price"] > $b["price"];
-        });
         $trips = array_values($trips);
         return response([
             'status' => true,
@@ -275,7 +271,7 @@ class PassengerController extends Controller
         foreach($all_trips as $trip) {
             if($trip->num_user == $trip->num_seats) {
                 $bookings = Booking::where([
-                    'client_id' => $client->id,
+                    'passenger_id' => $passenger->id,
                     'trip_id' => $trip->id
                 ])->get();
                 if(count($bookings) == 0) {
@@ -283,7 +279,7 @@ class PassengerController extends Controller
                 }
             }
             $complaints = Complaint::where([
-                'client_id' => $client->id,
+                'passenger_id' => $passenger->id,
                 'trip_id' => $trip->id
             ])->get();
             if(count($complaints) > 0) {
@@ -311,7 +307,7 @@ class PassengerController extends Controller
             $trip1["status"] = $trip->status;
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;
-            $trip1["price"] = ceil($trip->price / $trip->num_seats);
+            $trip1["price"] = ceil($trip->price / $trip->num_seats + 2);
             $trip1["public"] = $trip->public;
             $organization = $trip->organization;
             $user = $organization->user;
@@ -401,18 +397,6 @@ class PassengerController extends Controller
      *
      */
     public function join_trip(Request $req) {
-        $validator = Validator::make($req->all(), [
-            'distance' => 'required|numeric|min:0',
-            'time' => 'required|numeric|min:0',
-        ]);
-        if($validator->fails()) {
-            $message = [];
-            $message = UserController::format_message($message, $validator);
-            return response([
-                'status' => false,
-                'message' => $message
-            ], 200);
-        }
         
         $organization = Auth::user()->passenger->organization;
         $trip = Trip::find($req->id);
@@ -486,7 +470,7 @@ class PassengerController extends Controller
                 $token = $result['id'];
                 try{
                     $status = Stripe\Charge::create([
-                        "amount" => ceil((0.01 * $distance + $time / 60000 + 15) / $trip->num_seats)* 100,
+                        "amount" => ceil($trip->price / $trip->num_seats + 2) * 100,
                         "currency" => "egp",
                         "card" => $token,
                         "description" => "Trip " . $trip->id . " payment" 
@@ -504,13 +488,13 @@ class PassengerController extends Controller
                 ], 200);
             } elseif($req->payment_method == "wallet") {
                 $wallet = Auth::user()->passenger->wallet;
-                if(ceil((0.01 * $distance + $time / 60000 + 15) / $trip->num_seats) > $wallet->balance) {
+                if(ceil($trip->price / $trip->num_seats + 2) > $wallet->balance) {
                     return [
                         'status' => false,
                         'message' => ['balance of the wallet isn\'t enough']
                     ];
                 } else {
-                    $wallet->balance -= ceil((0.01 * $distance + $time / 60000 + 15) / $trip->num_seats);
+                    $wallet->balance -= ceil($trip->price / $trip->num_seats + 2);
                     $wallet->save();
                 }
             } else {
@@ -530,9 +514,7 @@ class PassengerController extends Controller
             $trip->num_users += 1;
             $trip->save();
             $booking = Booking::where(['passenger_id' => $passenger->id, 'trip_id' => $trip_id])->first();
-            $booking->distance = $req->distance;
-            $booking->time = $req->time;
-            $booking->price = ceil((0.01 * $distance + $time / 60000 + 15) / $trip->num_seats);
+            $booking->price = ceil($trip->price / $trip->num_seats + 2);
             $booking->save();
             return response([
                 'status' => true,
@@ -575,7 +557,7 @@ class PassengerController extends Controller
                 continue;
             }
             $complaints = Complaint::where([
-                'client_id' => $client->id,
+                'passenger_id' => $passenger->id,
                 'trip_id' => $trip->id
             ])->get();
             if(count($complaints) > 0) {
