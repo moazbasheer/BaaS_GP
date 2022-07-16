@@ -121,9 +121,9 @@ class OrganizationController extends Controller
         $validator = Validator::make($req->all(), [
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
-            'name' => 'required',
-            'phone' => 'required|min:11',
-            'address' => 'required'
+            'name' => 'required|regex:/^[a-zA-Z ]+$/',
+            'phone' => 'required|min:11|numeric',
+            'address' => 'required|regex:/^[a-zA-Z ]+$/'
         ]);
         $row = $req->all();
         $message = [];
@@ -226,6 +226,18 @@ class OrganizationController extends Controller
     public function deactivate_passenger(Request $req) {
         
         $passenger = Passenger::where('id', $req->id)->first();
+        if(!$passenger) {
+            return [
+                'status' => false,
+                'message' => ['id is not valid']
+            ];
+        }
+        if($passenger->organization_id != Auth::user()->organization->id) {
+            return [
+                'status' => false,
+                'message' => ['this passenger is not in your organization']
+            ];
+        }
         if($passenger->activated == 0) {
             return response([
                 'status' => false,
@@ -262,6 +274,18 @@ class OrganizationController extends Controller
     public function activate_passenger(Request $req) {
         
         $passenger = Passenger::where('id', $req->id)->first();
+        if(!$passenger) {
+            return [
+                'status' => false,
+                'message' => ['id is not valid']
+            ];
+        }
+        if($passenger->organization_id != Auth::user()->organization->id) {
+            return [
+                'status' => false,
+                'message' => ['this passenger is not in your organization']
+            ];
+        }
         if($passenger->activated == 1) {
             return response([
                 'status' => false,
@@ -298,10 +322,16 @@ class OrganizationController extends Controller
     public function remove_passenger(Request $req) {
         
         $passenger = Passenger::where('id', $req->id)->first();
-        if($passenger == null) {
+        if(!$passenger) {
             return [
                 'status' => false,
                 'message' => ['id is not valid']
+            ];
+        }
+        if($passenger->organization_id != Auth::user()->organization->id) {
+            return [
+                'status' => false,
+                'message' => ['this passenger is not in your organization']
             ];
         }
         $user = $passenger->user;

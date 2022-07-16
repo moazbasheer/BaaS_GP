@@ -147,14 +147,13 @@ class PathController extends Controller
                 'status' => false,
                 'message' => ['route id is not found']
             ], 200);
-        } 
-        if(!array_key_exists("stops", $req->path) || !count($req->path["stops"]) > 1) {
-            $message []= "The path field should have stops field (non-empty arrays)";
+        }
+        if(!array_key_exists("stops", $req->path) || !count($req->path["stops"]) > 0) {
+            $message []= "The path field should have stops field (non-empty array)";
         }
         if(!array_key_exists("path_name", $req->path) || is_null($req->path["path_name"]) ) {
             $message []= "The path field should have path_name field (non-empty string)";
         }
-        
         if(!array_key_exists("stops", $req->path) || !count($req->path["stops"]) > 0 || !array_key_exists("path_name", $req->path) || is_null($req->path["path_name"])) {
             return response([
                 'status' => false,
@@ -164,10 +163,10 @@ class PathController extends Controller
         $path_stops = $req->path["stops"];
         $path_name = $req->path["path_name"];
         $all_paths = Path::where('route_id', $route_id)->get();
-        if(gettype($path_stops) != "array" || array_keys($path_stops) !== range(0, count($path_stops) - 1)) {
+        if(gettype($path_stops) != "array" || count($path_stops) == 0 || array_keys($path_stops) !== range(0, count($path_stops) - 1)) {
             return response([
                 'status' => false,
-                "message" => ['stops must be a list']
+                "message" => ['stops must be a non-empty list']
             ]);
         }
         
@@ -218,6 +217,7 @@ class PathController extends Controller
                 ]);
             }
         }
+        
         if(count($path_stops) < 2) {
             return response([
                 'status' => true,
@@ -236,7 +236,12 @@ class PathController extends Controller
                 'message' => ['longitude or the latitude is not valid']
             ], 200);
         }
-        
+        if(array_key_exists("message", $res)) {
+            return [
+                'status' => false,
+                'message' => $res["message"]
+            ];
+        }
         $path = $res["paths"][0];
         $distance = $path["distance"];
         $time = $path["time"];
@@ -370,7 +375,7 @@ class PathController extends Controller
         }
         $str = "https://graphhopper.com/api/1/route?key=bd47e377-3534-45d4-95a1-e35b7a1ac81d";
         foreach($req->stops as $stop) {
-            $str = $str . '&point=' . $stop["longitude"] . "," . $stop["latitude"];
+            $str = $str . '&point=' . $stop["latitude"] . "," . $stop["longitude"];
         }
         
         $path = Http::get($str)["paths"][0];
