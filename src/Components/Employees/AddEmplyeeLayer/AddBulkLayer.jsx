@@ -4,7 +4,7 @@ import { FileUploader } from "react-drag-drop-files";
 import { privateRequst, token } from '../../axiosRequest';
 import Axios from 'axios';
 
-const fileTypes = ['CSV'];
+const fileTypes = ['CSV','XLTX'];
 
 function AddBulkLayer({ showBulkLayer, setBulkLayer, openAlert, setTrickReload }) {
 

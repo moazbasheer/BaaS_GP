@@ -52,14 +52,22 @@ function Register(props) {
     } else {
       setformValidationErrors([]);
       try {
-        let res = await publicRequst.post("register", orgainzation);
-        console.log(res);
-        setIsFetching(false);
-        console.log(isSuccess);
+        let {data} = await publicRequst.post("register", orgainzation);
+        console.log(data);
+        if(data.status){
+          setIsFetching(false);
+          console.log(isSuccess);
+          navigate("/login")
+        }else{
+          setformValidationErrors(data.message);
+          console.log("error in register\n"+data.message[0]);
+          setIsFetching(false);
+        }
+        
 
-        console.log(isSuccess);
+        
 
-        navigate("/login")
+        
       } catch (error) {
         console.log("error\n", error);
         setIsFetching(false);
@@ -110,7 +118,7 @@ function Register(props) {
                 <input onChange={handleOrg} type="text" name='address' className="form-control" placeholder="Address" />
               </div>
               <div className="validationErrors  ">
-                {formValidationErrors.map((err, index) => <Alert key={index} severity='error' className='my-2 p-2'> {err.message} </Alert>)}
+                {formValidationErrors.map((err, index) => <Alert key={index} severity='error' className='my-2 p-2'> {err.message||err} </Alert>)}
               </div>
               <button type='submit' disabled={isFetching} onClick={submitForm} className='btn btn-primary  mt-3 fs-3 fw-bolder text-white'>
                 {
