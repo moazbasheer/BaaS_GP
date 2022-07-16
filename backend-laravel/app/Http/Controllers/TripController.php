@@ -78,7 +78,8 @@ class TripController extends Controller
         
         if($validator->fails()) {
             $message = [];
-            $message = UserController::format_message($message, $validator);
+            $message = 
+            UserController::format_message($message, $validator);
             return response([
                 'status' => false,
                 'message' => $message
@@ -87,7 +88,8 @@ class TripController extends Controller
         if($req->num_seats <= 0) {
             return response([
                 'status' => false,
-                'message' => ['number of seats must be more then zero']
+                'message' => ['number of seats must be
+                 more then zero']
             ], 200);
         }
         $datetime = new \DateTime($req->date . ' ' . $req->time);
@@ -122,7 +124,8 @@ class TripController extends Controller
 
             return response([
                 'status' => false,
-                'message' => ['repitition is either one-time, daily, weekly']
+                'message' => ['repitition is either 
+                one-time, daily, weekly']
             ], 200);
         }
     }
@@ -218,7 +221,6 @@ class TripController extends Controller
      *       }
      *     )
      *
-     * Returns status of the update
      */
     public function pay_trip(Request $req) {
         $trip = Trip::find($req->id);
@@ -234,7 +236,8 @@ class TripController extends Controller
                 'message' => ['this trip is finished']
             ]);
         }
-        if($trip->organization_id != Auth::user()->organization->id
+        if($trip->organization_id != 
+        Auth::user()->organization->id
         || is_null($trip)) {
             return [
                 'status' => false,
@@ -247,7 +250,8 @@ class TripController extends Controller
                 'message' => ['trip is already paid']
             ], 200);
         }
-        if($req->payment_method && $req->payment_method == "credit") {
+        if($req->payment_method && 
+        $req->payment_method == "credit") {
             $validator = Validator::make($req->all(), [
                 'card_number' => 'required|size:16',
                 'exp_month' => 'required|size:2',
@@ -256,7 +260,8 @@ class TripController extends Controller
             ]);
             if($validator->fails()) {
                 $message = [];
-                $message = UserController::format_message($message, $validator);
+                $message = 
+                UserController::format_message($message, $validator);
                 return response([
                     'status' => false,
                     'message' => $message
@@ -324,6 +329,11 @@ class TripController extends Controller
                 $wallet->save();
                 $trip->status = 1;
                 $trip->save();
+                PaymentDetails::create([
+                    'trip_id' => $trip->id,
+                    'amount' => $trip->price,
+                    'currency' => "egp"
+                ]);
                 return response([
                     'status' => true,
                     'message' => ['trip is paid succesfully, your balance now is ' . $wallet->balance]
@@ -473,12 +483,33 @@ class TripController extends Controller
      *
      */
     public function destroy($id) {
+
         $trip = Trip::find($id);
+        
+        
         if($trip == null) {
             return [
                 'status' => false,
                 'message' => ['trip is not found']
             ];
+        }
+        if($trip->datetime > now()) {
+            $wallet = Auth::user()->organization->wallet;
+            $wallet->balance += $trip->price;
+            $wallet->save();
+            $all_clients = $trip->clients;
+            foreach($all_clients as $client) {
+                $wallet = $client->wallet;
+                $wallet->balance += ceil($trip->price / $trip->num_seats + 2);
+                $wallet->save();
+            }
+            $all_passengers = $trip->passengers;
+            
+            foreach($all_passengers as $passenger) {
+                $wallet = $passenger->wallet;
+                $wallet->balance += ceil($trip->price / $trip->num_seats + 2);
+                $wallet->save();
+            }
         }
         $trip->delete();
         return [

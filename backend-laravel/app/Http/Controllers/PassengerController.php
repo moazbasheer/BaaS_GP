@@ -581,8 +581,7 @@ class PassengerController extends Controller
                 $trip1["stops"][] = $stop1;
             }
             $trip1["repitition"] = $trip->repitition;
-            $trip1["date"] = $trip->date;
-            $trip1["time"] = $trip->time;
+            $trip1["datetime"] = $trip->datetime;
             $trip1["status"] = $trip->status;
             $trip1["path_distance"] = $trip->path->distance;
             $trip1["path_time"] = $trip->path->time;

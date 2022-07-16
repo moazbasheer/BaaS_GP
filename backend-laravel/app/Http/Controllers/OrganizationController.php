@@ -13,6 +13,7 @@ use App\Models\Passenger;
 use Spatie\Permission\Models\Role;
 use App\Models\Wallet;
 use Stripe;
+use Input;
 class OrganizationController extends Controller
 {
     /**
@@ -195,8 +196,8 @@ class OrganizationController extends Controller
             ], 200);
         }
         $import = new PassengersImport();
-        $import->import($req->file('file'));
-        //Excel::import(new PassengersImport, $req->file);
+        //$import->import($req->file('file'));
+        Excel::import(new PassengersImport, $req->file);
         return response([
             'status' => true,
             'message' => ['passengers are added succesfully']

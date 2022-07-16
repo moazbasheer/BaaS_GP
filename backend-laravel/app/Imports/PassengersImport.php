@@ -45,7 +45,7 @@ class PassengersImport implements ToModel, WithHeadingRow
         $role = Role::where('name', 'passenger')->first();
         $user->assignRole($role);
         $passenger = Passenger::create([
-            'user_id' => User::latest()->first()->id,
+            'user_id' => $user->id,
             'organization_id' => Auth::user()->organization->id,
             'name' => $row['name'],
             'phone' => $row['phone'],
