@@ -75,7 +75,7 @@ function Passengers() {
     } else {
       const { data } = await privateRequest.put(`organization/passengers/deactivate/${id}`);
       console.log(data);
-      passengers.get(index).activated = false;
+      passengers[index].activated = false;
       console.log(`${e.target.checked} bye${id}`);
     }
   };
