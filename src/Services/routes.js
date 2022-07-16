@@ -1,24 +1,24 @@
-import { privateRequst } from '../Components/axiosRequest';
+import { privateRequest } from '../Components/axiosRequest';
 
 const baseUrl = '/organization/routes';
 
 const getAll = async () => {
-  const response = await privateRequst.get(baseUrl);
+  const response = await privateRequest.get(baseUrl);
   return response.data;
 };
 
 const get = async (id) => {
-  const response = await privateRequst.get(`${baseUrl}/${id}`);
+  const response = await privateRequest.get(`${baseUrl}/${id}`);
   return response.data;
 };
 
 const create = async (route) => {
-  const response = await privateRequst.post(baseUrl, route);
+  const response = await privateRequest.post(baseUrl, route);
   return response;
 };
 
 const deleteRoute = async (id) => {
-  const response = await privateRequst.delete(`${baseUrl}/${id}`);
+  const response = await privateRequest.delete(`${baseUrl}/${id}`);
   return response;
 };
 

@@ -16,13 +16,13 @@ let origin; let destination; let pointType;
 const endpointsVecSource = new VectorSource();
 const endpointsVecLayer = new VectorLayer({
   source: endpointsVecSource,
-  style: setPointStyle
+  style: setPointStyle,
 });
 
 const stopsVecSource = new VectorSource();
 const stopsVecLayer = new VectorLayer({
   source: stopsVecSource,
-  style: setPointStyle
+  style: setPointStyle,
 });
 
 const pathVecSource = new VectorSource();
@@ -40,23 +40,15 @@ const snapAction = new Snap({
   source: stopsVecSource,
 });
 
-
 const deleteAction = new Select({
-  layers: [stopsVecLayer]
-})
+  layers: [stopsVecLayer],
+});
 
 function CreatePathMap({ route, setNavigationResult, setStops }) {
   const [time, setTime] = useState();
   const [distance, setDistance] = useState();
   const [focusExtent, setFocusExtent] = useState();
   const [deleteMode, setDeleteMode] = useState();
-
-  const clearStops = () => {
-    stops = [];
-    stopsVecSource.clear();
-    drawPath();
-    setStops(stops);
-  };
 
   const clearPath = () => {
     setTime(null);
@@ -71,8 +63,8 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     stops.forEach((stop) => points.push(pointToCoordinates(stop)));
     points.push(pointToCoordinates(destination));
 
-    const result = await pathAPIService.getPath(points)
-    const pathFeature = stringToPolyline(result.paths[0].points)
+    const result = await pathAPIService.getPath(points);
+    const pathFeature = stringToPolyline(result.paths[0].points);
 
     // delete previous path if any
     clearPath();
@@ -83,25 +75,31 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     setNavigationResult(result);
   };
 
-  const changePointType = type => {
-    pointType = type
+  const clearStops = () => {
+    stops = [];
+    stopsVecSource.clear();
+    drawPath();
+    setStops(stops);
+  };
 
-    drawAction.setActive(false)
-    deleteAction.setActive(false)
+  const changePointType = (type) => {
+    pointType = type;
+
+    drawAction.setActive(false);
+    deleteAction.setActive(false);
 
     if (pointType === 'delete') {
-      deleteAction.setActive(true)
-    }
-    else {
-      deleteAction.getFeatures().clear()
+      deleteAction.setActive(true);
+    } else {
+      deleteAction.getFeatures().clear();
     }
 
     if (pointType === 'stop') {
-      drawAction.setActive(true)
+      drawAction.setActive(true);
     }
 
-    setDeleteMode(deleteAction.getActive())
-  }
+    setDeleteMode(deleteAction.getActive());
+  };
 
   const handleDrawAction = (event) => {
     const point = event.feature;
@@ -116,28 +114,28 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     drawPath();
   };
 
-  const handleDeleteAction = event => {
-    const feature = event.selected[0]
+  const handleDeleteAction = (event) => {
+    const feature = event.selected[0];
 
-    stopsVecSource.removeFeature(feature)
-    stops = stops.filter(stop => stop !== feature)
-    setStops(stops)
-    console.log(stops)
+    stopsVecSource.removeFeature(feature);
+    stops = stops.filter((stop) => stop !== feature);
+    setStops(stops);
+    console.log(stops);
 
-    drawPath()
-  }
+    drawPath();
+  };
 
   useEffect(() => {
-    drawAction.on('drawstart', handleDrawAction)
-    deleteAction.on('select', handleDeleteAction)
-    changePointType('none')
+    drawAction.on('drawstart', handleDrawAction);
+    deleteAction.on('select', handleDeleteAction);
+    changePointType('none');
 
     // deconstructor
     return () => {
-      drawAction.un('drawstart', handleDrawAction)
-      deleteAction.un('select', handleDeleteAction)
-    }
-  }, [])
+      drawAction.un('drawstart', handleDrawAction);
+      deleteAction.un('select', handleDeleteAction);
+    };
+  }, []);
 
   useEffect(() => {
     // add origin and destination
@@ -148,17 +146,17 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
     origin = coordinatesToPoint([route.source_latitude, route.source_longitude]);
     origin.name = route.source;
     origin.type = 'origin';
-    
+
     destination = coordinatesToPoint([route.destination_latitude, route.destination_longitude]);
     destination.name = route.destination;
     destination.type = 'destination';
-    stops = []
+    stops = [];
 
     const features = [origin, destination];
     features.forEach((p) => setPointStyle(p));
     endpointsVecSource.addFeatures(features);
 
-    drawPath().then(() => setFocusExtent(pathVecSource.getExtent()))
+    drawPath().then(() => setFocusExtent(pathVecSource.getExtent()));
   }, [route]);
 
   return (
@@ -169,14 +167,14 @@ function CreatePathMap({ route, setNavigationResult, setStops }) {
         focusExtent={focusExtent}
       />
       <PathInfo time={time} distance={distance} />
-      <div className='d-flex justify-content-between mt-3'>
+      <div className="d-flex justify-content-between mt-3">
         <div>
-          <button onClick={() => changePointType('stop')} className='btn btn-outline-primary'>Add Stop</button>
-          <button onClick={() => changePointType('none')} className='btn btn-outline-secondary'>None</button>
+          <button onClick={() => changePointType('stop')} className="btn btn-outline-primary">Add Stop</button>
+          <button onClick={() => changePointType('none')} className="btn btn-outline-secondary">None</button>
         </div>
         <div>
           <button onClick={() => changePointType('delete')} className={`btn btn-danger h-100 mx-1 ${deleteMode && 'bg-white text-danger'}`}>Delete a Point</button>
-          <button className='btn btn-danger h-100' onClick={clearStops}>Clear All</button>
+          <button className="btn btn-danger h-100" onClick={clearStops}>Clear All</button>
         </div>
       </div>
     </>
