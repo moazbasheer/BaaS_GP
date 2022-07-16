@@ -1,9 +1,9 @@
 import './App.css';
-import Login from './Components/Login/login';
-import Register from './Components/Register/Register';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import NotFound from './Components/Not Found/NotFound';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
+import NotFound from './Components/Not Found/NotFound';
 import MainInterface from './Components/MainInterface/MainInterface';
 import RoutingGuard from './Components/RoutingGuard/RoutingGuard';
 import Employees from './Components/Employees/Employees';
@@ -17,6 +17,7 @@ import Trips from './Components/Trips/Trips';
 import Home from './Components/Home/Home';
 
 function App() {
+  // eslint-disable-next-line unused-imports/no-unused-vars, no-unused-vars
   const [loggedOrg, setLoggedOrg] = useState({});
   const navigate = useNavigate();
 
@@ -32,24 +33,23 @@ function App() {
   }, []);
 
   return (
-    <>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={(<RoutingGuard logOut={logout} Component={MainInterface} />)}>
-          <Route path="home" element={<Home />} />
-          <Route path="passengers" element={<Employees />} />
-          <Route path="routes/create" element={<CreateRoute />} />
-          <Route path="routes/:id" element={<ViewRoute />} />
-          <Route path="routes" element={<OrgRoutes />} />
-          <Route path="paths/create/:id" element={<CreatePath />} />
-          <Route path="paths/:id" element={<ViewPath />} />
-          <Route path="trips/create" element={<CreateTrip />} />
-          <Route path="trips" element={<Trips />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      {/* eslint-disable-next-line react/jsx-no-bind */}
+      <Route path="/" element={(<RoutingGuard logOut={logout} Component={MainInterface} />)}>
+        <Route path="home" element={<Home />} />
+        <Route path="passengers" element={<Employees />} />
+        <Route path="routes/create" element={<CreateRoute />} />
+        <Route path="routes/:id" element={<ViewRoute />} />
+        <Route path="routes" element={<OrgRoutes />} />
+        <Route path="paths/create/:id" element={<CreatePath />} />
+        <Route path="paths/:id" element={<ViewPath />} />
+        <Route path="trips/create" element={<CreateTrip />} />
+        <Route path="trips" element={<Trips />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 

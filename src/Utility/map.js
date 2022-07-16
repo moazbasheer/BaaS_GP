@@ -1,9 +1,9 @@
 import { Feature } from 'ol';
 import { Polyline } from 'ol/format';
-import { LineString, Point } from 'ol/geom';
+import { Point } from 'ol/geom';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import {
-  Circle, Fill, RegularShape, Stroke, Style, Text,
+  Circle, Fill, Stroke, Style, Text,
 } from 'ol/style';
 
 export const setPointStyle = (point) => {
@@ -54,7 +54,7 @@ export const setPointStyle = (point) => {
           width: baseStyle.strokeWidth,
         }),
       }),
-    })
+    });
   }
 
   style.setText(new Text({
@@ -63,7 +63,7 @@ export const setPointStyle = (point) => {
     font: baseStyle.textStyle,
   }));
 
-  return style
+  return style;
 };
 
 // get coordinates of a feature (point) in the form of lat long
@@ -94,43 +94,44 @@ export const stringToPolyline = (string) => (
 );
 
 // styling function for easier view of path adding arrow on each point on the path
-export const setPathStyle = (polyline) => {
-  let styles = [
+export const setPathStyle = () => {
+  const styles = [
     new Style({
       stroke: new Stroke({
         color: '#00688bbb',
-        width: 7
-      })
-    })
-  ]
+        width: 7,
+      }),
+    }),
+  ];
 
-  const maxLength = 50
-  polyline.getGeometry().forEachSegment((start, end) => {
-    let dx = end[0] - start[0]
-    let dy = end[1] - start[1]
-    const length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
-    
-    // don't guiding arrows if segment length is longer than max length
-    if (length > maxLength) {
-      return
-    }
-    
-    let rotation = Math.atan2(dy, dx)
-    const arrowShape = new RegularShape({
-      fill: new Fill({ color: '#002447' }),
-      points: 3,
-      radius: 9,
-      rotation: -rotation,
-      angle: Math.PI / 2
-    })
+  // arrows
+  // const maxLength = 50
+  // polyline.getGeometry().forEachSegment((start, end) => {
+  //   let dx = end[0] - start[0]
+  //   let dy = end[1] - start[1]
+  //   const length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))
 
-    const arrowStyle = new Style({
-      geometry: new Point(start),
-      image: arrowShape
-    })
+  //   // don't guiding arrows if segment length is longer than max length
+  //   if (length > maxLength) {
+  //     return
+  //   }
 
-    styles.push(arrowStyle)
-  })
+  //   let rotation = Math.atan2(dy, dx)
+  //   const arrowShape = new RegularShape({
+  //     fill: new Fill({ color: '#002447' }),
+  //     points: 3,
+  //     radius: 9,
+  //     rotation: -rotation,
+  //     angle: Math.PI / 2
+  //   })
 
-  return styles
-}
+  //   const arrowStyle = new Style({
+  //     geometry: new Point(start),
+  //     image: arrowShape
+  //   })
+
+  //   styles.push(arrowStyle)
+  // })
+
+  return styles;
+};
