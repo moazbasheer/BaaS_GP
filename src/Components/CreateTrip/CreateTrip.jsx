@@ -17,6 +17,7 @@ function CreateTrip() {
     public: true,
   });
   const [paths, setPaths] = useState([]);
+  const [routes, setRoutes] = useState([]);
   const [currentPath, setCurrentPath] = useState();
   const [messages, setMessages] = useState([]);
   const [wallet, setWallet] = useOutletContext();
@@ -24,6 +25,7 @@ function CreateTrip() {
   console.log(`wallet in create trips is ${wallet}`);
   useEffect(() => {
     pathService.getAll().then((result) => setPaths(result.message));
+    routeService.getAll().then((result) => setRoutes(result.message));
   }, []);
 
   useEffect(() => {
@@ -93,7 +95,9 @@ function CreateTrip() {
       tripService.create(data).then(
         (response) => {
           console.log(`create trip response is : ${response.data}`);
-          if (response.status === 200) {
+
+          if (response.data.status) {
+            console.log(response)
             const { id } = response.data.trip;
             tripService.payTrip(id).then((res) => {
               console.log(`response for payment : ${res}`);
@@ -103,6 +107,10 @@ function CreateTrip() {
               } else setMessages([{ content: 'Error in trip payment.', type: 'error' }]);
             }).catch((err) => console.log(`error in paying for trip with id ${id}\n${err}`));
             console.log(id);
+          } else {
+            setMessages(response.data.message.map(message => (
+              { content: message, type: 'error' }
+            )));
           }
         },
       );
@@ -127,8 +135,6 @@ function CreateTrip() {
     return date.toISOString().split('T')[0];
   };
 
-  console.log(routes)
-
   return (
     <>
       <PageTitle title="Create a New Trip" />
@@ -136,9 +142,10 @@ function CreateTrip() {
         <div>
           <select className="form-select" name="pathId" id="path" value={form.pathId} onChange={handleChange}>
             <option value="" disabled>Select your path</option>
-            {paths.map(
-              (path) => <option key={path.id} value={path.id}>{path.path_name}</option>,
-            )}
+            {routes.map(
+              (route) => paths.filter((path) => path.route_id === route.id)
+                .map((path) => <option key={path.id} value={path.id}>{route.name}/{path.path_name}</option>,
+              ))}
           </select>
           {currentPath && <div className="my-3"><ViewPathMap path={currentPath} /></div>}
         </div>

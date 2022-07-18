@@ -60,9 +60,11 @@ function CreatePath() {
     console.log(request);
 
     const response = await pathService.create(request);
-    if (response.status === 200) {
+    if (response.data.status) {
       setMessage({ content: 'Path created successfully.', type: 'success' });
       console.log(response);
+    } else {
+      setMessage({ content: response.data.message[0], type: 'error' });
     }
   };
 

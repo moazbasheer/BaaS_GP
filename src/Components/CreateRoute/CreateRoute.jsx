@@ -43,11 +43,18 @@ function CreateRoute() {
     };
 
     const response = await routeService.create(route);
-    if (response.status === 200) {
+    if (response.data.status) {
       setMessage(
         {
           content: 'Route created successfully.',
           type: 'success',
+        },
+      );
+    } else {
+      setMessage(
+        {
+          content: response.data.status,
+          type: 'error',
         },
       );
     }
