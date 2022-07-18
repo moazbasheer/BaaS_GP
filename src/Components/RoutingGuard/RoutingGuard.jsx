@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-props-no-spreading */
 import { Navigate } from 'react-router-dom';
 
 function RoutingGuard({ Component, ...rest }) {

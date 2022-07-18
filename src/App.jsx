@@ -17,7 +17,6 @@ import Trips from './Components/Trips/Trips';
 import Home from './Components/Home/Home';
 
 function App() {
-  // eslint-disable-next-line unused-imports/no-unused-vars, no-unused-vars
   const [loggedOrg, setLoggedOrg] = useState({});
   const navigate = useNavigate();
 
@@ -36,7 +35,6 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      {/* eslint-disable-next-line react/jsx-no-bind */}
       <Route path="/" element={(<RoutingGuard logOut={logout} Component={MainInterface} />)}>
         <Route path="home" element={<Home />} />
         <Route path="passengers" element={<Employees />} />

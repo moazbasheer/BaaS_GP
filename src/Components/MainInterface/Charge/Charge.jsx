@@ -3,7 +3,6 @@ import { privateRequest } from '../../axiosRequest';
 import style from './Charge.module.css';
 
 function Charge({
-  // eslint-disable-next-line unused-imports/no-unused-vars, no-unused-vars
   setShowlayer, showLayer, openAlert, wallet, setWallet,
 }) {
   const [card, setCard] = useState({
@@ -87,7 +86,6 @@ function Charge({
               <button type="button" onClick={chargeBalance} className="btn  m-2 fw-bold btn-success">Recharge</button>
               <button type="button" onClick={() => setShowlayer(false)} className="btn btn-danger m-2">Cancel</button>
               {operationErrors.map((err, index) => (
-                // eslint-disable-next-line react/no-array-index-key
                 <div key={index} className="alert-danger text-center rounded-1 my-1 py-1">
                   {err}
                   {' '}

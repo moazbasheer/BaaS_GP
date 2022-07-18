@@ -4,7 +4,7 @@ import Axios from 'axios';
 import style from './AddEmpLayer.module.css';
 import { token } from '../../axiosRequest';
 
-const fileTypes = ['CSV','XLTX'];
+const fileTypes = ['CSV', 'XLTX'];
 
 function AddBulkLayer({
   showBulkLayer, setBulkLayer, openAlert, setTrickReload,

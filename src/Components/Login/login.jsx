@@ -89,7 +89,6 @@ function Login() {
               </div>
 
               <div className="validationErrors">
-                {/* eslint-disable-next-line react/no-array-index-key */}
                 {errors.map((err, index) => <Alert key={index} className="my-2 p-2" severity="error">{err.message}</Alert>)}
               </div>
               <button onClick={submitForm} className="btn btn-primary mt-3 fs-3 fw-bolder text-white mb-3" disabled={isFetching}>

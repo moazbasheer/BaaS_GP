@@ -3,6 +3,7 @@ import Joi from 'joi';
 import { useOutletContext } from 'react-router-dom';
 import { Alert } from '@mui/material';
 import pathService from '../../Services/paths';
+import routeService from '../../Services/routes';
 import ViewPathMap from '../ViewPathMap/ViewPathMap';
 import tripService from '../../Services/trips';
 import PageTitle from '../PageTitle/PageTitle';
@@ -19,6 +20,7 @@ function CreateTrip() {
   const [currentPath, setCurrentPath] = useState();
   const [messages, setMessages] = useState([]);
   const [wallet, setWallet] = useOutletContext();
+
   console.log(`wallet in create trips is ${wallet}`);
   useEffect(() => {
     pathService.getAll().then((result) => setPaths(result.message));
@@ -31,6 +33,8 @@ function CreateTrip() {
       });
     }
   }, [form.pathId]);
+
+  console.log(routes);
 
   const validateForm = (tripForm) => {
     const schema = Joi.object({
@@ -113,7 +117,7 @@ function CreateTrip() {
     setForm({ ...form, [event.target.name]: event.target.checked });
   };
 
-  // return today date in format yyyy-mm-dd as a string
+  // return minimum date in format yyyy-mm-dd as a string
   const getTodayDate = () => {
     let date = new Date();
     date.setDate(date.getDate() + 2);
@@ -122,6 +126,8 @@ function CreateTrip() {
 
     return date.toISOString().split('T')[0];
   };
+
+  console.log(routes)
 
   return (
     <>
@@ -138,7 +144,6 @@ function CreateTrip() {
         </div>
         {messages.map(
           (message, i) => (
-            // eslint-disable-next-line react/no-array-index-key
             <Alert key={i} severity={message.type}>
               {message.content}
             </Alert>

@@ -70,7 +70,6 @@ function AddEmpLayer({
               <button type="button" onClick={addEmployee} className="btn btn-primary m-2">Add Employee</button>
               <button type="button" onClick={() => setShowAddEmp(false)} className="btn btn-danger m-2">Cancel</button>
               {addEmployerErrors.map((err, index) => (
-                // eslint-disable-next-line react/no-array-index-key
                 <div key={index} className="alert-danger text-center rounded-1 my-1 py-1">
                   {err}
                   {' '}

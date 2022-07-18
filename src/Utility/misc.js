@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import pathAPIService from '../Services/graphhopper';
 
 // returns the textual address of given coordinates

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import style from './AddEmpLayer.module.css';
 
 function EditEmpLayer({
-  // eslint-disable-next-line unused-imports/no-unused-vars, no-unused-vars
   setShowAddEmp, showAddEmp, openAlert, setTrickReload, emp,
 }) {
   const [employee, setEmployee] = useState({

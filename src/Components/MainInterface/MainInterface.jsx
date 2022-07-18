@@ -15,7 +15,6 @@ function MainInterface({ logOut }) {
   const [wallet, setWallet] = useState(0);
   const [showLayer, setShowLayer] = useState(false);
   const [successAlert, setSuccessAlert] = useState(false);
-  // eslint-disable-next-line unused-imports/no-unused-vars, no-unused-vars
   const [orgName, setOrgName] = useState(
     JSON.parse(
       localStorage.getItem('organization'),

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import Joi from 'joi';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -64,8 +63,6 @@ function Register() {
         console.log(res);
         setIsFetching(false);
         console.log(isSuccess);
-
-        
 
         navigate('/login');
       } catch (error) {
