@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:learningdart/Login.dart';
-import 'package:learningdart/complaints.dart';
-import 'package:learningdart/main.dart';
-import 'package:learningdart/Complaint.dart';
+import 'package:learningdart/joinedTripsComplaints.dart';
+import 'package:learningdart/searchPublicTrips.dart';
+import 'package:learningdart/walletOption.dart';
 
-class NavBar extends StatelessWidget {
-  const NavBar({Key? key}) : super(key: key);
-  // ignore: constant_identifier_names
-  //static const IconData view_module =
-  //IconData(0xe6b6, fontFamily: 'MaterialIcons');
-  static const IconData walleticon =
-      IconData(0xf07d4, fontFamily: 'MaterialIcons');
+class clientProfilePage extends StatelessWidget {
+  final String? username;
+  final String? email;
+  final String? rolename;
+  const clientProfilePage({Key? key, this.email, this.rolename, this.username})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
+        controller: ScrollController(),
         // Remove padding
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: const Text('Mohamed Mohsen',
+            accountName: Text('$username',
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            accountEmail: const Text('MohamedMohsen46saeed@gmail.com'),
+            accountEmail: Text('$email'),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset(
@@ -37,16 +37,20 @@ class NavBar extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.message),
-            title: const Text('Messages'),
-            // ignore: avoid_returning_null_for_void
-            onTap: () => null,
-          ),
-          ListTile(
             leading: const Icon(Icons.wallet_travel_rounded),
             title: const Text('Wallet'),
             // ignore: avoid_returning_null_for_void
-            onTap: () => null,
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => wallet(
+                          email: email,
+                          username: username,
+                          rolename: rolename,
+                        )),
+              )
+            },
           ),
           ListTile(
             leading: const Icon(Icons.mode_edit),
@@ -56,34 +60,31 @@ class NavBar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const MyStatefulWidget()),
+                    builder: (context) => joinedTripscomplaints(
+                          email: email,
+                          username: username,
+                          rolename: rolename,
+                        )),
               );
             },
           ),
+          Divider(),
           ListTile(
-            leading: const Icon(Icons.cable_rounded),
-            title: const Text('Organization trips'),
+            leading: const Icon(Icons.search),
+            title: const Text('search trips'),
             // ignore: avoid_returning_null_for_void
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Complaints()),
+                MaterialPageRoute(
+                    builder: (context) => searchPublicTrips(
+                          email: email,
+                          username: username,
+                          rolename: rolename,
+                        )),
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.punch_clock_sharp),
-            title: const Text('show trips'),
-            // ignore: avoid_returning_null_for_void
-            onTap: () => null,
-          ),
-          const ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Notification'),
-          ),
-          const Divider(),
-          const ListTile(
-              leading: Icon(Icons.settings), title: Text('Settings')),
           const Divider(),
           ListTile(
             title: const Text('Log out'),
@@ -95,10 +96,6 @@ class NavBar extends StatelessWidget {
               );
             },
           ),
-          /*ListTile(
-            leading: Icon(view_module),
-            onTap: () => null,
-          )*/
         ],
       ),
     );

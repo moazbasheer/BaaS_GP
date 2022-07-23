@@ -33,23 +33,16 @@ class _SplashState extends State<Splash> {
           children: [
             SizedBox(
                 width: 200,
-                height: 150,
+                height: 200,
                 /*decoration: BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(50.0)),*/
                 child: Image.asset(
-                  'images/favpng_tour-bus-service-coach-clip-art.png',
+                  'images/logo.png',
                   fit: BoxFit.fitWidth,
                   color: Colors.white.withOpacity(1),
                   colorBlendMode: BlendMode.modulate,
                 )),
-            const Text(
-              'BAAS',
-              style: TextStyle(
-                  fontSize: 60,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
           ],
         ),
       ),
